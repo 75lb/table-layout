@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "array-tools": "^2.0.0-5",
+    "object-tools": "^1.6.7",
     "string-tools": "^0.1.8",
     "transform-tools": "^0.1.1",
     "word-wrap": "^1.0.3"
