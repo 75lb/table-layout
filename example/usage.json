@@ -1,0 +1,16 @@
+{
+    "options": {
+        "columns": [
+            { "name": "line" },
+            { "name": "option", "width": 30 },
+            { "name": "description" }
+        ]
+    },
+    "data": [
+      { "line": "Example App" },
+      { "line": "This is an example app, yeah?" },
+      { "line": "" },
+      { "line": "Usage" },
+      { "line": "$ example one two" }
+    ]
+}
