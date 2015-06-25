@@ -1,9 +1,9 @@
 {
     "options": {
         "columns": [
-            { "name": "line" },
-            { "name": "option", "width": 30 },
-            { "name": "description" }
+            { "name": "line", "nowrap": true },
+            { "name": "option", "nowrap": true },
+            { "name": "description", "width": 20 }
         ]
     },
     "data": [
@@ -11,6 +11,12 @@
       { "line": "This is an example app, yeah?" },
       { "line": "" },
       { "line": "Usage" },
-      { "line": "$ example one two" }
+      { "line": "$ example one two" },
+      { "line": "" },
+      { "option": "-t, --template", "description": "blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah"},
+      { "option": "-v, --verbose", "description": "yeah yeah yeah"},
+      { "option": "-s, --something", "description": "bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang"},
+      { "line": "" },
+      { "line": "This is the footer" }
     ]
 }
