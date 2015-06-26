@@ -9,7 +9,7 @@
   "bin": {
     "cols": "bin/cli.js"
   },
-  "keywords": [],
+  "keywords": [ "wrap", "terminal", "data", "columns", "format", "json", "command line" ],
   "engines": {
     "node": ">=0.10.0"
   },

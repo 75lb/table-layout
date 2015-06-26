@@ -3,7 +3,7 @@
         "columns": [
             { "name": "line", "nowrap": true },
             { "name": "option", "nowrap": true },
-            { "name": "description", "width": 20 }
+            { "name": "description" }
         ]
     },
     "data": [
