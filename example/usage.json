@@ -1,22 +1,21 @@
 {
     "options": {
         "columns": [
-            { "name": "line", "line": true },
             { "name": "option", "nowrap": true },
             { "name": "description" }
         ]
     },
     "data": [
-      { "line": "Example App" },
-      { "line": "This is an example app, yeah?" },
-      { "line": "" },
-      { "line": "Usage" },
-      { "line": "$ example one two" },
-      { "line": "" },
+      "Example App",
+      "This is an example app, yeah?",
+      "",
+      "Usage",
+      "$ example one two",
+      "",
       { "option": "-t, --template", "description": "blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah"},
       { "option": "-v, --verbose", "description": "yeah yeah yeah"},
       { "option": "-s, --something", "description": "bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang"},
-      { "line": "" },
-      { "line": "This is the footer" }
+      "",
+      "This is the footer"
     ]
 }
