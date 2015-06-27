@@ -1,7 +1,7 @@
 {
     "options": {
         "columns": [
-            { "name": "line", "nowrap": true },
+            { "name": "line", "line": true },
             { "name": "option", "nowrap": true },
             { "name": "description" }
         ]
