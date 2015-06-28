@@ -79,6 +79,26 @@ $ cat example/two-columns.json | column-layout --width "column 2: 45"
  the Acts of Union.
 ```
 
+Plain strings in the input data are passed straight through to the output - useful for injecting lines around the column layout:
+
+```sh
+$ cat example/usage.json | column-layout
+```
+<pre><code>
+<strong>Example App</strong>
+This is an example app, yeah?
+
+<strong>Usage</strong>
+$ example one two
+
+ -t, --template   blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah
+ -v, --verbose    yeah yeah yeah
+ -s, --something  bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang
+                  bang bang bang bang bang
+
+This is the footer
+</code></pre>
+
 ## More Examples
 Read the latest npm issues:
 ```sh
@@ -114,11 +134,13 @@ $ curl -s https://api.github.com/repos/npm/npm/issues \
 ## API Reference
 
 * [column-layout](#module_column-layout)
-  * [columnLayout(data, [options])](#exp_module_column-layout--columnLayout) ⏏
+  * [columnLayout(data, [options])](#exp_module_column-layout--columnLayout) ⇒ <code>string</code> ⏏
     * [~columnOption](#module_column-layout--columnLayout..columnOption)
 
 <a name="exp_module_column-layout--columnLayout"></a>
-### columnLayout(data, [options]) ⏏
+### columnLayout(data, [options]) ⇒ <code>string</code> ⏏
+Returns JSON data formatted in columns.
+
 **Kind**: Exported function  
 
 | Param | Type | Description |
@@ -128,6 +150,16 @@ $ curl -s https://api.github.com/repos/npm/npm/issues \
 | [options.viewWidth] | <code>number</code> | maximum width of layout |
 | [options.columns] | <code>[columnOption](#module_column-layout--columnLayout..columnOption)</code> | array of column options |
 
+**Example**  
+```js
+> columnFormat = require("column-format")
+> jsonData = [{ 
+    col1: "Some text you wish to read in column layout",
+    col2: "And some more text in column two. "
+}]
+> columnFormat(jsonData, { viewWidth: 30 })
+' Some text you  And some more \n wish to read   text in       \n in column      column two.   \n layout                       \n'
+```
 <a name="module_column-layout--columnLayout..columnOption"></a>
 #### columnLayout~columnOption
 **Kind**: inner typedef of <code>[columnLayout](#exp_module_column-layout--columnLayout)</code>  

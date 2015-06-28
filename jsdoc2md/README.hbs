@@ -79,6 +79,26 @@ $ cat example/two-columns.json | column-layout --width "column 2: 45"
  the Acts of Union.
 ```
 
+Plain strings in the input data are passed straight through to the output - useful for injecting lines around the column layout:
+
+```sh
+$ cat example/usage.json | column-layout
+```
+<pre><code>
+<strong>Example App</strong>
+This is an example app, yeah?
+
+<strong>Usage</strong>
+$ example one two
+
+ -t, --template   blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah
+ -v, --verbose    yeah yeah yeah
+ -s, --something  bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang
+                  bang bang bang bang bang
+
+This is the footer
+</code></pre>
+
 ## More Examples
 Read the latest npm issues:
 ```sh

@@ -6,10 +6,10 @@
         ]
     },
     "data": [
-      "Example App",
+      "\u001b[1mExample App\u001b[0m",
       "This is an example app, yeah?",
       "",
-      "Usage",
+      "\u001b[1mUsage\u001b[0m",
       "$ example one two",
       "",
       { "option": "-t, --template", "description": "blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah"},
