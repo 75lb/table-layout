@@ -3,10 +3,24 @@
 var columnLayout = require("../");
 var tr = require("transform-tools");
 var cliArgs = require("command-line-args");
+var pkg = require("../package");
 
-var options = cliArgs([
-    { name: "width", type: Array, alias: "w" }
-]).parse();
+var cli = cliArgs([
+    { name: "help", type: Boolean, alias: "h" },
+    { name: "width", type: Array, alias: "w", description: "specify a list of column widths in the format '<column>:<width>', for example:\n$ cat <json data> | column-layout --width \"column 1: 10\" \"column 2: 30\"" }
+]);
+var options = cli.parse();
+
+if (options.help){
+    console.error(cli.getUsage({
+        title: "column-layout",
+        header: pkg.description,
+        forms: [
+            "$ cat <json data> | column-format <options>"
+        ]
+    }));
+    process.exit(0);
+}
 
 var columns = [];
 if (options.width){

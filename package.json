@@ -2,7 +2,7 @@
   "name": "column-layout",
   "author": "Lloyd Brookes <75pound@gmail.com>",
   "version": "0.0.0",
-  "description": "column-layout",
+  "description": "Pretty-print JSON data in columns.",
   "repository": "https://github.com/75lb/column-layout.git",
   "license": "MIT",
   "main": "./lib/column-layout.js",
@@ -32,5 +32,8 @@
     "typical": "^2.2.0",
     "word-wrap": "^1.0.3",
     "command-line-args": "~0.5.9"
+  },
+  "devDependencies": {
+    "jsdoc-to-markdown": "^1.1.1"
   }
 }
