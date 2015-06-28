@@ -1,6 +1,5 @@
 [![view on npm](http://img.shields.io/npm/v/column-layout.svg)](https://www.npmjs.org/package/column-layout)
 [![npm module downloads per month](http://img.shields.io/npm/dm/column-layout.svg)](https://www.npmjs.org/package/column-layout)
-[![Build Status](https://travis-ci.org/75lb/column-layout.svg?branch=master)](https://travis-ci.org/75lb/column-layout)
 [![Dependency Status](https://david-dm.org/75lb/column-layout.svg)](https://david-dm.org/75lb/column-layout)
 
 # column-layout
@@ -17,12 +16,12 @@ Say you have some data:
 ]
 ```
 
-piping it through `column-layout`:
+pipe it through `column-layout`:
 ```sh
 $ cat example/two-columns.json | column-layout
 ```
 
-produces this output: 
+to get this:
 ```
  The Kingdom of Scotland was a state in  Operation Barbarossa (German:
  north-west Europe traditionally said    Unternehmen Barbarossa) was the code
@@ -84,18 +83,19 @@ Plain strings in the input data are passed straight through to the output - usef
 ```sh
 $ cat example/usage.json | column-layout
 ```
-<pre><code>
-<strong>Example App</strong>
+<pre><code><strong>Example App</strong>
 This is an example app, yeah?
 
 <strong>Usage</strong>
 $ example one two
 
- -t, --template   blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah
+ -t, --template   blah blah blah blah blah blah blah blah blah blah blah blah
+                  blah blah blah blah blah blah
  -v, --verbose    yeah yeah yeah
- -s, --something  bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang bang
-                  bang bang bang bang bang
-
+ -s, --something  bang bang bang bang bang bang bang bang bang bang bang bang
+                  bang bang bang bang bang bang bang bang bang bang bang bang
+                  bang bang bang bang bang bang
+                  
 This is the footer
 </code></pre>
 
