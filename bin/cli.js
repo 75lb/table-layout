@@ -4,6 +4,8 @@ var columnLayout = require("../");
 var tr = require("transform-tools");
 var cliArgs = require("command-line-args");
 var pkg = require("../package");
+var collectJson = require("collect-json");
+var ansi = require("ansi-escape-sequences");
 
 var cli = cliArgs([
     { name: "help", type: Boolean, alias: "h" },
@@ -35,9 +37,13 @@ if (options.width){
 }
 
 process.stdin
-    .pipe(tr.collectJson({ through: function(json){
+    .pipe(collectJson(function(json){
         var clOptions = { viewWidth: process.stdout.columns };
         if (columns.length) clOptions.columns = columns;
         return columnLayout(json, clOptions);
-    }}))
+    }))
+    .on("error", function(err){
+        console.error(ansi.format(err.message, "red"));
+        process.exit(1);
+    })
     .pipe(process.stdout);
