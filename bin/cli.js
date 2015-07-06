@@ -9,13 +9,14 @@ var ansi = require("ansi-escape-sequences");
 
 var cli = cliArgs([
     { name: "help", type: Boolean, alias: "h" },
-    { name: "width", type: Array, alias: "w", description: "specify a list of column widths in the format '<column>:<width>', for example:\n$ cat <json data> | column-layout --width \"column 1: 10\" \"column 2: 30\"" }
+    { name: "width", type: String, multiple: true, alias: "w", description: "specify a list of column widths in the format '<column>:<width>', for example:\n$ cat <json data> | column-layout --width \"column 1: 10\" \"column 2: 30\"" }
 ]);
 var options = cli.parse();
 
 if (options.help){
     console.error(cli.getUsage({
         title: "column-layout",
+        description: "Pretty-print JSON data in columns",
         header: pkg.description,
         forms: [
             "$ cat <json data> | column-format <options>"

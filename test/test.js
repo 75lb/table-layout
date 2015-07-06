@@ -1,6 +1,10 @@
 var test = require("tape");
-var lib = require("../");
+var columnLayout = require("../");
 
-test("first", function(t){
-    
+test("no options", function(t){
+    t.strictEqual(
+        columnLayout([ { a: 1, b: 2 } ]),
+        " 1  2 \n"
+    );
+    t.end();
 });
