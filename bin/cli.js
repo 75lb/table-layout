@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 "use strict";
 var columnLayout = require("../");
-var tr = require("transform-tools");
 var cliArgs = require("command-line-args");
 var pkg = require("../package");
 var collectJson = require("collect-json");
