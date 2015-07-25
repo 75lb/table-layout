@@ -8,7 +8,10 @@ var ansi = require("ansi-escape-sequences");
 
 var cli = cliArgs([
     { name: "help", type: Boolean, alias: "h" },
-    { name: "width", type: String, multiple: true, alias: "w", description: "specify a list of column widths in the format '<column>:<width>', for example:\n$ cat <json data> | column-layout --width \"column 1: 10\" \"column 2: 30\"" }
+    { name: "width", type: String, multiple: true, alias: "w",
+    description: "specify a list of column widths in the format '<column>:<width>', for example:\n$ cat <json data> | column-layout --width \"column 1: 10\" \"column 2: 30\"" },
+    { name: "padding-left", type: String, alias: "l" },
+    { name: "padding-right", type: String, alias: "r" }
 ]);
 var options = cli.parse();
 
@@ -38,7 +41,13 @@ if (options.width){
 
 process.stdin
     .pipe(collectJson(function(json){
-        var clOptions = { viewWidth: process.stdout.columns };
+        var clOptions = {
+            viewWidth: process.stdout.columns,
+            padding: {
+                left: options["padding-left"],
+                right: options["padding-right"]
+            }
+        };
         if (columns.length) clOptions.columns = columns;
         return columnLayout(json, clOptions);
     }))
