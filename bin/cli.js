@@ -8,10 +8,12 @@ var ansi = require("ansi-escape-sequences");
 
 var cli = cliArgs([
     { name: "help", type: Boolean, alias: "h" },
-    { name: "width", type: String, multiple: true, alias: "w",
+    { name: "width", type: String, multiple: true, alias: "w", typeLabel: "<widths>",
     description: "specify a list of column widths in the format '<column>:<width>', for example:\n$ cat <json data> | column-layout --width \"column 1: 10\" \"column 2: 30\"" },
-    { name: "padding-left", type: String, alias: "l" },
-    { name: "padding-right", type: String, alias: "r" }
+    { name: "padding-left", type: String, alias: "l", 
+    description: "One or more characters to pad the left of each column. Defaults to ' '." },
+    { name: "padding-right", type: String, alias: "r",
+    description: "One or more characters to pad the right of each column. Defaults to ' '." }
 ]);
 var options = cli.parse();
 
