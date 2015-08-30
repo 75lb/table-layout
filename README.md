@@ -167,7 +167,7 @@ Returns JSON data formatted in columns.
 **Example**  
 ```js
 > columnFormat = require("column-format")
-> jsonData = [{ 
+> jsonData = [{
     col1: "Some text you wish to read in column layout",
     col2: "And some more text in column two. "
 }]
