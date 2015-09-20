@@ -163,6 +163,9 @@ Returns JSON data formatted in columns.
 | [options] | <code>object</code> | optional settings |
 | [options.viewWidth] | <code>number</code> | maximum width of layout |
 | [options.columns] | <code>[columnOption](#module_column-layout--columnLayout..columnOption)</code> | array of column options |
+| [options.padding] | <code>object</code> |  |
+| [options.padding.left] | <code>string</code> |  |
+| [options.padding.right] | <code>string</code> |  |
 
 **Example**  
 ```js
