@@ -28,11 +28,11 @@
     "ansi-escape-sequences": "^2.1.0",
     "array-tools": "^2.0.0",
     "collect-json": "^1",
-    "command-line-args": "^1.0.0",
+    "command-line-args": "^2",
     "object-tools": "^2",
     "string-tools": "^1",
     "typical": "^2.2.0",
-    "wordwrapjs": "~0.2"
+    "wordwrapjs": "^1"
   },
   "devDependencies": {
     "jsdoc-to-markdown": "^1.1.1",
