@@ -1,5 +1,5 @@
 [![view on npm](http://img.shields.io/npm/v/column-layout.svg)](https://www.npmjs.org/package/column-layout)
-[![npm module downloads per month](http://img.shields.io/npm/dm/column-layout.svg)](https://www.npmjs.org/package/column-layout)
+[![npm module downloads](http://img.shields.io/npm/dt/column-layout.svg)](https://www.npmjs.org/package/column-layout)
 [![Build Status](https://travis-ci.org/75lb/column-layout.svg?branch=master)](https://travis-ci.org/75lb/column-layout)
 [![Dependency Status](https://david-dm.org/75lb/column-layout.svg)](https://david-dm.org/75lb/column-layout)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](https://github.com/feross/standard)
@@ -11,8 +11,8 @@ Pretty-print JSON data in columns.
 Say you have some data:
 ```json
 [
-    { 
-        "column 1": "The Kingdom of Scotland was a state in north-west Europe traditionally said to have been founded in 843, which joined with the Kingdom of England to form a unified Kingdom of Great Britain in 1707. Its territories expanded and shrank, but it came to occupy the northern third of the island of Great Britain, sharing a land border to the south with the Kingdom of England. It suffered many invasions by the English, but under Robert I it fought a successful war of independence and remained a distinct state in the late Middle Ages. In 1603, James VI of Scotland became King of England, joining Scotland with England in a personal union. In 1707, the two kingdoms were united to form the Kingdom of Great Britain under the terms of the Acts of Union. ", 
+    {
+        "column 1": "The Kingdom of Scotland was a state in north-west Europe traditionally said to have been founded in 843, which joined with the Kingdom of England to form a unified Kingdom of Great Britain in 1707. Its territories expanded and shrank, but it came to occupy the northern third of the island of Great Britain, sharing a land border to the south with the Kingdom of England. It suffered many invasions by the English, but under Robert I it fought a successful war of independence and remained a distinct state in the late Middle Ages. In 1603, James VI of Scotland became King of England, joining Scotland with England in a personal union. In 1707, the two kingdoms were united to form the Kingdom of Great Britain under the terms of the Acts of Union. ",
         "column 2": "Operation Barbarossa (German: Unternehmen Barbarossa) was the code name for Nazi Germany's invasion of the Soviet Union during World War II, which began on 22 June 1941. Over the course of the operation, about four million soldiers of the Axis powers invaded Soviet Russia along a 2,900 kilometer front, the largest invasion force in the history of warfare. In addition to troops, the Germans employed some 600,000 motor vehicles and between 600–700,000 horses. The operation was driven by Adolf Hitler's ideological desire to conquer the Soviet territories as outlined in his 1925 manifesto Mein Kampf ('My Struggle'). It marked the beginning of the rapid escalation of the war, both geographically and in the formation of the Allied coalition."
     }
 ]
@@ -48,7 +48,7 @@ to get this:
  terms of the Acts of Union.             the Allied coalition.
 ```
 
-Columns containing wrappable data are auto-sized by default to fit the available space. You can set specific widths using `--width` 
+Columns containing wrappable data are auto-sized by default to fit the available space. You can set specific widths using `--width`
 
 ```sh
 $ cat example/two-columns.json | column-layout --width "column 2: 45"
@@ -97,7 +97,7 @@ $ example one two
  -s, --something  bang bang bang bang bang bang bang bang bang bang bang bang
                   bang bang bang bang bang bang bang bang bang bang bang bang
                   bang bang bang bang bang bang
-                  
+
 This is the footer
 </code></pre>
 
