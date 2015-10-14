@@ -2,7 +2,6 @@
 'use strict'
 var columnLayout = require('../')
 var cliArgs = require('command-line-args')
-var pkg = require('../package')
 var collectJson = require('collect-json')
 var ansi = require('ansi-escape-sequences')
 var o = require('object-tools')
@@ -22,8 +21,7 @@ if (options.help) {
   console.error(cli.getUsage({
     title: 'column-layout',
     description: 'Pretty-print JSON data in columns',
-    header: pkg.description,
-    forms: [
+    synopsis: [
       '$ cat [underline]{jsonfile} | column-format [options]'
     ]
   }))
@@ -46,11 +44,10 @@ process.stdin
   .pipe(collectJson(function (json) {
     var clOptions = {
       viewWidth: process.stdout.columns,
-      padding: {
-        left: options['padding-left'],
-        right: options['padding-right']
-      }
+      padding: {}
     }
+    if (options['padding-left']) clOptions.padding.left = options['padding-left']
+    if (options['padding-right']) clOptions.padding.right = options['padding-right']
 
     /* split input into data and options */
     if (!Array.isArray(json)) {
