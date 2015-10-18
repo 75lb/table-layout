@@ -30,6 +30,7 @@
     "array-tools": "^2.0.0",
     "collect-json": "^1",
     "command-line-args": "^2",
+    "feature-detect-es6": "^1.0.0",
     "object-tools": "^2",
     "string-tools": "^1",
     "typical": "^2.2.0",
