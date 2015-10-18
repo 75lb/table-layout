@@ -12,8 +12,8 @@ Say you have some data:
 ```json
 [
     {
-        "column 1": "The Kingdom of Scotland was a state in north-west Europe traditionally said to have been founded in 843, which joined with the Kingdom of England to form a unified Kingdom of Great Britain in 1707. Its territories expanded and shrank, but it came to occupy the northern third of the island of Great Britain, sharing a land border to the south with the Kingdom of England. It suffered many invasions by the English, but under Robert I it fought a successful war of independence and remained a distinct state in the late Middle Ages. In 1603, James VI of Scotland became King of England, joining Scotland with England in a personal union. In 1707, the two kingdoms were united to form the Kingdom of Great Britain under the terms of the Acts of Union. ",
-        "column 2": "Operation Barbarossa (German: Unternehmen Barbarossa) was the code name for Nazi Germany's invasion of the Soviet Union during World War II, which began on 22 June 1941. Over the course of the operation, about four million soldiers of the Axis powers invaded Soviet Russia along a 2,900 kilometer front, the largest invasion force in the history of warfare. In addition to troops, the Germans employed some 600,000 motor vehicles and between 600–700,000 horses. The operation was driven by Adolf Hitler's ideological desire to conquer the Soviet territories as outlined in his 1925 manifesto Mein Kampf ('My Struggle'). It marked the beginning of the rapid escalation of the war, both geographically and in the formation of the Allied coalition."
+      "column 1": "The Kingdom of Scotland was a state in north-west Europe traditionally said to have been founded in 843, which joined with the Kingdom of England to form a unified Kingdom of Great Britain in 1707. Its territories expanded and shrank, but it came to occupy the northern third of the island of Great Britain, sharing a land border to the south with the Kingdom of England. ",
+      "column 2": "Operation Barbarossa (German: Unternehmen Barbarossa) was the code name for Nazi Germany's invasion of the Soviet Union during World War II, which began on 22 June 1941. Over the course of the operation, about four million soldiers of the Axis powers invaded Soviet Russia along a 2,900 kilometer front, the largest invasion force in the history of warfare. In addition to troops, the Germans employed some 600,000 motor vehicles and between 600–700,000 horses."
     }
 ]
 ```
@@ -25,81 +25,40 @@ $ cat example/two-columns.json | column-layout
 
 to get this:
 ```
- The Kingdom of Scotland was a state in  Operation Barbarossa (German:
- north-west Europe traditionally said    Unternehmen Barbarossa) was the code
- to have been founded in 843, which      name for Nazi Germany's invasion of
- joined with the Kingdom of England to   the Soviet Union during World War II,
- form a unified Kingdom of Great         which began on 22 June 1941. Over the
- Britain in 1707. Its territories        course of the operation, about four
- expanded and shrank, but it came to     million soldiers of the Axis powers
- occupy the northern third of the        invaded Soviet Russia along a 2,900
- island of Great Britain, sharing a      kilometer front, the largest invasion
- land border to the south with the       force in the history of warfare. In
- Kingdom of England. It suffered many    addition to troops, the Germans
- invasions by the English, but under     employed some 600,000 motor vehicles
- Robert I it fought a successful war of  and between 600–700,000 horses. The
- independence and remained a distinct    operation was driven by Adolf Hitler's
- state in the late Middle Ages. In       ideological desire to conquer the
- 1603, James VI of Scotland became King  Soviet territories as outlined in his
- of England, joining Scotland with       1925 manifesto Mein Kampf ('My
- England in a personal union. In 1707,   Struggle'). It marked the beginning of
- the two kingdoms were united to form    the rapid escalation of the war, both
- the Kingdom of Great Britain under the  geographically and in the formation of
- terms of the Acts of Union.             the Allied coalition.
+The Kingdom of Scotland was a state in       Operation Barbarossa (German: Unternehmen
+north-west Europe traditionally said to      Barbarossa) was the code name for Nazi
+have been founded in 843, which joined with  Germany's invasion of the Soviet Union
+the Kingdom of England to form a unified     during World War II, which began on 22 June
+Kingdom of Great Britain in 1707. Its        1941. Over the course of the operation,
+territories expanded and shrank, but it      about four million soldiers of the Axis
+came to occupy the northern third of the     powers invaded Soviet Russia along a 2,900
+island of Great Britain, sharing a land      kilometer front, the largest invasion force
+border to the south with the Kingdom of      in the history of warfare. In addition to
+England.                                     troops, the Germans employed some 600,000
+                                             motor vehicles and between 600–700,000
+                                             horses.
 ```
 
 Columns containing wrappable data are auto-sized by default to fit the available space. You can set specific widths using `--width`
 
 ```sh
-$ cat example/two-columns.json | column-layout --width "column 2: 45"
-```
-```
- The Kingdom of Scotland was a      Operation Barbarossa (German: Unternehmen
- state in north-west Europe         Barbarossa) was the code name for Nazi
- traditionally said to have been    Germany's invasion of the Soviet Union
- founded in 843, which joined with  during World War II, which began on 22 June
- the Kingdom of England to form a   1941. Over the course of the operation,
- unified Kingdom of Great Britain   about four million soldiers of the Axis
- in 1707. Its territories expanded  powers invaded Soviet Russia along a 2,900
- and shrank, but it came to occupy  kilometer front, the largest invasion force
- the northern third of the island   in the history of warfare. In addition to
- of Great Britain, sharing a land   troops, the Germans employed some 600,000
- border to the south with the       motor vehicles and between 600–700,000
- Kingdom of England. It suffered    horses. The operation was driven by Adolf
- many invasions by the English,     Hitler's ideological desire to conquer the
- but under Robert I it fought a     Soviet territories as outlined in his 1925
- successful war of independence     manifesto Mein Kampf ('My Struggle'). It
- and remained a distinct state in   marked the beginning of the rapid
- the late Middle Ages. In 1603,     escalation of the war, both geographically
- James VI of Scotland became King   and in the formation of the Allied
- of England, joining Scotland with  coalition.
- England in a personal union. In
- 1707, the two kingdoms were
- united to form the Kingdom of
- Great Britain under the terms of
- the Acts of Union.
+$ cat example/two-columns.json | column-layout --width "column 2: 55"
 ```
 
-Plain strings in the input data are passed straight through to the output - useful for injecting lines around the column layout:
-
-```sh
-$ cat example/usage.json | column-layout
 ```
-<pre><code><strong>Example App</strong>
-This is an example app, yeah?
-
-<strong>Usage</strong>
-$ example one two
-
- -t, --template   blah blah blah blah blah blah blah blah blah blah blah blah
-                  blah blah blah blah blah blah
- -v, --verbose    yeah yeah yeah
- -s, --something  bang bang bang bang bang bang bang bang bang bang bang bang
-                  bang bang bang bang bang bang bang bang bang bang bang bang
-                  bang bang bang bang bang bang
-
-This is the footer
-</code></pre>
+The Kingdom of Scotland was a      Operation Barbarossa (German: Unternehmen Barbarossa)
+state in north-west Europe         was the code name for Nazi Germany's invasion of the
+traditionally said to have been    Soviet Union during World War II, which began on 22
+founded in 843, which joined with  June 1941. Over the course of the operation, about
+the Kingdom of England to form a   four million soldiers of the Axis powers invaded
+unified Kingdom of Great Britain   Soviet Russia along a 2,900 kilometer front, the
+in 1707. Its territories expanded  largest invasion force in the history of warfare. In
+and shrank, but it came to occupy  addition to troops, the Germans employed some 600,000
+the northern third of the island   motor vehicles and between 600–700,000 horses.
+of Great Britain, sharing a land
+border to the south with the
+Kingdom of England.
+```
 
 ## More Examples
 Read the latest npm issues:
@@ -167,7 +126,7 @@ Returns JSON data formatted in columns.
 | [options] | <code>object</code> | optional settings |
 | [options.viewWidth] | <code>number</code> | maximum width of layout |
 | [options.columns] | <code>[columnOption](#module_column-layout--columnLayout..columnOption)</code> | array of column options |
-| [options.padding] | <code>object</code> |  |
+| [options.padding] | <code>object</code> | Padding values to set on each column. Per-column overrides can be set in the `options.columns` array. |
 | [options.padding.left] | <code>string</code> |  |
 | [options.padding.right] | <code>string</code> |  |
 
