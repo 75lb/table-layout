@@ -78,11 +78,15 @@ var Table = (function () {
         var line = [];
         _this2.columns.forEach(function (column) {
           var cell = row[column.name];
-          line.push(wrap.lines(cell, {
-            width: column.generatedWidth - column.padding.length(),
-            ignore: ansi.regexp,
-            'break': column['break']
-          }));
+          if (column.nowrap) {
+            line.push(cell.split(/\r\n?|\n/));
+          } else {
+            line.push(wrap.lines(cell, {
+              width: column.generatedWidth - column.padding.length(),
+              ignore: ansi.regexp,
+              'break': column['break']
+            }));
+          }
         });
         lines.push(line);
       });
