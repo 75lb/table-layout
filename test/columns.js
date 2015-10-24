@@ -1,16 +1,6 @@
 'use strict'
 var test = require('tape')
-var Columns = require('../lib/columns')
-
-test('new Columns(columns)', function (t) {
-  var data = [
-    { name: 'one', width: 6 }
-  ]
-  var columns = new Columns(data)
-
-  t.deepEqual(columns, columns)
-  t.end()
-})
+var Columns = require('../').Columns
 
 test('columns.autoSize(contentColumns, viewWidth)', function (t) {
   var columns = new Columns([

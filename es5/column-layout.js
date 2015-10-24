@@ -1,6 +1,7 @@
 'use strict';
 require('core-js/es6/array');
 var Table = require('./table');
+var Columns = require('./columns');
 
 module.exports = columnLayout;
 
@@ -17,3 +18,5 @@ columnLayout.lines = function (data, options) {
 columnLayout.table = function (data, options) {
   return new Table(data, options);
 };
+
+columnLayout.Columns = Columns;
