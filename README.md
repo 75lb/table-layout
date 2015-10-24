@@ -127,6 +127,8 @@ Returns JSON data formatted in columns.
 | data | <code>array</code> | input data |
 | [options] | <code>object</code> | optional settings |
 | [options.viewWidth] | <code>number</code> | maximum width of layout |
+| [options.nowrap] | <code>boolean</code> | disable wrapping on all columns |
+| [options.break] | <code>boolean</code> | enable breaking on all columns |
 | [options.columns] | <code>[columnOption](#module_column-layout--columnLayout..columnOption)</code> | array of column options |
 | [options.padding] | <code>object</code> | Padding values to set on each column. Per-column overrides can be set in the `options.columns` array. |
 | [options.padding.left] | <code>string</code> |  |
@@ -170,6 +172,7 @@ Identical to [column-layout](#module_column-layout) with the exception of the re
 | width | <code>number</code> | column width |
 | maxWidth | <code>number</code> | column max width |
 | nowrap | <code>boolean</code> | disable wrapping for this column |
+| break | <code>boolean</code> | enable breaking on all columns |
 | padding | <code>object</code> | padding options |
 | padding.left | <code>string</code> | a string to pad the left of each cell (default: `" "`) |
 | padding.right | <code>string</code> | a string to pad the right of each cell (default: `" "`) |
