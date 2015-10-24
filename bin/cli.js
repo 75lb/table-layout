@@ -5,6 +5,7 @@ var cliArgs = require('command-line-args')
 var collectJson = require('collect-json')
 var ansi = require('ansi-escape-sequences')
 var o = require('object-tools')
+var t = require('typical')
 
 var cli = cliArgs([
   { name: 'help', type: Boolean, alias: 'h' },
@@ -13,7 +14,8 @@ var cli = cliArgs([
   { name: 'padding-left', type: String, alias: 'l',
   description: "One or more characters to pad the left of each column. Defaults to ' '." },
   { name: 'padding-right', type: String, alias: 'r',
-  description: "One or more characters to pad the right of each column. Defaults to ' '." }
+  description: "One or more characters to pad the right of each column. Defaults to ' '." },
+  { name: 'lines', type: Boolean, description: 'return an array of lines' }
 ])
 var options = cli.parse()
 
@@ -46,13 +48,14 @@ process.stdin
       viewWidth: process.stdout.columns,
       padding: {}
     }
-    if (options['padding-left']) clOptions.padding.left = options['padding-left']
-    if (options['padding-right']) clOptions.padding.right = options['padding-right']
+
+    if (t.isDefined(options['padding-left'])) clOptions.padding.left = options['padding-left']
+    if (t.isDefined(options['padding-right'])) clOptions.padding.right = options['padding-right']
 
     /* split input into data and options */
     if (!Array.isArray(json)) {
       if (json.options && json.data) {
-        clOptions = o.extend(json.options, clOptions)
+        clOptions = o.extend(clOptions, json.options)
         json = json.data
       } else {
         throw new Error('Invalid input data')
@@ -60,7 +63,9 @@ process.stdin
     }
 
     if (columns.length) clOptions.columns = columns
-    return columnLayout(json, clOptions)
+    return options.lines
+      ? JSON.stringify(columnLayout.lines(json, clOptions), null, '  ') + '\n'
+      : columnLayout(json, clOptions)
   }))
   .on('error', function (err) {
     console.error(ansi.format(err.stack, 'red'))
