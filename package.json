@@ -20,8 +20,7 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "tape test/columnLayout.js",
-    "lint": "jshint lib/*.js bin/*.js test/*.js; echo",
+    "test": "tape test/*.js",
     "docs": "jsdoc2md -t jsdoc2md/README.hbs lib/*.js > README.md; echo",
     "es5": "babel --no-comments lib --out-dir es5"
   },
