@@ -11,24 +11,6 @@ var os = require('os');
 var Rows = require('./rows');
 var ansi = require('./ansi');
 
-var Padding = (function () {
-  function Padding(padding) {
-    _classCallCheck(this, Padding);
-
-    this.left = padding.left;
-    this.right = padding.right;
-  }
-
-  _createClass(Padding, [{
-    key: 'length',
-    value: function length() {
-      return this.left.length + this.right.length;
-    }
-  }]);
-
-  return Padding;
-})();
-
 var Table = (function () {
   function Table(data, options) {
     var _this = this;
@@ -45,9 +27,16 @@ var Table = (function () {
     this.rows = new Rows(data);
     this.columns = this.rows.getColumns();
 
+    this.columns.viewWidth = options.viewWidth;
     this.columns.forEach(function (column) {
-      column.padding = new Padding(options.padding);
+      if (options.padding) column.padding = options.padding;
+      if (options.nowrap) column.nowrap = options.nowrap;
+      if (options['break']) {
+        column['break'] = options['break'];
+        column.contentWrappable = true;
+      }
     });
+
     options.columns.forEach(function (optionColumn) {
       var column = _this.columns.get(optionColumn.name);
       if (column) {
@@ -65,7 +54,7 @@ var Table = (function () {
       }
     });
 
-    this.columns.autoSize(options.viewWidth);
+    this.columns.autoSize();
   }
 
   _createClass(Table, [{

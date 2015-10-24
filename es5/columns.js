@@ -9,6 +9,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var t = require('typical');
+var Padding = require('./padding');
+
+var _viewWidth = new WeakMap();
 
 var Columns = (function (_Array) {
   _inherits(Columns, _Array);
@@ -66,7 +69,7 @@ var Columns = (function (_Array) {
 
       if (columns) {
         columns.forEach(function (column) {
-          _this.push(column);
+          _this.push(column instanceof Column ? column : new Column(column));
         });
       }
     }
@@ -79,11 +82,13 @@ var Columns = (function (_Array) {
     }
   }, {
     key: 'autoSize',
-    value: function autoSize(viewWidth) {
+    value: function autoSize() {
       var _this2 = this;
 
+      var viewWidth = _viewWidth.get(this);
+
       this.forEach(function (column) {
-        column.generatedWidth = column.width || column.contentWidth + column.padding.length();
+        return column.generateWidth();
       });
 
       var width = {
@@ -94,33 +99,67 @@ var Columns = (function (_Array) {
         totalResizable: viewWidth - this.totalFixedWidth()
       };
 
-      if (width.diff) {
+      if (width.diff > 0) {
+        var grownColumns;
+        var shrunkenColumns;
+        var salvagedSpace;
+
         (function () {
           var resizableColumns = _this2.getResizable();
           resizableColumns.forEach(function (column) {
             column.generatedWidth = Math.floor(width.totalResizable / resizableColumns.length);
           });
+
+          grownColumns = _this2.filter(function (column) {
+            return column.generatedWidth > column.contentWidth;
+          });
+          shrunkenColumns = _this2.filter(function (column) {
+            return column.generatedWidth < column.contentWidth;
+          });
+          salvagedSpace = 0;
+
+          grownColumns.forEach(function (column) {
+            var currentGeneratedWidth = column.generatedWidth;
+            column.generateWidth();
+            salvagedSpace += currentGeneratedWidth - column.generatedWidth;
+          });
+          shrunkenColumns.forEach(function (column) {
+            column.generatedWidth += Math.floor(salvagedSpace / shrunkenColumns.length);
+          });
+
+          _this2.forEach(function (column) {
+            if (t.isDefined(column.maxWidth) && column.generatedWidth > column.maxWidth) {
+              column.generatedWidth = column.maxWidth;
+            }
+          });
         })();
       }
-
-      this.forEach(function (column) {
-        if (t.isDefined(column.maxWidth) && column.generatedWidth > column.maxWidth) {
-          column.generatedWidth = column.maxWidth;
-        }
-      });
+    }
+  }, {
+    key: 'viewWidth',
+    set: function set(val) {
+      _viewWidth.set(this, val);
     }
   }]);
 
   return Columns;
 })(Array);
 
+var _padding = new WeakMap();
+
 var Column = (function () {
   function Column(column) {
     _classCallCheck(this, Column);
 
-    for (var prop in column) {
-      this[prop] = column[prop];
-    }
+    if (t.isDefined(column.name)) this.name = column.name;
+    if (t.isDefined(column.width)) this.width = column.width;
+    if (t.isDefined(column.maxWidth)) this.maxWidth = column.maxWidth;
+    if (t.isDefined(column.nowrap)) this.nowrap = column.nowrap;
+    if (t.isDefined(column['break'])) this['break'] = column['break'];
+    if (t.isDefined(column.contentWrappable)) this.contentWrappable = column.contentWrappable;
+    if (t.isDefined(column.contentWidth)) this.contentWidth = column.contentWidth;
+    this.padding = column.padding || { left: ' ', right: ' ' };
+    this.generatedWidth = null;
   }
 
   _createClass(Column, [{
@@ -132,6 +171,24 @@ var Column = (function () {
     key: 'isFixed',
     value: function isFixed() {
       return t.isDefined(this.width) || this.nowrap || !this.contentWrappable;
+    }
+  }, {
+    key: 'generateWidth',
+    value: function generateWidth() {
+      this.generatedWidth = this.width || this.contentWidth + this.padding.length();
+    }
+  }, {
+    key: 'padding',
+    set: function set(padding) {
+      _padding.set(this, new Padding(padding));
+    },
+    get: function get() {
+      return _padding.get(this);
+    }
+  }, {
+    key: 'wrappedContentWidth',
+    get: function get() {
+      return this.generatedWidth - this.padding.length();
     }
   }]);
 

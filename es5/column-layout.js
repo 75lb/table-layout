@@ -13,3 +13,7 @@ columnLayout.lines = function (data, options) {
   var table = new Table(data, options);
   return table.renderLines();
 };
+
+columnLayout.table = function (data, options) {
+  return new Table(data, options);
+};
