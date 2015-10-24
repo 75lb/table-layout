@@ -23,7 +23,7 @@
     "test": "tape test/*.js",
     "docs": "jsdoc2md -t jsdoc2md/README.hbs lib/*.js > README.md; echo",
     "es5": "babel --no-comments lib --out-dir es5",
-    "cover": "istanbul cover ./node_modules/.bin/tape test/*.js && cat coverage/lcov.info | ./node_modules/.bin/coveralls && rm -rf coverage; echo"
+    "cover": "istanbul cover tape -- test/*.js && cat coverage/lcov.info | ./node_modules/.bin/coveralls && rm -rf coverage; echo"
   },
   "dependencies": {
     "ansi-escape-sequences": "^2.1.0",

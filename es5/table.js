@@ -67,6 +67,13 @@ var Table = (function () {
         var line = [];
         _this2.columns.forEach(function (column) {
           var cell = row[column.name];
+          if (!t.isString(cell)) {
+            if (!t.isDefined(cell)) {
+              cell = '';
+            } else {
+              cell = String(cell);
+            }
+          }
           if (column.nowrap) {
             line.push(cell.split(/\r\n?|\n/));
           } else {
