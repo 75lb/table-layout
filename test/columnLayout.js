@@ -24,3 +24,15 @@ test('columnLayout.lines(data, options)', function (t) {
   t.deepEqual(columnLayout.lines(fixture.data, fixture.options), result)
   t.end()
 })
+
+test('columnLayout.lines(data, options)', function (t) {
+  var fixture = require('./fixture/primatives')
+  var result = [
+    "<row 1 column one .. .. ..><3000>",
+    "<true                     ><null>",
+    "<[object Object]          ><    >"
+  ]
+
+  t.deepEqual(columnLayout.lines(fixture.data, fixture.options), result)
+  t.end()
+})
