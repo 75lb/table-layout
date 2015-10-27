@@ -10,6 +10,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== 'function' 
 
 var Columns = require('./columns');
 var ansi = require('./ansi');
+var arrayify = require('array-back');
 
 var Rows = (function (_Array) {
   _inherits(Rows, _Array);
@@ -26,7 +27,7 @@ var Rows = (function (_Array) {
     value: function load(rows) {
       var _this = this;
 
-      rows.forEach(function (row) {
+      arrayify(rows).forEach(function (row) {
         return _this.push(row);
       });
     }
@@ -35,14 +36,14 @@ var Rows = (function (_Array) {
     value: function getColumns() {
       var columns = new Columns();
       this.forEach(function (row) {
-        var _loop = function (prop) {
+        var _loop = function (columnName) {
           var column = columns.find(function (column) {
-            return column.name === prop;
+            return column.name === columnName;
           });
           if (!column) {
-            column = columns.add({ name: prop, contentWidth: 0 });
+            column = columns.add({ name: columnName, contentWidth: 0, minContentWidth: 0 });
           }
-          var cellValue = row[prop];
+          var cellValue = row[columnName];
           if (cellValue === undefined) {
             cellValue = '';
           } else if (ansi.has(cellValue)) {
@@ -52,11 +53,16 @@ var Rows = (function (_Array) {
           }
           if (cellValue.length > column.contentWidth) column.contentWidth = cellValue.length;
 
+          var longestWord = getLongestWord(cellValue);
+          if (longestWord > column.minContentWidth) {
+            column.minContentWidth = longestWord;
+          }
+
           if (!column.contentWrappable) column.contentWrappable = /\s+/.test(cellValue);
         };
 
-        for (var prop in row) {
-          _loop(prop);
+        for (var columnName in row) {
+          _loop(columnName);
         }
       });
       return columns;
@@ -65,5 +71,12 @@ var Rows = (function (_Array) {
 
   return Rows;
 })(Array);
+
+function getLongestWord(line) {
+  var words = line.match(/(\S+|\r\n?|\n)/g) || [];
+  return words.reduce(function (max, word) {
+    return Math.max(word.length, max);
+  }, 0);
+}
 
 module.exports = Rows;

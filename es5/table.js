@@ -5,7 +5,6 @@ var _createClass = (function () { function defineProperties(target, props) { for
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 var wrap = require('wordwrapjs');
-var s = require('string-tools');
 var t = require('typical');
 var os = require('os');
 var Rows = require('./rows');
@@ -46,6 +45,7 @@ var Table = (function () {
         }
         if (optionColumn.width) column.width = optionColumn.width;
         if (optionColumn.maxWidth) column.maxWidth = optionColumn.maxWidth;
+        if (optionColumn.minWidth) column.minWidth = optionColumn.minWidth;
         if (optionColumn.nowrap) column.nowrap = optionColumn.nowrap;
         if (optionColumn['break']) {
           column['break'] = optionColumn['break'];
@@ -142,7 +142,8 @@ function getLongestArray(arrays) {
 
 function padCell(cellValue, padding, width) {
   var ansiLength = cellValue.length - ansi.remove(cellValue).length;
-  return (padding.left || '') + s.padRight(cellValue || '', width - padding.length() + ansiLength) + (padding.right || '');
+  cellValue = cellValue || '';
+  return (padding.left || '') + cellValue.padRight(width - padding.length() + ansiLength) + (padding.right || '');
 }
 
 module.exports = Table;

@@ -26,11 +26,11 @@ var Columns = (function (_Array) {
   _createClass(Columns, [{
     key: 'totalWidth',
     value: function totalWidth() {
-      return this.map(function (col) {
+      return this.length ? this.map(function (col) {
         return col.generatedWidth;
       }).reduce(function (a, b) {
         return a + b;
-      });
+      }) : 0;
     }
   }, {
     key: 'totalFixedWidth',
@@ -88,7 +88,18 @@ var Columns = (function (_Array) {
       var viewWidth = _viewWidth.get(this);
 
       this.forEach(function (column) {
-        return column.generateWidth();
+        column.generateWidth();
+        column.generateMinWidth();
+      });
+
+      this.forEach(function (column) {
+        if (t.isDefined(column.maxWidth) && column.generatedWidth > column.maxWidth) {
+          column.generatedWidth = column.maxWidth;
+        }
+
+        if (t.isDefined(column.minWidth) && column.generatedWidth < column.minWidth) {
+          column.generatedWidth = column.minWidth;
+        }
       });
 
       var width = {
@@ -96,7 +107,7 @@ var Columns = (function (_Array) {
         view: viewWidth,
         diff: this.totalWidth() - viewWidth,
         totalFixed: this.totalFixedWidth(),
-        totalResizable: viewWidth - this.totalFixedWidth()
+        totalResizable: Math.max(viewWidth - this.totalFixedWidth(), 0)
       };
 
       if (width.diff > 0) {
@@ -126,12 +137,6 @@ var Columns = (function (_Array) {
           shrunkenColumns.forEach(function (column) {
             column.generatedWidth += Math.floor(salvagedSpace / shrunkenColumns.length);
           });
-
-          _this2.forEach(function (column) {
-            if (t.isDefined(column.maxWidth) && column.generatedWidth > column.maxWidth) {
-              column.generatedWidth = column.maxWidth;
-            }
-          });
         })();
       }
     }
@@ -154,10 +159,12 @@ var Column = (function () {
     if (t.isDefined(column.name)) this.name = column.name;
     if (t.isDefined(column.width)) this.width = column.width;
     if (t.isDefined(column.maxWidth)) this.maxWidth = column.maxWidth;
+    if (t.isDefined(column.minWidth)) this.minWidth = column.minWidth;
     if (t.isDefined(column.nowrap)) this.nowrap = column.nowrap;
     if (t.isDefined(column['break'])) this['break'] = column['break'];
     if (t.isDefined(column.contentWrappable)) this.contentWrappable = column.contentWrappable;
     if (t.isDefined(column.contentWidth)) this.contentWidth = column.contentWidth;
+    if (t.isDefined(column.minContentWidth)) this.minContentWidth = column.minContentWidth;
     this.padding = column.padding || { left: ' ', right: ' ' };
     this.generatedWidth = null;
   }
@@ -178,6 +185,11 @@ var Column = (function () {
       this.generatedWidth = this.width || this.contentWidth + this.padding.length();
     }
   }, {
+    key: 'generateMinWidth',
+    value: function generateMinWidth() {
+      this.minWidth = this.minContentWidth + this.padding.length();
+    }
+  }, {
     key: 'padding',
     set: function set(padding) {
       _padding.set(this, new Padding(padding));
@@ -188,7 +200,7 @@ var Column = (function () {
   }, {
     key: 'wrappedContentWidth',
     get: function get() {
-      return this.generatedWidth - this.padding.length();
+      return Math.max(this.generatedWidth - this.padding.length(), 0);
     }
   }]);
 
