@@ -31,6 +31,7 @@
     "collect-json": "^1",
     "command-line-args": "^2",
     "core-js": "^1.2.2",
+    "deep-extend": "~0.4.0",
     "feature-detect-es6": "^1.0.0",
     "object-tools": "^2",
     "typical": "^2.2.0",

@@ -9,6 +9,7 @@ var t = require('typical');
 var os = require('os');
 var Rows = require('./rows');
 var ansi = require('./ansi');
+var extend = require('deep-extend');
 
 var Table = (function () {
   function Table(data, options) {
@@ -16,15 +17,18 @@ var Table = (function () {
 
     _classCallCheck(this, Table);
 
-    options = options || {};
-    if (!options.padding) options.padding = {};
-    options.padding.left = t.isDefined(options.padding.left) ? options.padding.left : ' ';
-    options.padding.right = t.isDefined(options.padding.right) ? options.padding.right : ' ';
-    options.viewWidth = t.isDefined(options.viewWidth) ? options.viewWidth : process && process.stdout.columns || 80;
-    options.columns = options.columns || [];
+    var defaults = {
+      padding: {
+        left: ' ',
+        right: ' '
+      },
+      viewWidth: process && process.stdout.columns || 80,
+      columns: []
+    };
+    options = extend(defaults, options);
 
-    this.rows = new Rows(data);
-    this.columns = this.rows.getColumns();
+    this.columns = Rows.getColumns(data);
+    this.rows = new Rows(data, this.columns);
 
     this.columns.viewWidth = options.viewWidth;
     this.columns.forEach(function (column) {
@@ -60,33 +64,22 @@ var Table = (function () {
   _createClass(Table, [{
     key: 'getWrapped',
     value: function getWrapped() {
-      var _this2 = this;
-
-      var lines = [];
-      this.rows.forEach(function (row) {
+      this.columns.autoSize();
+      return this.rows.map(function (row) {
         var line = [];
-        _this2.columns.forEach(function (column) {
-          var cell = row[column.name];
-          if (!t.isString(cell)) {
-            if (!t.isDefined(cell)) {
-              cell = '';
-            } else {
-              cell = String(cell);
-            }
-          }
+        row.forEach(function (cell, column) {
           if (column.nowrap) {
-            line.push(cell.split(/\r\n?|\n/));
+            line.push(cell.value.split(/\r\n?|\n/));
           } else {
-            line.push(wrap.lines(cell, {
+            line.push(wrap.lines(cell.value, {
               width: column.generatedWidth - column.padding.length(),
               ignore: ansi.regexp,
               'break': column['break']
             }));
           }
         });
-        lines.push(line);
+        return line;
       });
-      return lines;
     }
   }, {
     key: 'getLines',
@@ -113,12 +106,12 @@ var Table = (function () {
   }, {
     key: 'renderLines',
     value: function renderLines() {
-      var _this3 = this;
+      var _this2 = this;
 
       var lines = this.getLines();
       return lines.map(function (line) {
         return line.reduce(function (prev, cell, index) {
-          var column = _this3.columns[index];
+          var column = _this2.columns[index];
           return prev + padCell(cell, column.padding, column.generatedWidth);
         }, '');
       });

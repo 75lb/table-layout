@@ -10,6 +10,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== 'function' 
 
 var t = require('typical');
 var Padding = require('./padding');
+var arrayify = require('array-back');
 
 var _viewWidth = new WeakMap();
 
@@ -65,25 +66,19 @@ var Columns = (function (_Array) {
   }, {
     key: 'load',
     value: function load(columns) {
-      var _this = this;
-
-      if (columns) {
-        columns.forEach(function (column) {
-          _this.push(column instanceof Column ? column : new Column(column));
-        });
-      }
+      arrayify(columns).forEach(this.add.bind(this));
     }
   }, {
     key: 'add',
     value: function add(column) {
-      var col = new Column(column);
+      var col = column instanceof Column ? column : new Column(column);
       this.push(col);
       return col;
     }
   }, {
     key: 'autoSize',
     value: function autoSize() {
-      var _this2 = this;
+      var _this = this;
 
       var viewWidth = _viewWidth.get(this);
 
@@ -116,15 +111,15 @@ var Columns = (function (_Array) {
         var salvagedSpace;
 
         (function () {
-          var resizableColumns = _this2.getResizable();
+          var resizableColumns = _this.getResizable();
           resizableColumns.forEach(function (column) {
             column.generatedWidth = Math.floor(width.totalResizable / resizableColumns.length);
           });
 
-          grownColumns = _this2.filter(function (column) {
+          grownColumns = _this.filter(function (column) {
             return column.generatedWidth > column.contentWidth;
           });
-          shrunkenColumns = _this2.filter(function (column) {
+          shrunkenColumns = _this.filter(function (column) {
             return column.generatedWidth < column.contentWidth;
           });
           salvagedSpace = 0;
@@ -139,6 +134,8 @@ var Columns = (function (_Array) {
           });
         })();
       }
+
+      return this;
     }
   }, {
     key: 'viewWidth',
@@ -157,6 +154,7 @@ var Column = (function () {
     _classCallCheck(this, Column);
 
     if (t.isDefined(column.name)) this.name = column.name;
+
     if (t.isDefined(column.width)) this.width = column.width;
     if (t.isDefined(column.maxWidth)) this.maxWidth = column.maxWidth;
     if (t.isDefined(column.minWidth)) this.minWidth = column.minWidth;

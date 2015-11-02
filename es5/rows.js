@@ -11,58 +11,46 @@ function _inherits(subClass, superClass) { if (typeof superClass !== 'function' 
 var Columns = require('./columns');
 var ansi = require('./ansi');
 var arrayify = require('array-back');
+var wrap = require('wordwrapjs');
+var Cell = require('./cell');
 
 var Rows = (function (_Array) {
   _inherits(Rows, _Array);
 
-  function Rows(rows) {
+  function Rows(rows, columns) {
     _classCallCheck(this, Rows);
 
     _get(Object.getPrototypeOf(Rows.prototype), 'constructor', this).call(this);
-    this.load(rows);
+    this.load(rows, columns);
   }
 
   _createClass(Rows, [{
     key: 'load',
-    value: function load(rows) {
+    value: function load(rows, columns) {
       var _this = this;
 
       arrayify(rows).forEach(function (row) {
-        return _this.push(row);
+        return _this.push(new Row(row, columns));
       });
     }
-  }, {
+  }], [{
     key: 'getColumns',
-    value: function getColumns() {
+    value: function getColumns(rows) {
       var columns = new Columns();
-      this.forEach(function (row) {
-        var _loop = function (columnName) {
-          var column = columns.find(function (column) {
-            return column.name === columnName;
-          });
+      arrayify(rows).forEach(function (row) {
+        for (var columnName in row) {
+          var column = columns.get(columnName);
           if (!column) {
             column = columns.add({ name: columnName, contentWidth: 0, minContentWidth: 0 });
           }
-          var cellValue = row[columnName];
-          if (cellValue === undefined) {
-            cellValue = '';
-          } else if (ansi.has(cellValue)) {
-            cellValue = ansi.remove(cellValue);
-          } else {
-            cellValue = String(cellValue);
-          }
-          if (cellValue.length > column.contentWidth) column.contentWidth = cellValue.length;
+          var cell = new Cell(row[columnName], column);
+          if (cell.value.length > column.contentWidth) column.contentWidth = cell.value.length;
 
-          var longestWord = getLongestWord(cellValue);
+          var longestWord = getLongestWord(cell.value);
           if (longestWord > column.minContentWidth) {
             column.minContentWidth = longestWord;
           }
-
-          if (!column.contentWrappable) column.contentWrappable = /\s+/.test(cellValue);
-        };
-
-        for (var columnName in row) {
-          _loop(columnName);
+          if (!column.contentWrappable) column.contentWrappable = wrap.isWrappable(cell.value);
         }
       });
       return columns;
@@ -72,11 +60,30 @@ var Rows = (function (_Array) {
   return Rows;
 })(Array);
 
+var Row = (function (_Map) {
+  _inherits(Row, _Map);
+
+  function Row(row, columns) {
+    _classCallCheck(this, Row);
+
+    _get(Object.getPrototypeOf(Row.prototype), 'constructor', this).call(this, objectToIterable(row, columns));
+  }
+
+  return Row;
+})(Map);
+
 function getLongestWord(line) {
-  var words = line.match(/(\S+|\r\n?|\n)/g) || [];
+  var words = wrap.getWords(line);
   return words.reduce(function (max, word) {
     return Math.max(word.length, max);
   }, 0);
+}
+
+function objectToIterable(row, columns) {
+  return Object.keys(row).map(function (columnName) {
+    var column = columns.get(columnName);
+    return [column, new Cell(row[columnName], column)];
+  });
 }
 
 module.exports = Rows;
