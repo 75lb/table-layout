@@ -31,9 +31,6 @@ var Cell = (function () {
       } else {
         cellValue = String(cellValue);
       }
-      if (ansi.has(cellValue)) {
-        cellValue = ansi.remove(cellValue);
-      }
       return cellValue;
     }
   }]);

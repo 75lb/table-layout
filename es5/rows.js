@@ -44,13 +44,18 @@ var Rows = (function (_Array) {
             column = columns.add({ name: columnName, contentWidth: 0, minContentWidth: 0 });
           }
           var cell = new Cell(row[columnName], column);
-          if (cell.value.length > column.contentWidth) column.contentWidth = cell.value.length;
+          var cellValue = cell.value;
+          if (ansi.has(cellValue)) {
+            cellValue = ansi.remove(cellValue);
+          }
 
-          var longestWord = getLongestWord(cell.value);
+          if (cellValue.length > column.contentWidth) column.contentWidth = cellValue.length;
+
+          var longestWord = getLongestWord(cellValue);
           if (longestWord > column.minContentWidth) {
             column.minContentWidth = longestWord;
           }
-          if (!column.contentWrappable) column.contentWrappable = wrap.isWrappable(cell.value);
+          if (!column.contentWrappable) column.contentWrappable = wrap.isWrappable(cellValue);
         }
       });
       return columns;
@@ -80,9 +85,8 @@ function getLongestWord(line) {
 }
 
 function objectToIterable(row, columns) {
-  return Object.keys(row).map(function (columnName) {
-    var column = columns.get(columnName);
-    return [column, new Cell(row[columnName], column)];
+  return columns.map(function (column) {
+    return [column, new Cell(row[column.name], column)];
   });
 }
 
