@@ -30,7 +30,7 @@ var Rows = (function (_Array) {
       var _this = this;
 
       arrayify(rows).forEach(function (row) {
-        return _this.push(new Row(row, columns));
+        return _this.push(new Map(objectToIterable(row, columns)));
       });
     }
   }], [{
@@ -64,18 +64,6 @@ var Rows = (function (_Array) {
 
   return Rows;
 })(Array);
-
-var Row = (function (_Map) {
-  _inherits(Row, _Map);
-
-  function Row(row, columns) {
-    _classCallCheck(this, Row);
-
-    _get(Object.getPrototypeOf(Row.prototype), 'constructor', this).call(this, objectToIterable(row, columns));
-  }
-
-  return Row;
-})(Map);
 
 function getLongestWord(line) {
   var words = wrap.getWords(line);

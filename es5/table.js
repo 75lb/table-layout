@@ -11,10 +11,10 @@ var Rows = require('./rows');
 var ansi = require('./ansi');
 var extend = require('deep-extend');
 
+var _options = new WeakMap();
+
 var Table = (function () {
   function Table(data, options) {
-    var _this = this;
-
     _classCallCheck(this, Table);
 
     var defaults = {
@@ -25,43 +25,52 @@ var Table = (function () {
       viewWidth: process && process.stdout.columns || 80,
       columns: []
     };
-    options = extend(defaults, options);
+    _options.set(this, extend(defaults, options));
 
-    this.columns = Rows.getColumns(data);
-    this.rows = new Rows(data, this.columns);
-
-    this.columns.viewWidth = options.viewWidth;
-    this.columns.forEach(function (column) {
-      if (options.padding) column.padding = options.padding;
-      if (options.nowrap) column.nowrap = options.nowrap;
-      if (options['break']) {
-        column['break'] = options['break'];
-        column.contentWrappable = true;
-      }
-    });
-
-    options.columns.forEach(function (optionColumn) {
-      var column = _this.columns.get(optionColumn.name);
-      if (column) {
-        if (optionColumn.padding) {
-          column.padding.left = optionColumn.padding.left;
-          column.padding.right = optionColumn.padding.right;
-        }
-        if (optionColumn.width) column.width = optionColumn.width;
-        if (optionColumn.maxWidth) column.maxWidth = optionColumn.maxWidth;
-        if (optionColumn.minWidth) column.minWidth = optionColumn.minWidth;
-        if (optionColumn.nowrap) column.nowrap = optionColumn.nowrap;
-        if (optionColumn['break']) {
-          column['break'] = optionColumn['break'];
-          column.contentWrappable = true;
-        }
-      }
-    });
-
-    this.columns.autoSize();
+    this.load(data);
   }
 
   _createClass(Table, [{
+    key: 'load',
+    value: function load(data) {
+      var _this = this;
+
+      this.columns = Rows.getColumns(data);
+      this.rows = new Rows(data, this.columns);
+      var options = _options.get(this);
+
+      this.columns.viewWidth = options.viewWidth;
+      this.columns.forEach(function (column) {
+        if (options.padding) column.padding = options.padding;
+        if (options.nowrap) column.nowrap = options.nowrap;
+        if (options['break']) {
+          column['break'] = options['break'];
+          column.contentWrappable = true;
+        }
+      });
+
+      options.columns.forEach(function (optionColumn) {
+        var column = _this.columns.get(optionColumn.name);
+        if (column) {
+          if (optionColumn.padding) {
+            column.padding.left = optionColumn.padding.left;
+            column.padding.right = optionColumn.padding.right;
+          }
+          if (optionColumn.width) column.width = optionColumn.width;
+          if (optionColumn.maxWidth) column.maxWidth = optionColumn.maxWidth;
+          if (optionColumn.minWidth) column.minWidth = optionColumn.minWidth;
+          if (optionColumn.nowrap) column.nowrap = optionColumn.nowrap;
+          if (optionColumn['break']) {
+            column['break'] = optionColumn['break'];
+            column.contentWrappable = true;
+          }
+        }
+      });
+
+      this.columns.autoSize();
+      return this;
+    }
+  }, {
     key: 'getWrapped',
     value: function getWrapped() {
       this.columns.autoSize();
