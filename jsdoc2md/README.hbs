@@ -6,7 +6,7 @@
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](https://github.com/feross/standard)
 
 # column-layout
-Pretty-print JSON data in columns.
+Pretty-print text data in columns.
 
 ## Synopsis
 Say you have some data:
@@ -67,31 +67,30 @@ Kingdom of England.
 Read the latest npm issues:
 ```sh
 $ curl -s https://api.github.com/repos/npm/npm/issues \
-| array-tools pick number title updated_at user.login comments \
+| jq 'map({ number, title, login:.user.login, comments })' \
 | column-layout
 ```
 ```
- 8738  install: Run the "install"         2015-06-27T22:19:33Z  iarna
-       lifecycle in the toplevel module
- 8737  npm install (-g) (everything)      2015-06-27T22:15:52Z  DerekFoulk    2
-       completely broken after upgrade
-       to 2.12.0 [Windows]
- 8736  node-gyp not executed on npm@3     2015-06-27T22:19:19Z  piranna       2
- 8735  Graceful fs 4                      2015-06-27T21:12:57Z  isaacs
- 8734  npm start failed dont get why its  2015-06-27T21:12:36Z  kashikhan1
-       happened error windows_nt
-       6.3.9600 error on npm start
- 8733  npm install error "elliptic curve  2015-06-27T21:07:15Z  MF-Bra
-       routines"
- 8732  No clue what do                    2015-06-27T20:05:26Z  worldlynx
- 8731  npm does not work on IPv6          2015-06-27T17:33:10Z  hobarrera
- 8730  Pass module version on preversion  2015-06-27T17:11:57Z  zanona
-       and postversion scripts.
- 8729  problem installing cordova on      2015-06-27T14:28:35Z  axtens
-       Windows
- 8728  npm error                          2015-06-27T14:20:42Z  hyguyz
- 8727  npm install error                  2015-06-27T13:40:56Z  wfgenius
- 8726  Why can't I install the npm?       2015-06-27T17:37:51Z  PleasantPro   2
+10263  npm run start                                            Slepperpon        4
+10262  npm-shrinkwrap.json being ignored for a dependency of a  maxkorp           0
+      dependency (2.14.9, 3.3.10)
+10261  EPROTO Error Installing Packages                         azkaiart          2
+10260  ENOENT during npm install with npm v3.3.6/v3.3.12 and    lencioni          2
+      node v5.0.0
+10259  npm install failed                                       geraldvillorente  1
+10258  npm moves common dependencies under a dependency on      trygveaa          2
+      install
+10257  [NPM3] Missing top level dependencies after npm install  naholyr           0
+10256  Yo meanjs app creation problem                           nrjkumar41        0
+10254  sapnwrfc is not installing                               RamprasathS       0
+10253  npm install deep dependence folder "node_modules"        duyetvv           2
+10251  cannot npm login                                         w0ps              2
+10250  Update npm-team.md                                       louislarry        0
+10248  cant install module I created                            nousacademy       4
+10247  Cannot install passlib                                   nicola883         3
+10246  Error installing Gulp                                    AlanIsrael0       1
+10245  cannot install packages through NPM                      RoyGeagea         11
+10244  Remove arguments from npm-dedupe.md                      bengotow          0
  etc.
  etc.
 ```
