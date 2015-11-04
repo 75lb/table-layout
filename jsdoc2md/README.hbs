@@ -64,7 +64,7 @@ Kingdom of England.
 ```
 
 ## More Examples
-Read the latest npm issues:
+Read the latest npm issues: (example requires [jq](https://stedolan.github.io/jq/))
 ```sh
 $ curl -s https://api.github.com/repos/npm/npm/issues \
 | jq 'map({ number, title, login:.user.login, comments })' \

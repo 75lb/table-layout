@@ -64,7 +64,7 @@ Kingdom of England.
 ```
 
 ## More Examples
-Read the latest npm issues:
+Read the latest npm issues: (example requires [jq](https://stedolan.github.io/jq/))
 ```sh
 $ curl -s https://api.github.com/repos/npm/npm/issues \
 | jq 'map({ number, title, login:.user.login, comments })' \
@@ -170,6 +170,7 @@ Identical to [column-layout](#module_column-layout) with the exception of the re
 | Name | Type | Description |
 | --- | --- | --- |
 | width | <code>number</code> | column width |
+| minWidth | <code>number</code> | column min width |
 | maxWidth | <code>number</code> | column max width |
 | nowrap | <code>boolean</code> | disable wrapping for this column |
 | break | <code>boolean</code> | enable breaking on all columns |
