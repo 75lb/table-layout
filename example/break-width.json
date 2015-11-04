@@ -3,7 +3,7 @@
         "columns": [
             { "name": "name", "width": 25 },
             { "name": "description", "width": 20 },
-            { "name": "html_url", "width": 50 },
+            { "name": "html_url", "width": 20, "break": true },
             { "name": "stargazers_count", "width": 5 }
         ]
     },

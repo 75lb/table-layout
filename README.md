@@ -1,7 +1,9 @@
 [![view on npm](http://img.shields.io/npm/v/column-layout.svg)](https://www.npmjs.org/package/column-layout)
-[![npm module downloads per month](http://img.shields.io/npm/dm/column-layout.svg)](https://www.npmjs.org/package/column-layout)
+[![npm module downloads](http://img.shields.io/npm/dt/column-layout.svg)](https://www.npmjs.org/package/column-layout)
 [![Build Status](https://travis-ci.org/75lb/column-layout.svg?branch=master)](https://travis-ci.org/75lb/column-layout)
+[![Coverage Status](https://coveralls.io/repos/75lb/column-layout/badge.svg?branch=master&service=github)](https://coveralls.io/github/75lb/column-layout?branch=master)
 [![Dependency Status](https://david-dm.org/75lb/column-layout.svg)](https://david-dm.org/75lb/column-layout)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](https://github.com/feross/standard)
 
 # column-layout
 Pretty-print JSON data in columns.
@@ -10,9 +12,9 @@ Pretty-print JSON data in columns.
 Say you have some data:
 ```json
 [
-    { 
-        "column 1": "The Kingdom of Scotland was a state in north-west Europe traditionally said to have been founded in 843, which joined with the Kingdom of England to form a unified Kingdom of Great Britain in 1707. Its territories expanded and shrank, but it came to occupy the northern third of the island of Great Britain, sharing a land border to the south with the Kingdom of England. It suffered many invasions by the English, but under Robert I it fought a successful war of independence and remained a distinct state in the late Middle Ages. In 1603, James VI of Scotland became King of England, joining Scotland with England in a personal union. In 1707, the two kingdoms were united to form the Kingdom of Great Britain under the terms of the Acts of Union. ", 
-        "column 2": "Operation Barbarossa (German: Unternehmen Barbarossa) was the code name for Nazi Germany's invasion of the Soviet Union during World War II, which began on 22 June 1941. Over the course of the operation, about four million soldiers of the Axis powers invaded Soviet Russia along a 2,900 kilometer front, the largest invasion force in the history of warfare. In addition to troops, the Germans employed some 600,000 motor vehicles and between 600–700,000 horses. The operation was driven by Adolf Hitler's ideological desire to conquer the Soviet territories as outlined in his 1925 manifesto Mein Kampf ('My Struggle'). It marked the beginning of the rapid escalation of the war, both geographically and in the formation of the Allied coalition."
+    {
+      "column 1": "The Kingdom of Scotland was a state in north-west Europe traditionally said to have been founded in 843, which joined with the Kingdom of England to form a unified Kingdom of Great Britain in 1707. Its territories expanded and shrank, but it came to occupy the northern third of the island of Great Britain, sharing a land border to the south with the Kingdom of England. ",
+      "column 2": "Operation Barbarossa (German: Unternehmen Barbarossa) was the code name for Nazi Germany's invasion of the Soviet Union during World War II, which began on 22 June 1941. Over the course of the operation, about four million soldiers of the Axis powers invaded Soviet Russia along a 2,900 kilometer front, the largest invasion force in the history of warfare. In addition to troops, the Germans employed some 600,000 motor vehicles and between 600–700,000 horses."
     }
 ]
 ```
@@ -24,81 +26,42 @@ $ cat example/two-columns.json | column-layout
 
 to get this:
 ```
- The Kingdom of Scotland was a state in  Operation Barbarossa (German:
- north-west Europe traditionally said    Unternehmen Barbarossa) was the code
- to have been founded in 843, which      name for Nazi Germany's invasion of
- joined with the Kingdom of England to   the Soviet Union during World War II,
- form a unified Kingdom of Great         which began on 22 June 1941. Over the
- Britain in 1707. Its territories        course of the operation, about four
- expanded and shrank, but it came to     million soldiers of the Axis powers
- occupy the northern third of the        invaded Soviet Russia along a 2,900
- island of Great Britain, sharing a      kilometer front, the largest invasion
- land border to the south with the       force in the history of warfare. In
- Kingdom of England. It suffered many    addition to troops, the Germans
- invasions by the English, but under     employed some 600,000 motor vehicles
- Robert I it fought a successful war of  and between 600–700,000 horses. The
- independence and remained a distinct    operation was driven by Adolf Hitler's
- state in the late Middle Ages. In       ideological desire to conquer the
- 1603, James VI of Scotland became King  Soviet territories as outlined in his
- of England, joining Scotland with       1925 manifesto Mein Kampf ('My
- England in a personal union. In 1707,   Struggle'). It marked the beginning of
- the two kingdoms were united to form    the rapid escalation of the war, both
- the Kingdom of Great Britain under the  geographically and in the formation of
- terms of the Acts of Union.             the Allied coalition.
+The Kingdom of Scotland was a state in     Operation Barbarossa (German: Unternehmen
+north-west Europe traditionally said to    Barbarossa) was the code name for Nazi
+have been founded in 843, which joined     Germany's invasion of the Soviet Union
+with the Kingdom of England to form a      during World War II, which began on 22
+unified Kingdom of Great Britain in 1707.  June 1941. Over the course of the
+Its territories expanded and shrank, but   operation, about four million soldiers of
+it came to occupy the northern third of    the Axis powers invaded Soviet Russia
+the island of Great Britain, sharing a     along a 2,900 kilometer front, the
+land border to the south with the Kingdom  largest invasion force in the history of
+of England.                                warfare. In addition to troops, the
+                                           Germans employed some 600,000 motor
+                                           vehicles and between 600–700,000 horses.
 ```
 
-Columns containing wrappable data are auto-sized by default to fit the available space. You can set specific widths using `--width` 
+Columns containing wrappable data are auto-sized by default to fit the available space. You can set specific widths using `--width`
 
 ```sh
-$ cat example/two-columns.json | column-layout --width "column 2: 45"
-```
-```
- The Kingdom of Scotland was a      Operation Barbarossa (German: Unternehmen
- state in north-west Europe         Barbarossa) was the code name for Nazi
- traditionally said to have been    Germany's invasion of the Soviet Union
- founded in 843, which joined with  during World War II, which began on 22 June
- the Kingdom of England to form a   1941. Over the course of the operation,
- unified Kingdom of Great Britain   about four million soldiers of the Axis
- in 1707. Its territories expanded  powers invaded Soviet Russia along a 2,900
- and shrank, but it came to occupy  kilometer front, the largest invasion force
- the northern third of the island   in the history of warfare. In addition to
- of Great Britain, sharing a land   troops, the Germans employed some 600,000
- border to the south with the       motor vehicles and between 600–700,000
- Kingdom of England. It suffered    horses. The operation was driven by Adolf
- many invasions by the English,     Hitler's ideological desire to conquer the
- but under Robert I it fought a     Soviet territories as outlined in his 1925
- successful war of independence     manifesto Mein Kampf ('My Struggle'). It
- and remained a distinct state in   marked the beginning of the rapid
- the late Middle Ages. In 1603,     escalation of the war, both geographically
- James VI of Scotland became King   and in the formation of the Allied
- of England, joining Scotland with  coalition.
- England in a personal union. In
- 1707, the two kingdoms were
- united to form the Kingdom of
- Great Britain under the terms of
- the Acts of Union.
+$ cat example/two-columns.json | column-layout --width "column 2: 55"
 ```
 
-Plain strings in the input data are passed straight through to the output - useful for injecting lines around the column layout:
-
-```sh
-$ cat example/usage.json | column-layout
 ```
-<pre><code><strong>Example App</strong>
-This is an example app, yeah?
-
-<strong>Usage</strong>
-$ example one two
-
- -t, --template   blah blah blah blah blah blah blah blah blah blah blah blah
-                  blah blah blah blah blah blah
- -v, --verbose    yeah yeah yeah
- -s, --something  bang bang bang bang bang bang bang bang bang bang bang bang
-                  bang bang bang bang bang bang bang bang bang bang bang bang
-                  bang bang bang bang bang bang
-                  
-This is the footer
-</code></pre>
+The Kingdom of Scotland was a  Operation Barbarossa (German: Unternehmen Barbarossa)
+state in north-west Europe     was the code name for Nazi Germany's invasion of the
+traditionally said to have     Soviet Union during World War II, which began on 22
+been founded in 843, which     June 1941. Over the course of the operation, about
+joined with the Kingdom of     four million soldiers of the Axis powers invaded
+England to form a unified      Soviet Russia along a 2,900 kilometer front, the
+Kingdom of Great Britain in    largest invasion force in the history of warfare. In
+1707. Its territories          addition to troops, the Germans employed some 600,000
+expanded and shrank, but it    motor vehicles and between 600–700,000 horses.
+came to occupy the northern
+third of the island of Great
+Britain, sharing a land
+border to the south with the
+Kingdom of England.
+```
 
 ## More Examples
 Read the latest npm issues:
@@ -149,7 +112,10 @@ $ npm install -g column-layout
 
 * [column-layout](#module_column-layout)
   * [columnLayout(data, [options])](#exp_module_column-layout--columnLayout) ⇒ <code>string</code> ⏏
-    * [~columnOption](#module_column-layout--columnLayout..columnOption)
+    * _static_
+      * [.lines()](#module_column-layout--columnLayout.lines) ⇒ <code>Array</code>
+    * _inner_
+      * [~columnOption](#module_column-layout--columnLayout..columnOption)
 
 <a name="exp_module_column-layout--columnLayout"></a>
 ### columnLayout(data, [options]) ⇒ <code>string</code> ⏏
@@ -162,8 +128,10 @@ Returns JSON data formatted in columns.
 | data | <code>array</code> | input data |
 | [options] | <code>object</code> | optional settings |
 | [options.viewWidth] | <code>number</code> | maximum width of layout |
+| [options.nowrap] | <code>boolean</code> | disable wrapping on all columns |
+| [options.break] | <code>boolean</code> | enable breaking on all columns |
 | [options.columns] | <code>[columnOption](#module_column-layout--columnLayout..columnOption)</code> | array of column options |
-| [options.padding] | <code>object</code> |  |
+| [options.padding] | <code>object</code> | Padding values to set on each column. Per-column overrides can be set in the `options.columns` array. |
 | [options.padding.left] | <code>string</code> |  |
 | [options.padding.right] | <code>string</code> |  |
 
@@ -177,6 +145,24 @@ Returns JSON data formatted in columns.
 > columnFormat(jsonData, { viewWidth: 30 })
 ' Some text you  And some more \n wish to read   text in       \n in column      column two.   \n layout                       \n'
 ```
+<a name="module_column-layout--columnLayout.lines"></a>
+#### columnLayout.lines() ⇒ <code>Array</code>
+Identical to [column-layout](#module_column-layout) with the exception of the rendered result being returned as an array of lines, rather that a single string.
+
+**Kind**: static method of <code>[columnLayout](#exp_module_column-layout--columnLayout)</code>  
+**Example**  
+```js
+> columnFormat = require("column-format")
+> jsonData = [{
+     col1: "Some text you wish to read in column layout",
+     col2: "And some more text in column two. "
+}]
+> columnFormat.lines(jsonData, { viewWidth: 30 })
+[ ' Some text you  And some more ',
+' wish to read   text in       ',
+' in column      column two.   ',
+' layout                       ' ]
+```
 <a name="module_column-layout--columnLayout..columnOption"></a>
 #### columnLayout~columnOption
 **Kind**: inner typedef of <code>[columnLayout](#exp_module_column-layout--columnLayout)</code>  
@@ -185,7 +171,9 @@ Returns JSON data formatted in columns.
 | Name | Type | Description |
 | --- | --- | --- |
 | width | <code>number</code> | column width |
+| maxWidth | <code>number</code> | column max width |
 | nowrap | <code>boolean</code> | disable wrapping for this column |
+| break | <code>boolean</code> | enable breaking on all columns |
 | padding | <code>object</code> | padding options |
 | padding.left | <code>string</code> | a string to pad the left of each cell (default: `" "`) |
 | padding.right | <code>string</code> | a string to pad the right of each cell (default: `" "`) |
