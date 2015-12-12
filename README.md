@@ -1,7 +1,6 @@
 [![view on npm](http://img.shields.io/npm/v/column-layout.svg)](https://www.npmjs.org/package/column-layout)
 [![npm module downloads](http://img.shields.io/npm/dt/column-layout.svg)](https://www.npmjs.org/package/column-layout)
 [![Build Status](https://travis-ci.org/75lb/column-layout.svg?branch=master)](https://travis-ci.org/75lb/column-layout)
-[![Coverage Status](https://coveralls.io/repos/75lb/column-layout/badge.svg?branch=master&service=github)](https://coveralls.io/github/75lb/column-layout?branch=master)
 [![Dependency Status](https://david-dm.org/75lb/column-layout.svg)](https://david-dm.org/75lb/column-layout)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](https://github.com/feross/standard)
 
@@ -128,7 +127,7 @@ Returns JSON data formatted in columns.
 | [options] | <code>object</code> | optional settings |
 | [options.viewWidth] | <code>number</code> | maximum width of layout |
 | [options.nowrap] | <code>boolean</code> | disable wrapping on all columns |
-| [options.break] | <code>boolean</code> | enable breaking on all columns |
+| [options.break] | <code>boolean</code> | enable word-breaking on all columns |
 | [options.columns] | <code>[columnOption](#module_column-layout--columnLayout..columnOption)</code> | array of column options |
 | [options.padding] | <code>object</code> | Padding values to set on each column. Per-column overrides can be set in the `options.columns` array. |
 | [options.padding.left] | <code>string</code> |  |
@@ -173,7 +172,7 @@ Identical to [column-layout](#module_column-layout) with the exception of the re
 | minWidth | <code>number</code> | column min width |
 | maxWidth | <code>number</code> | column max width |
 | nowrap | <code>boolean</code> | disable wrapping for this column |
-| break | <code>boolean</code> | enable breaking on all columns |
+| break | <code>boolean</code> | enable word-breaking for this columns |
 | padding | <code>object</code> | padding options |
 | padding.left | <code>string</code> | a string to pad the left of each cell (default: `" "`) |
 | padding.right | <code>string</code> | a string to pad the right of each cell (default: `" "`) |
