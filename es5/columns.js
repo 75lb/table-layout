@@ -1,12 +1,12 @@
 'use strict';
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var t = require('typical');
 var Padding = require('./padding');
@@ -20,8 +20,10 @@ var Columns = (function (_Array) {
   function Columns(columns) {
     _classCallCheck(this, Columns);
 
-    _get(Object.getPrototypeOf(Columns.prototype), 'constructor', this).call(this);
-    this.load(columns);
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Columns).call(this));
+
+    _this.load(columns);
+    return _this;
   }
 
   _createClass(Columns, [{
@@ -78,7 +80,7 @@ var Columns = (function (_Array) {
   }, {
     key: 'autoSize',
     value: function autoSize() {
-      var _this = this;
+      var _this2 = this;
 
       var viewWidth = _viewWidth.get(this);
 
@@ -111,15 +113,15 @@ var Columns = (function (_Array) {
         var salvagedSpace;
 
         (function () {
-          var resizableColumns = _this.getResizable();
+          var resizableColumns = _this2.getResizable();
           resizableColumns.forEach(function (column) {
             column.generatedWidth = Math.floor(width.totalResizable / resizableColumns.length);
           });
 
-          grownColumns = _this.filter(function (column) {
+          grownColumns = _this2.filter(function (column) {
             return column.generatedWidth > column.contentWidth;
           });
-          shrunkenColumns = _this.filter(function (column) {
+          shrunkenColumns = _this2.filter(function (column) {
             return column.generatedWidth < column.contentWidth;
           });
           salvagedSpace = 0;
@@ -159,7 +161,7 @@ var Column = (function () {
     if (t.isDefined(column.maxWidth)) this.maxWidth = column.maxWidth;
     if (t.isDefined(column.minWidth)) this.minWidth = column.minWidth;
     if (t.isDefined(column.nowrap)) this.nowrap = column.nowrap;
-    if (t.isDefined(column['break'])) this['break'] = column['break'];
+    if (t.isDefined(column.break)) this.break = column.break;
     if (t.isDefined(column.contentWrappable)) this.contentWrappable = column.contentWrappable;
     if (t.isDefined(column.contentWidth)) this.contentWidth = column.contentWidth;
     if (t.isDefined(column.minContentWidth)) this.minContentWidth = column.minContentWidth;

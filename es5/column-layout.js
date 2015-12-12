@@ -1,4 +1,5 @@
 'use strict';
+
 require('core-js/es6/array');
 require('core-js/es6/weak-map');
 require('core-js/es6/map');
