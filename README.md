@@ -109,11 +109,11 @@ $ npm install -g column-layout
 ## API Reference
 
 * [column-layout](#module_column-layout)
-  * [columnLayout(data, [options])](#exp_module_column-layout--columnLayout) ⇒ <code>string</code> ⏏
-    * _static_
-      * [.lines()](#module_column-layout--columnLayout.lines) ⇒ <code>Array</code>
-    * _inner_
-      * [~columnOption](#module_column-layout--columnLayout..columnOption)
+    * [columnLayout(data, [options])](#exp_module_column-layout--columnLayout) ⇒ <code>string</code> ⏏
+        * _static_
+            * [.lines()](#module_column-layout--columnLayout.lines) ⇒ <code>Array</code>
+        * _inner_
+            * [~columnOption](#module_column-layout--columnLayout..columnOption)
 
 <a name="exp_module_column-layout--columnLayout"></a>
 ### columnLayout(data, [options]) ⇒ <code>string</code> ⏏
@@ -168,6 +168,7 @@ Identical to [column-layout](#module_column-layout) with the exception of the re
 
 | Name | Type | Description |
 | --- | --- | --- |
+| name | <code>string</code> | column name, must match a property name in the input |
 | width | <code>number</code> | column width |
 | minWidth | <code>number</code> | column min width |
 | maxWidth | <code>number</code> | column max width |
