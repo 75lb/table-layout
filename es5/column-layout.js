@@ -6,6 +6,7 @@ require('core-js/es7/string');
 
 var Table = require('./table');
 var Columns = require('./columns');
+var Rows = require('./rows');
 
 module.exports = columnLayout;
 
@@ -24,3 +25,4 @@ columnLayout.table = function (data, options) {
 };
 
 columnLayout.Columns = Columns;
+columnLayout.Rows = Rows;

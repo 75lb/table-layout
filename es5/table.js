@@ -39,9 +39,14 @@ var Table = (function () {
     value: function load(data) {
       var _this = this;
 
+      var options = _options.get(this);
+
+      if (options.ignoreEmptyColumns) {
+        data = Rows.removeEmptyColumns(data);
+      }
+
       this.columns = Rows.getColumns(data);
       this.rows = new Rows(data, this.columns);
-      var options = _options.get(this);
 
       this.columns.viewWidth = options.viewWidth;
       this.columns.forEach(function (column) {

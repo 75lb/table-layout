@@ -13,6 +13,7 @@ var ansi = require('./ansi');
 var arrayify = require('array-back');
 var wrap = require('wordwrapjs');
 var Cell = require('./cell');
+var t = require('typical');
 
 var Rows = (function (_Array) {
   _inherits(Rows, _Array);
@@ -59,6 +60,31 @@ var Rows = (function (_Array) {
         }
       });
       return columns;
+    }
+  }, {
+    key: 'removeEmptyColumns',
+    value: function removeEmptyColumns(data) {
+      var distinctColumnNames = data.reduce(function (columnNames, row) {
+        Object.keys(row).forEach(function (key) {
+          if (columnNames.indexOf(key) === -1) columnNames.push(key);
+        });
+        return columnNames;
+      }, []);
+
+      var emptyColumns = distinctColumnNames.filter(function (columnName) {
+        var hasValue = data.some(function (row) {
+          var value = row[columnName];
+          return t.isDefined(value) && !t.isString(value) || t.isString(value) && /\S+/.test(value);
+        });
+        return !hasValue;
+      });
+
+      return data.map(function (row) {
+        emptyColumns.forEach(function (emptyCol) {
+          return delete row[emptyCol];
+        });
+        return row;
+      });
     }
   }]);
 
