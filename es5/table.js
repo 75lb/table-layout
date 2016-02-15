@@ -149,7 +149,7 @@ function getLongestArray(arrays) {
 function padCell(cellValue, padding, width) {
   var ansiLength = cellValue.length - ansi.remove(cellValue).length;
   cellValue = cellValue || '';
-  return (padding.left || '') + cellValue.padRight(width - padding.length() + ansiLength) + (padding.right || '');
+  return (padding.left || '') + cellValue.padEnd(width - padding.length() + ansiLength) + (padding.right || '');
 }
 
 module.exports = Table;
