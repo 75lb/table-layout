@@ -110,11 +110,9 @@ $ npm install -g column-layout
 
 * [column-layout](#module_column-layout)
     * [columnLayout(data, [options])](#exp_module_column-layout--columnLayout) ⇒ <code>string</code> ⏏
-        * _static_
-            * [.lines(data, [options])](#module_column-layout--columnLayout.lines) ⇒ <code>Array</code>
-            * [.table(data, [options])](#module_column-layout--columnLayout.table) ⇒ <code>[Table](#Table)</code>
-        * _inner_
-            * [~columnOption](#module_column-layout--columnLayout..columnOption)
+        * [.lines(data, [options])](#module_column-layout--columnLayout.lines) ⇒ <code>Array</code>
+        * [.table(data, [options])](#module_column-layout--columnLayout.table) ⇒ <code>[Table](#Table)</code>
+        * [~columnOption](#module_column-layout--columnLayout..columnOption)
 
 <a name="exp_module_column-layout--columnLayout"></a>
 ### columnLayout(data, [options]) ⇒ <code>string</code> ⏏
@@ -141,8 +139,11 @@ Returns JSON data formatted in columns.
     col1: "Some text you wish to read in column layout",
     col2: "And some more text in column two. "
 }]
-> columnFormat(jsonData, { viewWidth: 30 })
-' Some text you  And some more \n wish to read   text in       \n in column      column two.   \n layout                       \n'
+> console.log(columnFormat(jsonData, { viewWidth: 30 }))
+ Some text you  And some more
+ wish to read   text in
+ in column      column two.
+ layout
 ```
 <a name="module_column-layout--columnLayout.lines"></a>
 #### columnLayout.lines(data, [options]) ⇒ <code>Array</code>
