@@ -111,7 +111,8 @@ $ npm install -g column-layout
 * [column-layout](#module_column-layout)
     * [columnLayout(data, [options])](#exp_module_column-layout--columnLayout) ⇒ <code>string</code> ⏏
         * _static_
-            * [.lines()](#module_column-layout--columnLayout.lines) ⇒ <code>Array</code>
+            * [.lines(data, [options])](#module_column-layout--columnLayout.lines) ⇒ <code>Array</code>
+            * [.table(data, [options])](#module_column-layout--columnLayout.table) ⇒ <code>[Table](#Table)</code>
         * _inner_
             * [~columnOption](#module_column-layout--columnLayout..columnOption)
 
@@ -120,18 +121,18 @@ $ npm install -g column-layout
 Returns JSON data formatted in columns.
 
 **Kind**: Exported function  
+**Params**
 
-| Param | Type | Description |
-| --- | --- | --- |
-| data | <code>array</code> | input data |
-| [options] | <code>object</code> | optional settings |
-| [options.viewWidth] | <code>number</code> | maximum width of layout |
-| [options.nowrap] | <code>boolean</code> | disable wrapping on all columns |
-| [options.break] | <code>boolean</code> | enable word-breaking on all columns |
-| [options.columns] | <code>[columnOption](#module_column-layout--columnLayout..columnOption)</code> | array of column options |
-| [options.padding] | <code>object</code> | Padding values to set on each column. Per-column overrides can be set in the `options.columns` array. |
-| [options.padding.left] | <code>string</code> |  |
-| [options.padding.right] | <code>string</code> |  |
+- data <code>Array.&lt;object&gt;</code> - input data
+- [options] <code>object</code> - optional settings
+    - [.viewWidth] <code>number</code> - maximum width of layout
+    - [.nowrap] <code>boolean</code> - disable wrapping on all columns
+    - [.break] <code>boolean</code> - enable word-breaking on all columns
+    - [.columns] <code>[columnOption](#module_column-layout--columnLayout..columnOption)</code> - array of column options
+    - [.ignoreEmptyColumns] <code>boolean</code>
+    - [.padding] <code>object</code> - Padding values to set on each column. Per-column overrides can be set in the `options.columns` array.
+        - [.left] <code>string</code>
+        - [.right] <code>string</code>
 
 **Example**  
 ```js
@@ -144,10 +145,15 @@ Returns JSON data formatted in columns.
 ' Some text you  And some more \n wish to read   text in       \n in column      column two.   \n layout                       \n'
 ```
 <a name="module_column-layout--columnLayout.lines"></a>
-#### columnLayout.lines() ⇒ <code>Array</code>
+#### columnLayout.lines(data, [options]) ⇒ <code>Array</code>
 Identical to [column-layout](#module_column-layout) with the exception of the rendered result being returned as an array of lines, rather that a single string.
 
 **Kind**: static method of <code>[columnLayout](#exp_module_column-layout--columnLayout)</code>  
+**Params**
+
+- data <code>Array.&lt;object&gt;</code> - input data
+- [options] <code>object</code> - optional settings
+
 **Example**  
 ```js
 > columnFormat = require("column-format")
@@ -161,6 +167,14 @@ Identical to [column-layout](#module_column-layout) with the exception of the re
 ' in column      column two.   ',
 ' layout                       ' ]
 ```
+<a name="module_column-layout--columnLayout.table"></a>
+#### columnLayout.table(data, [options]) ⇒ <code>[Table](#Table)</code>
+**Kind**: static method of <code>[columnLayout](#exp_module_column-layout--columnLayout)</code>  
+**Params**
+
+- data <code>Array.&lt;object&gt;</code> - input data
+- [options] <code>object</code> - optional settings
+
 <a name="module_column-layout--columnLayout..columnOption"></a>
 #### columnLayout~columnOption
 **Kind**: inner typedef of <code>[columnLayout](#exp_module_column-layout--columnLayout)</code>  
@@ -181,4 +195,4 @@ Identical to [column-layout](#module_column-layout) with the exception of the re
 
 * * *
 
-&copy; 2015 Lloyd Brookes \<75pound@gmail.com\>. Documented by [jsdoc-to-markdown](https://github.com/jsdoc2md/jsdoc-to-markdown).
+&copy; 2015-16 Lloyd Brookes \<75pound@gmail.com\>. Documented by [jsdoc-to-markdown](https://github.com/jsdoc2md/jsdoc-to-markdown).

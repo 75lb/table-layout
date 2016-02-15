@@ -21,7 +21,7 @@
   },
   "scripts": {
     "test": "tape test/*.js",
-    "docs": "jsdoc2md -t jsdoc2md/README.hbs lib/*.js > README.md; echo",
+    "docs": "jsdoc2md -t jsdoc2md/README.hbs lib/*.js -p list > README.md; echo",
     "es5": "babel --no-comments lib --out-dir es5",
     "cover": "istanbul cover tape -- test/*.js && cat coverage/lcov.info | ./node_modules/.bin/coveralls && rm -rf coverage; echo"
   },
