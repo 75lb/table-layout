@@ -1,5 +1,16 @@
 var detect = require('feature-detect-es6')
 
-module.exports = detect.class() && detect.arrowFunction() && detect.templateStrings()
+/* required on all node versions */
+require('core-js/es7/string');
+
+if (!detect.newArrayFeatures()) {
+  require('core-js/es6/array')
+}
+if (!detect.collections()) {
+  require('core-js/es6/weak-map')
+  require('core-js/es6/map')
+}
+
+module.exports = detect.all('class', 'arrowFunction', 'templateStrings')
   ? require('./lib/column-layout')
   : require('./es5/column-layout')

@@ -1,9 +1,4 @@
 'use strict';
-require('core-js/es6/array');
-require('core-js/es6/weak-map');
-require('core-js/es6/map');
-require('core-js/es7/string');
-
 var Table = require('./table');
 var Columns = require('./columns');
 var Rows = require('./rows');
