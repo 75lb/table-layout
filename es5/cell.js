@@ -5,7 +5,6 @@ var _createClass = (function () { function defineProperties(target, props) { for
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 var t = require('typical');
-var ansi = require('./ansi');
 
 var _value = new WeakMap();
 var _column = new WeakMap();
