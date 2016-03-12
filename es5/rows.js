@@ -104,4 +104,4 @@ function objectToIterable(row, columns) {
   });
 }
 
-module.exports = Rows;
+module.exports = require('./no-species')(Rows);

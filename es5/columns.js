@@ -205,4 +205,4 @@ var Column = (function () {
   return Column;
 })();
 
-module.exports = Columns;
+module.exports = require('./no-species')(Columns);
