@@ -10,8 +10,8 @@ test('columns.autoSize(contentColumns, viewWidth)', function (t) {
 
   columns.viewWidth = 30
   columns.autoSize()
-  t.strictEqual(columns[0].generatedWidth, 12)
-  t.strictEqual(columns[1].generatedWidth, 18)
+  t.strictEqual(columns.list[0].generatedWidth, 12)
+  t.strictEqual(columns.list[1].generatedWidth, 18)
 
   t.end()
 })

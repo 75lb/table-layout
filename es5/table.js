@@ -1,8 +1,8 @@
 'use strict';
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var wrap = require('wordwrapjs');
 var os = require('os');
@@ -12,7 +12,7 @@ var extend = require('deep-extend');
 
 var _options = new WeakMap();
 
-var Table = (function () {
+var Table = function () {
   function Table(data, options) {
     _classCallCheck(this, Table);
 
@@ -48,11 +48,11 @@ var Table = (function () {
       this.rows = new Rows(data, this.columns);
 
       this.columns.viewWidth = options.viewWidth;
-      this.columns.forEach(function (column) {
+      this.columns.list.forEach(function (column) {
         if (options.padding) column.padding = options.padding;
         if (options.nowrap) column.nowrap = options.nowrap;
-        if (options['break']) {
-          column['break'] = options['break'];
+        if (options.break) {
+          column.break = options.break;
           column.contentWrappable = true;
         }
       });
@@ -68,8 +68,8 @@ var Table = (function () {
           if (optionColumn.maxWidth) column.maxWidth = optionColumn.maxWidth;
           if (optionColumn.minWidth) column.minWidth = optionColumn.minWidth;
           if (optionColumn.nowrap) column.nowrap = optionColumn.nowrap;
-          if (optionColumn['break']) {
-            column['break'] = optionColumn['break'];
+          if (optionColumn.break) {
+            column.break = optionColumn.break;
             column.contentWrappable = true;
           }
         }
@@ -82,7 +82,7 @@ var Table = (function () {
     key: 'getWrapped',
     value: function getWrapped() {
       this.columns.autoSize();
-      return this.rows.map(function (row) {
+      return this.rows.list.map(function (row) {
         var line = [];
         row.forEach(function (cell, column) {
           if (column.nowrap) {
@@ -91,7 +91,7 @@ var Table = (function () {
             line.push(wrap.lines(cell.value, {
               width: column.wrappedContentWidth,
               ignore: ansi.regexp,
-              'break': column['break']
+              break: column.break
             }));
           }
         });
@@ -106,7 +106,7 @@ var Table = (function () {
       wrappedLines.forEach(function (wrapped) {
         var mostLines = getLongestArray(wrapped);
 
-        var _loop = function (i) {
+        var _loop = function _loop(i) {
           var line = [];
           wrapped.forEach(function (cell) {
             line.push(cell[i] || '');
@@ -128,7 +128,7 @@ var Table = (function () {
       var lines = this.getLines();
       return lines.map(function (line) {
         return line.reduce(function (prev, cell, index) {
-          var column = _this2.columns[index];
+          var column = _this2.columns.list[index];
           return prev + padCell(cell, column.padding, column.generatedWidth);
         }, '');
       });
@@ -141,7 +141,7 @@ var Table = (function () {
   }]);
 
   return Table;
-})();
+}();
 
 function getLongestArray(arrays) {
   var lengths = arrays.map(function (array) {

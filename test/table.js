@@ -2,16 +2,16 @@
 var test = require('tape')
 var columnLayout = require('..')
 
-test('columnLayout.table()', function(t){
+test('columnLayout.table()', function (t) {
   var fixture = require('./fixture/simple-viewWidth')
   var table = columnLayout.table(fixture.data, fixture.options)
 
-  t.strictEqual(table.rows.length, 2)
-  t.strictEqual(table.columns.length, 2)
+  t.strictEqual(table.rows.list.length, 2)
+  t.strictEqual(table.columns.list.length, 2)
   t.end()
 })
 
-test('table.getWrapped()', function(t){
+test('table.getWrapped()', function (t) {
   var fixture = require('./fixture/simple-viewWidth')
   var table = columnLayout.table(fixture.data, fixture.options)
 
@@ -22,7 +22,7 @@ test('table.getWrapped()', function(t){
   t.end()
 })
 
-test('table.getLines()', function(t){
+test('table.getLines()', function (t) {
   var fixture = require('./fixture/simple-viewWidth')
   var table = columnLayout.table(fixture.data, fixture.options)
 
@@ -34,7 +34,7 @@ test('table.getLines()', function(t){
   t.end()
 })
 
-test('table.renderLines()', function(t){
+test('table.renderLines()', function (t) {
   var fixture = require('./fixture/simple-viewWidth')
   var table = columnLayout.table(fixture.data, fixture.options)
 

@@ -1,4 +1,5 @@
 'use strict';
+
 var Table = require('./table');
 var Columns = require('./columns');
 var Rows = require('./rows');

@@ -1,4 +1,5 @@
 'use strict';
+
 var t = require('typical');
 
 function markNoSpecies(constructor) {
