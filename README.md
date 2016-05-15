@@ -5,10 +5,10 @@
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](https://github.com/feross/standard)
 
 # column-layout
-Pretty-print text data in columns.
+Stylable text tables, handling ansi colour. Useful for console output.
 
 ## Synopsis
-Say you have some data:
+Converts arrays of row data to text tables. For example - one row, two columns:
 ```json
 [
     {
@@ -39,7 +39,7 @@ of England.                                warfare. In addition to troops, the
                                            vehicles and between 600–700,000 horses.
 ```
 
-Columns containing wrappable data are auto-sized by default to fit the available space. You can set specific widths using `--width`
+Columns containing wrappable data (like the above) are auto-sized by default to fit the available space. You can set specific column widths using `--width`
 
 ```sh
 $ cat example/two-columns.json | column-layout --width "column 2: 55"
@@ -115,15 +115,16 @@ $ npm install -g column-layout
         * [~columnOption](#module_column-layout--columnLayout..columnOption)
 
 <a name="exp_module_column-layout--columnLayout"></a>
+
 ### columnLayout(data, [options]) ⇒ <code>string</code> ⏏
-Returns JSON data formatted in columns.
+Recordset data in (array of objects), text table out.
 
 **Kind**: Exported function  
 **Params**
 
 - data <code>Array.&lt;object&gt;</code> - input data
 - [options] <code>object</code> - optional settings
-    - [.viewWidth] <code>number</code> - maximum width of layout
+    - [.maxWidth] <code>number</code> - maximum width of layout
     - [.nowrap] <code>boolean</code> - disable wrapping on all columns
     - [.break] <code>boolean</code> - enable word-breaking on all columns
     - [.columns] <code>[columnOption](#module_column-layout--columnLayout..columnOption)</code> - array of column options
@@ -139,13 +140,14 @@ Returns JSON data formatted in columns.
     col1: "Some text you wish to read in column layout",
     col2: "And some more text in column two. "
 }]
-> console.log(columnFormat(jsonData, { viewWidth: 30 }))
+> console.log(columnFormat(jsonData, { maxWidth: 30 }))
  Some text you  And some more
  wish to read   text in
  in column      column two.
  layout
 ```
 <a name="module_column-layout--columnLayout.lines"></a>
+
 #### columnLayout.lines(data, [options]) ⇒ <code>Array</code>
 Identical to [column-layout](#module_column-layout) with the exception of the rendered result being returned as an array of lines, rather that a single string.
 
@@ -162,13 +164,14 @@ Identical to [column-layout](#module_column-layout) with the exception of the re
      col1: "Some text you wish to read in column layout",
      col2: "And some more text in column two. "
 }]
-> columnFormat.lines(jsonData, { viewWidth: 30 })
+> columnFormat.lines(jsonData, { maxWidth: 30 })
 [ ' Some text you  And some more ',
 ' wish to read   text in       ',
 ' in column      column two.   ',
 ' layout                       ' ]
 ```
 <a name="module_column-layout--columnLayout.table"></a>
+
 #### columnLayout.table(data, [options]) ⇒ <code>[Table](#Table)</code>
 **Kind**: static method of <code>[columnLayout](#exp_module_column-layout--columnLayout)</code>  
 **Params**
@@ -177,6 +180,7 @@ Identical to [column-layout](#module_column-layout) with the exception of the re
 - [options] <code>object</code> - optional settings
 
 <a name="module_column-layout--columnLayout..columnOption"></a>
+
 #### columnLayout~columnOption
 **Kind**: inner typedef of <code>[columnLayout](#exp_module_column-layout--columnLayout)</code>  
 **Properties**
