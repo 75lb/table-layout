@@ -4,7 +4,7 @@
 [![Dependency Status](https://david-dm.org/75lb/column-layout.svg)](https://david-dm.org/75lb/column-layout)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](https://github.com/feross/standard)
 
-*** This package is deprecated, superceded by [table-layout](https://github.com/75lb/table-layout) ***
+***This package is deprecated, superceded by [table-layout](https://github.com/75lb/table-layout)***
 
 # column-layout
 Pretty-print text data in columns.
