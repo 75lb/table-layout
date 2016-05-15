@@ -109,17 +109,24 @@ $ npm install -g table-layout
 ## API Reference
 
 * [table-layout](#module_table-layout)
-    * [columnLayout(data, [options])](#exp_module_table-layout--columnLayout) ⇒ <code>string</code> ⏏
-        * [.lines(data, [options])](#module_table-layout--columnLayout.lines) ⇒ <code>Array</code>
-        * [.table(data, [options])](#module_table-layout--columnLayout.table) ⇒ <code>[Table](#Table)</code>
-        * [~columnOption](#module_table-layout--columnLayout..columnOption)
+    * [Table](#exp_module_table-layout--Table) ⏏
+        * [new Table(data, [options])](#new_module_table-layout--Table_new)
+        * [table.load()](#module_table-layout--Table+load) ↩︎
+        * [table.renderLines()](#module_table-layout--Table+renderLines) ⇒ <code>Array.&lt;string&gt;</code>
+        * [Table~getLongestArray()](#module_table-layout--Table..getLongestArray) ⇒ <code>number</code>
+        * [Table~columnOption](#module_table-layout--Table..columnOption)
 
-<a name="exp_module_table-layout--columnLayout"></a>
+<a name="exp_module_table-layout--Table"></a>
 
-### columnLayout(data, [options]) ⇒ <code>string</code> ⏏
+### Table ⏏
+Table containing the data.
+
+**Kind**: Exported class  
+<a name="new_module_table-layout--Table_new"></a>
+
+#### new Table(data, [options])
 Recordset data in (array of objects), text table out.
 
-**Kind**: Exported function  
 **Params**
 
 - data <code>Array.&lt;object&gt;</code> - input data
@@ -127,7 +134,7 @@ Recordset data in (array of objects), text table out.
     - [.maxWidth] <code>number</code> - maximum width of layout
     - [.nowrap] <code>boolean</code> - disable wrapping on all columns
     - [.break] <code>boolean</code> - enable word-breaking on all columns
-    - [.columns] <code>[columnOption](#module_table-layout--columnLayout..columnOption)</code> - array of column options
+    - [.columns] <code>[columnOption](#module_table-layout--Table..columnOption)</code> - array of column options
     - [.ignoreEmptyColumns] <code>boolean</code>
     - [.padding] <code>object</code> - Padding values to set on each column. Per-column overrides can be set in the `options.columns` array.
         - [.left] <code>string</code>
@@ -135,54 +142,52 @@ Recordset data in (array of objects), text table out.
 
 **Example**  
 ```js
-> tableLayout = require("table-layout")
+> Table = require("table-layout")
 > jsonData = [{
-    col1: "Some text you wish to read in column layout",
+    col1: "Some text you wish to read in table layout",
     col2: "And some more text in column two. "
 }]
-> console.log(tableLayout(jsonData, { maxWidth: 30 }))
+> console.log(new Table(jsonData, { maxWidth: 30 }))
  Some text you  And some more
  wish to read   text in
- in column      column two.
+ in table      column two.
  layout
 ```
-<a name="module_table-layout--columnLayout.lines"></a>
+<a name="module_table-layout--Table+load"></a>
 
-#### columnLayout.lines(data, [options]) ⇒ <code>Array</code>
-Identical to [table-layout](#module_table-layout) with the exception of the rendered result being returned as an array of lines, rather that a single string.
+#### table.load() ↩︎
+**Kind**: instance method of <code>[Table](#exp_module_table-layout--Table)</code>  
+**Chainable**  
+<a name="module_table-layout--Table+renderLines"></a>
 
-**Kind**: static method of <code>[columnLayout](#exp_module_table-layout--columnLayout)</code>  
-**Params**
+#### table.renderLines() ⇒ <code>Array.&lt;string&gt;</code>
+Identical to `.toString()` with the exception of the rendered result being returned as an array of lines, rather that a single string.
 
-- data <code>Array.&lt;object&gt;</code> - input data
-- [options] <code>object</code> - optional settings
-
+**Kind**: instance method of <code>[Table](#exp_module_table-layout--Table)</code>  
 **Example**  
 ```js
-> tableLayout = require("table-layout")
+> Table = require("table-layout")
 > jsonData = [{
-     col1: "Some text you wish to read in column layout",
-     col2: "And some more text in column two. "
+       col1: "Some text you wish to read in table layout",
+       col2: "And some more text in column two. "
 }]
-> tableLayout.lines(jsonData, { maxWidth: 30 })
+> table = new Table(jsonData, { maxWidth: 30 })
+> table.renderLines()
 [ ' Some text you  And some more ',
 ' wish to read   text in       ',
-' in column      column two.   ',
+' in table      column two.   ',
 ' layout                       ' ]
 ```
-<a name="module_table-layout--columnLayout.table"></a>
+<a name="module_table-layout--Table..getLongestArray"></a>
 
-#### columnLayout.table(data, [options]) ⇒ <code>[Table](#Table)</code>
-**Kind**: static method of <code>[columnLayout](#exp_module_table-layout--columnLayout)</code>  
-**Params**
+#### Table~getLongestArray() ⇒ <code>number</code>
+Array of arrays in.. Returns the length of the longest one
 
-- data <code>Array.&lt;object&gt;</code> - input data
-- [options] <code>object</code> - optional settings
+**Kind**: inner method of <code>[Table](#exp_module_table-layout--Table)</code>  
+<a name="module_table-layout--Table..columnOption"></a>
 
-<a name="module_table-layout--columnLayout..columnOption"></a>
-
-#### columnLayout~columnOption
-**Kind**: inner typedef of <code>[columnLayout](#exp_module_table-layout--columnLayout)</code>  
+#### Table~columnOption
+**Kind**: inner typedef of <code>[Table](#exp_module_table-layout--Table)</code>  
 **Properties**
 
 | Name | Type | Description |
