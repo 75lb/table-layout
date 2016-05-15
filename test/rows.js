@@ -1,6 +1,6 @@
 'use strict'
 var test = require('tape')
-var Rows = require('../').Rows
+var Rows = require('../lib/rows')
 
 test('removeEmptyColumns', function (t) {
   var input = [

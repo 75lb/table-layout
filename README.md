@@ -135,12 +135,12 @@ Recordset data in (array of objects), text table out.
 
 **Example**  
 ```js
-> columnFormat = require("column-format")
+> tableLayout = require("table-layout")
 > jsonData = [{
     col1: "Some text you wish to read in column layout",
     col2: "And some more text in column two. "
 }]
-> console.log(columnFormat(jsonData, { maxWidth: 30 }))
+> console.log(tableLayout(jsonData, { maxWidth: 30 }))
  Some text you  And some more
  wish to read   text in
  in column      column two.
@@ -159,12 +159,12 @@ Identical to [table-layout](#module_table-layout) with the exception of the rend
 
 **Example**  
 ```js
-> columnFormat = require("column-format")
+> tableLayout = require("table-layout")
 > jsonData = [{
      col1: "Some text you wish to read in column layout",
      col2: "And some more text in column two. "
 }]
-> columnFormat.lines(jsonData, { maxWidth: 30 })
+> tableLayout.lines(jsonData, { maxWidth: 30 })
 [ ' Some text you  And some more ',
 ' wish to read   text in       ',
 ' in column      column two.   ',

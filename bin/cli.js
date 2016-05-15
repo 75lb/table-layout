@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 'use strict'
-var columnLayout = require('../')
+var Table = require('../')
 var cliArgs = require('command-line-args')
 var collectJson = require('collect-json')
 var ansi = require('ansi-escape-sequences')
@@ -22,12 +22,12 @@ var options = cli.parse()
 if (options.help) {
   console.error(cli.getUsage({
     title: 'table-layout',
-    description: 'Pretty-print JSON data in columns',
+    description: 'Stylable text tables, handling ansi colour. Useful for console output.',
     synopsis: [
-      '$ cat [underline]{jsonfile} | column-format [options]'
+      '$ cat [underline]{jsonfile} | table-layout [options]'
     ]
   }))
-  process.exit(0)
+  return
 }
 
 var columns = []
@@ -63,12 +63,14 @@ process.stdin
     }
 
     if (columns.length) clOptions.columns = columns
+
+    var table = new Table(json, clOptions)
     return options.lines
-      ? JSON.stringify(columnLayout.lines(json, clOptions), null, '  ') + '\n'
-      : columnLayout(json, clOptions)
+      ? JSON.stringify(table.renderLines(), null, '  ') + '\n'
+      : table.toString()
   }))
   .on('error', function (err) {
     console.error(ansi.format(err.stack, 'red'))
-    process.exit(1)
+    process.exitCode = 1
   })
   .pipe(process.stdout)
