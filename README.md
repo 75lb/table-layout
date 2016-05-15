@@ -114,7 +114,6 @@ $ npm install -g table-layout
         * [table.load()](#module_table-layout--Table+load) ↩︎
         * [table.renderLines()](#module_table-layout--Table+renderLines) ⇒ <code>Array.&lt;string&gt;</code>
         * [table.toString()](#module_table-layout--Table+toString) ⇒ <code>string</code>
-        * [Table~getLongestArray()](#module_table-layout--Table..getLongestArray) ⇒ <code>number</code>
         * [Table~columnOption](#module_table-layout--Table..columnOption)
 
 <a name="exp_module_table-layout--Table"></a>
@@ -148,7 +147,8 @@ Recordset data in (array of objects), text table out.
     col1: "Some text you wish to read in table layout",
     col2: "And some more text in column two. "
 }]
-> console.log(new Table(jsonData, { maxWidth: 30 }))
+> table = new Table(jsonData, { maxWidth: 30 })
+> console.log(table.toString())
  Some text you  And some more
  wish to read   text in
  in table      column two.
@@ -185,12 +185,6 @@ Identical to `.toString()` with the exception of the rendered result being retur
 Returns the data as a text table.
 
 **Kind**: instance method of <code>[Table](#exp_module_table-layout--Table)</code>  
-<a name="module_table-layout--Table..getLongestArray"></a>
-
-#### Table~getLongestArray() ⇒ <code>number</code>
-Array of arrays in.. Returns the length of the longest one
-
-**Kind**: inner method of <code>[Table](#exp_module_table-layout--Table)</code>  
 <a name="module_table-layout--Table..columnOption"></a>
 
 #### Table~columnOption
