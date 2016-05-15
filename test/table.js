@@ -1,6 +1,6 @@
 'use strict'
 var test = require('tape')
-var Table = require('..')
+var Table = require('../')
 var os = require('os')
 
 test('new Table()', function (t) {
@@ -55,7 +55,7 @@ test('table.toString()', function (t) {
     '<r2 c1               ><row two column 2>'
   ].join(os.EOL) + os.EOL
 
-  const table = new Table(fixture.data, fixture.options)
+  var table = new Table(fixture.data, fixture.options)
   t.strictEqual(table.toString(), result)
   t.end()
 })
@@ -68,7 +68,7 @@ test('table.renderLines()', function (t) {
     '<r2 c1               ><row two column 2>'
   ]
 
-  const table = new Table(fixture.data, fixture.options)
+  var table = new Table(fixture.data, fixture.options)
   t.deepEqual(table.renderLines(), result)
   t.end()
 })
@@ -81,7 +81,7 @@ test('table.renderLines() 2', function (t) {
     '<[object Object]          ><    >'
   ]
 
-  const table = new Table(fixture.data, fixture.options)
+  var table = new Table(fixture.data, fixture.options)
   t.deepEqual(table.renderLines(), result)
   t.end()
 })
