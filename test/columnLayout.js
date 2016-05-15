@@ -4,7 +4,7 @@ var columnLayout = require('../')
 var os = require('os')
 
 test('columnLayout(data, options)', function (t) {
-  var fixture = require('./fixture/simple-viewWidth')
+  var fixture = require('./fixture/simple-maxWidth')
   var result = [
     '<row 1 column one .. ><r1 c2           >',
     '<.. ..               ><                >',
@@ -16,7 +16,7 @@ test('columnLayout(data, options)', function (t) {
 })
 
 test('columnLayout.lines(data, options)', function (t) {
-  var fixture = require('./fixture/simple-viewWidth')
+  var fixture = require('./fixture/simple-maxWidth')
   var result = [
     '<row 1 column one .. ><r1 c2           >',
     '<.. ..               ><                >',

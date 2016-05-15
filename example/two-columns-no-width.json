@@ -1,6 +1,6 @@
 {
     "options": {
-      "viewWidth": 40,
+      "maxWidth": 40,
         "columns": [
             { "name": "one" },
             { "name": "two" }

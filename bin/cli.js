@@ -45,7 +45,7 @@ if (options.width) {
 process.stdin
   .pipe(collectJson(function (json) {
     var clOptions = {
-      viewWidth: process.stdout.columns,
+      maxWidth: process.stdout.columns,
       padding: {}
     }
 
