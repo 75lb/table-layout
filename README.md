@@ -113,6 +113,7 @@ $ npm install -g table-layout
         * [new Table(data, [options])](#new_module_table-layout--Table_new)
         * [table.load()](#module_table-layout--Table+load) ↩︎
         * [table.renderLines()](#module_table-layout--Table+renderLines) ⇒ <code>Array.&lt;string&gt;</code>
+        * [table.toString()](#module_table-layout--Table+toString) ⇒ <code>string</code>
         * [Table~getLongestArray()](#module_table-layout--Table..getLongestArray) ⇒ <code>number</code>
         * [Table~columnOption](#module_table-layout--Table..columnOption)
 
@@ -178,6 +179,12 @@ Identical to `.toString()` with the exception of the rendered result being retur
 ' in table      column two.   ',
 ' layout                       ' ]
 ```
+<a name="module_table-layout--Table+toString"></a>
+
+#### table.toString() ⇒ <code>string</code>
+Returns the data as a text table.
+
+**Kind**: instance method of <code>[Table](#exp_module_table-layout--Table)</code>  
 <a name="module_table-layout--Table..getLongestArray"></a>
 
 #### Table~getLongestArray() ⇒ <code>number</code>
