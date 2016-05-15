@@ -4,6 +4,8 @@
 [![Dependency Status](https://david-dm.org/75lb/column-layout.svg)](https://david-dm.org/75lb/column-layout)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](https://github.com/feross/standard)
 
+*** This package is deprecated, superceded by [table-layout](https://github.com/75lb/table-layout) ***
+
 # column-layout
 Pretty-print text data in columns.
 
@@ -115,6 +117,7 @@ $ npm install -g column-layout
         * [~columnOption](#module_column-layout--columnLayout..columnOption)
 
 <a name="exp_module_column-layout--columnLayout"></a>
+
 ### columnLayout(data, [options]) ⇒ <code>string</code> ⏏
 Returns JSON data formatted in columns.
 
@@ -146,6 +149,7 @@ Returns JSON data formatted in columns.
  layout
 ```
 <a name="module_column-layout--columnLayout.lines"></a>
+
 #### columnLayout.lines(data, [options]) ⇒ <code>Array</code>
 Identical to [column-layout](#module_column-layout) with the exception of the rendered result being returned as an array of lines, rather that a single string.
 
@@ -169,6 +173,7 @@ Identical to [column-layout](#module_column-layout) with the exception of the re
 ' layout                       ' ]
 ```
 <a name="module_column-layout--columnLayout.table"></a>
+
 #### columnLayout.table(data, [options]) ⇒ <code>[Table](#Table)</code>
 **Kind**: static method of <code>[columnLayout](#exp_module_column-layout--columnLayout)</code>  
 **Params**
@@ -177,6 +182,7 @@ Identical to [column-layout](#module_column-layout) with the exception of the re
 - [options] <code>object</code> - optional settings
 
 <a name="module_column-layout--columnLayout..columnOption"></a>
+
 #### columnLayout~columnOption
 **Kind**: inner typedef of <code>[columnLayout](#exp_module_column-layout--columnLayout)</code>  
 **Properties**
