@@ -25,7 +25,7 @@ var Table = function () {
         left: ' ',
         right: ' '
       },
-      viewWidth: ttyWidth || 80,
+      maxWidth: ttyWidth || 80,
       columns: []
     };
 
@@ -47,7 +47,7 @@ var Table = function () {
       this.columns = Rows.getColumns(data);
       this.rows = new Rows(data, this.columns);
 
-      this.columns.viewWidth = options.viewWidth;
+      this.columns.maxWidth = options.maxWidth;
       this.columns.list.forEach(function (column) {
         if (options.padding) column.padding = options.padding;
         if (options.nowrap) column.nowrap = options.nowrap;
@@ -134,8 +134,8 @@ var Table = function () {
       });
     }
   }, {
-    key: 'render',
-    value: function render() {
+    key: 'toString',
+    value: function toString() {
       return this.renderLines().join(os.EOL) + os.EOL;
     }
   }]);

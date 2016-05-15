@@ -1,14 +1,14 @@
-[![view on npm](http://img.shields.io/npm/v/column-layout.svg)](https://www.npmjs.org/package/column-layout)
-[![npm module downloads](http://img.shields.io/npm/dt/column-layout.svg)](https://www.npmjs.org/package/column-layout)
-[![Build Status](https://travis-ci.org/75lb/column-layout.svg?branch=master)](https://travis-ci.org/75lb/column-layout)
-[![Dependency Status](https://david-dm.org/75lb/column-layout.svg)](https://david-dm.org/75lb/column-layout)
+[![view on npm](http://img.shields.io/npm/v/table-layout.svg)](https://www.npmjs.org/package/table-layout)
+[![npm module downloads](http://img.shields.io/npm/dt/table-layout.svg)](https://www.npmjs.org/package/table-layout)
+[![Build Status](https://travis-ci.org/75lb/table-layout.svg?branch=master)](https://travis-ci.org/75lb/table-layout)
+[![Dependency Status](https://david-dm.org/75lb/table-layout.svg)](https://david-dm.org/75lb/table-layout)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](https://github.com/feross/standard)
 
-# column-layout
-Pretty-print text data in columns.
+# table-layout
+Stylable text tables, handling ansi colour. Useful for console output.
 
 ## Synopsis
-Say you have some data:
+Converts arrays of row data to text tables. For example - one row, two columns:
 ```json
 [
     {
@@ -18,9 +18,9 @@ Say you have some data:
 ]
 ```
 
-pipe it through `column-layout`:
+pipe it through `table-layout`:
 ```sh
-$ cat example/two-columns.json | column-layout
+$ cat example/two-columns.json | table-layout
 ```
 
 to get this:
@@ -39,10 +39,10 @@ of England.                                warfare. In addition to troops, the
                                            vehicles and between 600–700,000 horses.
 ```
 
-Columns containing wrappable data are auto-sized by default to fit the available space. You can set specific widths using `--width`
+Columns containing wrappable data (like the above) are auto-sized by default to fit the available space. You can set specific column widths using `--width`
 
 ```sh
-$ cat example/two-columns.json | column-layout --width "column 2: 55"
+$ cat example/two-columns.json | table-layout --width "column 2: 55"
 ```
 
 ```
@@ -67,7 +67,7 @@ Read the latest npm issues: (example requires [jq](https://stedolan.github.io/jq
 ```sh
 $ curl -s https://api.github.com/repos/npm/npm/issues \
 | jq 'map({ number, title, login:.user.login, comments })' \
-| column-layout
+| table-layout
 ```
 ```
 10263  npm run start                                            Slepperpon        4
@@ -98,35 +98,42 @@ $ curl -s https://api.github.com/repos/npm/npm/issues \
 As a library:
 
 ```
-$ npm install column-layout --save
+$ npm install table-layout --save
 ```
 
 As a command-line tool:
 ```
-$ npm install -g column-layout
+$ npm install -g table-layout
 ```
 
 ## API Reference
 
-* [column-layout](#module_column-layout)
-    * [columnLayout(data, [options])](#exp_module_column-layout--columnLayout) ⇒ <code>string</code> ⏏
-        * [.lines(data, [options])](#module_column-layout--columnLayout.lines) ⇒ <code>Array</code>
-        * [.table(data, [options])](#module_column-layout--columnLayout.table) ⇒ <code>[Table](#Table)</code>
-        * [~columnOption](#module_column-layout--columnLayout..columnOption)
+* [table-layout](#module_table-layout)
+    * [Table](#exp_module_table-layout--Table) ⏏
+        * [new Table(data, [options])](#new_module_table-layout--Table_new)
+        * [table.renderLines()](#module_table-layout--Table+renderLines) ⇒ <code>Array.&lt;string&gt;</code>
+        * [table.toString()](#module_table-layout--Table+toString) ⇒ <code>string</code>
+        * [Table~columnOption](#module_table-layout--Table..columnOption)
 
-<a name="exp_module_column-layout--columnLayout"></a>
-### columnLayout(data, [options]) ⇒ <code>string</code> ⏏
-Returns JSON data formatted in columns.
+<a name="exp_module_table-layout--Table"></a>
 
-**Kind**: Exported function  
+### Table ⏏
+Table containing the data.
+
+**Kind**: Exported class  
+<a name="new_module_table-layout--Table_new"></a>
+
+#### new Table(data, [options])
+Recordset data in (array of objects), text table out.
+
 **Params**
 
 - data <code>Array.&lt;object&gt;</code> - input data
 - [options] <code>object</code> - optional settings
-    - [.viewWidth] <code>number</code> - maximum width of layout
+    - [.maxWidth] <code>number</code> - maximum width of layout
     - [.nowrap] <code>boolean</code> - disable wrapping on all columns
     - [.break] <code>boolean</code> - enable word-breaking on all columns
-    - [.columns] <code>[columnOption](#module_column-layout--columnLayout..columnOption)</code> - array of column options
+    - [.columns] <code>[columnOption](#module_table-layout--Table..columnOption)</code> - array of column options
     - [.ignoreEmptyColumns] <code>boolean</code>
     - [.padding] <code>object</code> - Padding values to set on each column. Per-column overrides can be set in the `options.columns` array.
         - [.left] <code>string</code>
@@ -134,51 +141,48 @@ Returns JSON data formatted in columns.
 
 **Example**  
 ```js
-> columnFormat = require("column-format")
+> Table = require("table-layout")
 > jsonData = [{
-    col1: "Some text you wish to read in column layout",
+    col1: "Some text you wish to read in table layout",
     col2: "And some more text in column two. "
 }]
-> console.log(columnFormat(jsonData, { viewWidth: 30 }))
+> table = new Table(jsonData, { maxWidth: 30 })
+> console.log(table.toString())
  Some text you  And some more
  wish to read   text in
- in column      column two.
+ in table      column two.
  layout
 ```
-<a name="module_column-layout--columnLayout.lines"></a>
-#### columnLayout.lines(data, [options]) ⇒ <code>Array</code>
-Identical to [column-layout](#module_column-layout) with the exception of the rendered result being returned as an array of lines, rather that a single string.
+<a name="module_table-layout--Table+renderLines"></a>
 
-**Kind**: static method of <code>[columnLayout](#exp_module_column-layout--columnLayout)</code>  
-**Params**
+#### table.renderLines() ⇒ <code>Array.&lt;string&gt;</code>
+Identical to `.toString()` with the exception of the rendered result being returned as an array of lines, rather that a single string.
 
-- data <code>Array.&lt;object&gt;</code> - input data
-- [options] <code>object</code> - optional settings
-
+**Kind**: instance method of <code>[Table](#exp_module_table-layout--Table)</code>  
 **Example**  
 ```js
-> columnFormat = require("column-format")
+> Table = require("table-layout")
 > jsonData = [{
-     col1: "Some text you wish to read in column layout",
-     col2: "And some more text in column two. "
+       col1: "Some text you wish to read in table layout",
+       col2: "And some more text in column two. "
 }]
-> columnFormat.lines(jsonData, { viewWidth: 30 })
+> table = new Table(jsonData, { maxWidth: 30 })
+> table.renderLines()
 [ ' Some text you  And some more ',
 ' wish to read   text in       ',
-' in column      column two.   ',
+' in table      column two.   ',
 ' layout                       ' ]
 ```
-<a name="module_column-layout--columnLayout.table"></a>
-#### columnLayout.table(data, [options]) ⇒ <code>[Table](#Table)</code>
-**Kind**: static method of <code>[columnLayout](#exp_module_column-layout--columnLayout)</code>  
-**Params**
+<a name="module_table-layout--Table+toString"></a>
 
-- data <code>Array.&lt;object&gt;</code> - input data
-- [options] <code>object</code> - optional settings
+#### table.toString() ⇒ <code>string</code>
+Returns the data as a text table.
 
-<a name="module_column-layout--columnLayout..columnOption"></a>
-#### columnLayout~columnOption
-**Kind**: inner typedef of <code>[columnLayout](#exp_module_column-layout--columnLayout)</code>  
+**Kind**: instance method of <code>[Table](#exp_module_table-layout--Table)</code>  
+<a name="module_table-layout--Table..columnOption"></a>
+
+#### Table~columnOption
+**Kind**: inner typedef of <code>[Table](#exp_module_table-layout--Table)</code>  
 **Properties**
 
 | Name | Type | Description |

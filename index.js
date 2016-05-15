@@ -12,5 +12,5 @@ if (!detect.collections()) {
 }
 
 module.exports = detect.all('class', 'arrowFunction', 'templateStrings')
-  ? require('./lib/column-layout')
-  : require('./es5/column-layout')
+  ? require('./lib/table-layout')
+  : require('./es5/table-layout')

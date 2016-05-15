@@ -8,7 +8,7 @@ var t = require('typical');
 var Padding = require('./padding');
 var arrayify = require('array-back');
 
-var _viewWidth = new WeakMap();
+var _maxWidth = new WeakMap();
 
 var Columns = function () {
   function Columns(columns) {
@@ -69,7 +69,7 @@ var Columns = function () {
     value: function autoSize() {
       var _this = this;
 
-      var viewWidth = _viewWidth.get(this);
+      var maxWidth = _maxWidth.get(this);
 
       this.list.forEach(function (column) {
         column.generateWidth();
@@ -88,10 +88,10 @@ var Columns = function () {
 
       var width = {
         total: this.totalWidth(),
-        view: viewWidth,
-        diff: this.totalWidth() - viewWidth,
+        view: maxWidth,
+        diff: this.totalWidth() - maxWidth,
         totalFixed: this.totalFixedWidth(),
-        totalResizable: Math.max(viewWidth - this.totalFixedWidth(), 0)
+        totalResizable: Math.max(maxWidth - this.totalFixedWidth(), 0)
       };
 
       if (width.diff > 0) {
@@ -127,9 +127,9 @@ var Columns = function () {
       return this;
     }
   }, {
-    key: 'viewWidth',
+    key: 'maxWidth',
     set: function set(val) {
-      _viewWidth.set(this, val);
+      _maxWidth.set(this, val);
     }
   }]);
 

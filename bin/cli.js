@@ -1,16 +1,16 @@
 #!/usr/bin/env node
 'use strict'
-var columnLayout = require('../')
+var Table = require('../')
 var cliArgs = require('command-line-args')
 var collectJson = require('collect-json')
 var ansi = require('ansi-escape-sequences')
-var o = require('object-tools')
+var extend = require('deep-extend')
 var t = require('typical')
 
 var cli = cliArgs([
   { name: 'help', type: Boolean, alias: 'h' },
   { name: 'width', type: String, multiple: true, alias: 'w', typeLabel: '<widths>',
-  description: 'specify a list of column widths in the format \'<column>:<width>\', for example:\n$ cat <json data> | column-layout --width "column 1: 10" "column 2: 30"' },
+  description: 'specify a list of column widths in the format \'<column>:<width>\', for example:\n$ cat <json data> | table-layout --width "column 1: 10" "column 2: 30"' },
   { name: 'padding-left', type: String, alias: 'l',
   description: "One or more characters to pad the left of each column. Defaults to ' '." },
   { name: 'padding-right', type: String, alias: 'r',
@@ -21,13 +21,13 @@ var options = cli.parse()
 
 if (options.help) {
   console.error(cli.getUsage({
-    title: 'column-layout',
-    description: 'Pretty-print JSON data in columns',
+    title: 'table-layout',
+    description: 'Stylable text tables, handling ansi colour. Useful for console output.',
     synopsis: [
-      '$ cat [underline]{jsonfile} | column-format [options]'
+      '$ cat [underline]{jsonfile} | table-layout [options]'
     ]
   }))
-  process.exit(0)
+  return
 }
 
 var columns = []
@@ -45,7 +45,7 @@ if (options.width) {
 process.stdin
   .pipe(collectJson(function (json) {
     var clOptions = {
-      viewWidth: process.stdout.columns,
+      maxWidth: process.stdout.columns,
       padding: {}
     }
 
@@ -55,7 +55,7 @@ process.stdin
     /* split input into data and options */
     if (!Array.isArray(json)) {
       if (json.options && json.data) {
-        clOptions = o.extend(clOptions, json.options)
+        clOptions = extend(clOptions, json.options)
         json = json.data
       } else {
         throw new Error('Invalid input data')
@@ -63,12 +63,14 @@ process.stdin
     }
 
     if (columns.length) clOptions.columns = columns
+
+    var table = new Table(json, clOptions)
     return options.lines
-      ? JSON.stringify(columnLayout.lines(json, clOptions), null, '  ') + '\n'
-      : columnLayout(json, clOptions)
+      ? JSON.stringify(table.renderLines(), null, '  ') + '\n'
+      : table.toString()
   }))
   .on('error', function (err) {
     console.error(ansi.format(err.stack, 'red'))
-    process.exit(1)
+    process.exitCode = 1
   })
   .pipe(process.stdout)
