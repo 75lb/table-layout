@@ -4,7 +4,7 @@ var columnLayout = require('../')
 var cliArgs = require('command-line-args')
 var collectJson = require('collect-json')
 var ansi = require('ansi-escape-sequences')
-var o = require('object-tools')
+var extend = require('deep-extend')
 var t = require('typical')
 
 var cli = cliArgs([
@@ -55,7 +55,7 @@ process.stdin
     /* split input into data and options */
     if (!Array.isArray(json)) {
       if (json.options && json.data) {
-        clOptions = o.extend(clOptions, json.options)
+        clOptions = extend(clOptions, json.options)
         json = json.data
       } else {
         throw new Error('Invalid input data')
