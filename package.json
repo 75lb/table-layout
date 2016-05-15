@@ -1,9 +1,9 @@
 {
-  "name": "column-layout",
+  "name": "table-layout",
   "author": "Lloyd Brookes <75pound@gmail.com>",
   "version": "2.1.2",
   "description": "Stylable text tables, handling ansi colour. Useful for console output.",
-  "repository": "https://github.com/75lb/column-layout.git",
+  "repository": "https://github.com/75lb/table-layout.git",
   "license": "MIT",
   "main": "index",
   "bin": "bin/cli.js",

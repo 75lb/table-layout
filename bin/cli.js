@@ -10,7 +10,7 @@ var t = require('typical')
 var cli = cliArgs([
   { name: 'help', type: Boolean, alias: 'h' },
   { name: 'width', type: String, multiple: true, alias: 'w', typeLabel: '<widths>',
-  description: 'specify a list of column widths in the format \'<column>:<width>\', for example:\n$ cat <json data> | column-layout --width "column 1: 10" "column 2: 30"' },
+  description: 'specify a list of column widths in the format \'<column>:<width>\', for example:\n$ cat <json data> | table-layout --width "column 1: 10" "column 2: 30"' },
   { name: 'padding-left', type: String, alias: 'l',
   description: "One or more characters to pad the left of each column. Defaults to ' '." },
   { name: 'padding-right', type: String, alias: 'r',
@@ -21,7 +21,7 @@ var options = cli.parse()
 
 if (options.help) {
   console.error(cli.getUsage({
-    title: 'column-layout',
+    title: 'table-layout',
     description: 'Pretty-print JSON data in columns',
     synopsis: [
       '$ cat [underline]{jsonfile} | column-format [options]'
