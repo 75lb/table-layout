@@ -1,6 +1,6 @@
 'use strict'
 var test = require('tape')
-var Columns = require('../lib/Columns')
+var Columns = require('../lib/columns')
 
 test('columns.autoSize(contentColumns, maxWidth)', function (t) {
   var columns = new Columns([
