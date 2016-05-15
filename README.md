@@ -111,7 +111,6 @@ $ npm install -g table-layout
 * [table-layout](#module_table-layout)
     * [Table](#exp_module_table-layout--Table) ⏏
         * [new Table(data, [options])](#new_module_table-layout--Table_new)
-        * [table.load()](#module_table-layout--Table+load) ↩︎
         * [table.renderLines()](#module_table-layout--Table+renderLines) ⇒ <code>Array.&lt;string&gt;</code>
         * [table.toString()](#module_table-layout--Table+toString) ⇒ <code>string</code>
         * [Table~columnOption](#module_table-layout--Table..columnOption)
@@ -154,11 +153,6 @@ Recordset data in (array of objects), text table out.
  in table      column two.
  layout
 ```
-<a name="module_table-layout--Table+load"></a>
-
-#### table.load() ↩︎
-**Kind**: instance method of <code>[Table](#exp_module_table-layout--Table)</code>  
-**Chainable**  
 <a name="module_table-layout--Table+renderLines"></a>
 
 #### table.renderLines() ⇒ <code>Array.&lt;string&gt;</code>
