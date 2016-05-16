@@ -110,6 +110,7 @@ $ npm install -g table-layout
 
 * [table-layout](#module_table-layout)
     * [tableLayout(data, [options])](#exp_module_table-layout--tableLayout) ⏏
+        * [.lines()](#module_table-layout--tableLayout.lines) ⇒ <code>Array.&lt;string&gt;</code>
         * [~columnOption](#module_table-layout--tableLayout..columnOption)
 
 <a name="exp_module_table-layout--tableLayout"></a>
@@ -133,17 +134,35 @@ Recordset data in (array of objects), text table out.
 
 **Example**  
 ```js
-> Table = require("table-layout")
+> tableLayout = require('table-layout')
 > jsonData = [{
-  col1: "Some text you wish to read in table layout",
-  col2: "And some more text in column two. "
+  col1: 'Some text you wish to read in table layout',
+  col2: 'And some more text in column two. '
 }]
-> table = new Table(jsonData, { maxWidth: 30 })
-> console.log(table.toString())
+> tableLayout(jsonData, { maxWidth: 30 })
  Some text you  And some more
  wish to read   text in
  in table      column two.
  layout
+```
+<a name="module_table-layout--tableLayout.lines"></a>
+
+#### tableLayout.lines() ⇒ <code>Array.&lt;string&gt;</code>
+Identical to `tableLayout()` with the exception of the rendered result being returned as an array of lines, rather that a single string.
+
+**Kind**: static method of <code>[tableLayout](#exp_module_table-layout--tableLayout)</code>  
+**Example**  
+```js
+> tableLayout = require('table-layout')
+> jsonData = [{
+  col1: 'Some text you wish to read in table layout',
+  col2: 'And some more text in column two. '
+}]
+> tableLayout.lines(jsonData, { maxWidth: 30 })
+[ ' Some text you  And some more ',
+' wish to read   text in       ',
+' in table      column two.   ',
+' layout                       ' ]
 ```
 <a name="module_table-layout--tableLayout..columnOption"></a>
 
@@ -160,8 +179,8 @@ Recordset data in (array of objects), text table out.
 | nowrap | <code>boolean</code> | disable wrapping for this column |
 | break | <code>boolean</code> | enable word-breaking for this columns |
 | padding | <code>object</code> | padding options |
-| padding.left | <code>string</code> | a string to pad the left of each cell (default: `" "`) |
-| padding.right | <code>string</code> | a string to pad the right of each cell (default: `" "`) |
+| padding.left | <code>string</code> | a string to pad the left of each cell (default: `' '`) |
+| padding.right | <code>string</code> | a string to pad the right of each cell (default: `' '`) |
 
 
 * * *
