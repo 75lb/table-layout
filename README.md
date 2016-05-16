@@ -109,23 +109,15 @@ $ npm install -g table-layout
 ## API Reference
 
 * [table-layout](#module_table-layout)
-    * [Table](#exp_module_table-layout--Table) ⏏
-        * [new Table(data, [options])](#new_module_table-layout--Table_new)
-        * [table.renderLines()](#module_table-layout--Table+renderLines) ⇒ <code>Array.&lt;string&gt;</code>
-        * [table.toString()](#module_table-layout--Table+toString) ⇒ <code>string</code>
-        * [Table~columnOption](#module_table-layout--Table..columnOption)
+    * [tableLayout(data, [options])](#exp_module_table-layout--tableLayout) ⏏
+        * [~columnOption](#module_table-layout--tableLayout..columnOption)
 
-<a name="exp_module_table-layout--Table"></a>
+<a name="exp_module_table-layout--tableLayout"></a>
 
-### Table ⏏
-Table containing the data.
-
-**Kind**: Exported class  
-<a name="new_module_table-layout--Table_new"></a>
-
-#### new Table(data, [options])
+### tableLayout(data, [options]) ⏏
 Recordset data in (array of objects), text table out.
 
+**Kind**: Exported function  
 **Params**
 
 - data <code>Array.&lt;object&gt;</code> - input data
@@ -133,7 +125,7 @@ Recordset data in (array of objects), text table out.
     - [.maxWidth] <code>number</code> - maximum width of layout
     - [.nowrap] <code>boolean</code> - disable wrapping on all columns
     - [.break] <code>boolean</code> - enable word-breaking on all columns
-    - [.columns] <code>[columnOption](#module_table-layout--Table..columnOption)</code> - array of column options
+    - [.columns] <code>[columnOption](#module_table-layout--tableLayout..columnOption)</code> - array of column options
     - [.ignoreEmptyColumns] <code>boolean</code>
     - [.padding] <code>object</code> - Padding values to set on each column. Per-column overrides can be set in the `options.columns` array.
         - [.left] <code>string</code>
@@ -143,8 +135,8 @@ Recordset data in (array of objects), text table out.
 ```js
 > Table = require("table-layout")
 > jsonData = [{
-    col1: "Some text you wish to read in table layout",
-    col2: "And some more text in column two. "
+  col1: "Some text you wish to read in table layout",
+  col2: "And some more text in column two. "
 }]
 > table = new Table(jsonData, { maxWidth: 30 })
 > console.log(table.toString())
@@ -153,36 +145,10 @@ Recordset data in (array of objects), text table out.
  in table      column two.
  layout
 ```
-<a name="module_table-layout--Table+renderLines"></a>
+<a name="module_table-layout--tableLayout..columnOption"></a>
 
-#### table.renderLines() ⇒ <code>Array.&lt;string&gt;</code>
-Identical to `.toString()` with the exception of the rendered result being returned as an array of lines, rather that a single string.
-
-**Kind**: instance method of <code>[Table](#exp_module_table-layout--Table)</code>  
-**Example**  
-```js
-> Table = require("table-layout")
-> jsonData = [{
-       col1: "Some text you wish to read in table layout",
-       col2: "And some more text in column two. "
-}]
-> table = new Table(jsonData, { maxWidth: 30 })
-> table.renderLines()
-[ ' Some text you  And some more ',
-' wish to read   text in       ',
-' in table      column two.   ',
-' layout                       ' ]
-```
-<a name="module_table-layout--Table+toString"></a>
-
-#### table.toString() ⇒ <code>string</code>
-Returns the data as a text table.
-
-**Kind**: instance method of <code>[Table](#exp_module_table-layout--Table)</code>  
-<a name="module_table-layout--Table..columnOption"></a>
-
-#### Table~columnOption
-**Kind**: inner typedef of <code>[Table](#exp_module_table-layout--Table)</code>  
+#### tableLayout~columnOption
+**Kind**: inner typedef of <code>[tableLayout](#exp_module_table-layout--tableLayout)</code>  
 **Properties**
 
 | Name | Type | Description |
