@@ -1,9 +1,9 @@
 'use strict'
 var test = require('tape')
-var Table = require('../')
+var tableLayout = require('../')
 
-test('table.renderLines(): no data', function (t) {
-  t.deepEqual(new Table([]).renderLines(), [])
-  t.deepEqual(new Table().renderLines(), [])
+test('table.lines(): no data', function (t) {
+  t.deepEqual(tableLayout.lines([]), [])
+  t.deepEqual(tableLayout.lines(), [])
   t.end()
 })

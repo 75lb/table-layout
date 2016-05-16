@@ -1,6 +1,6 @@
 'use strict'
 var test = require('tape')
-var Table = require('../')
+var Table = require('../').Table
 var os = require('os')
 
 test('new Table()', function (t) {

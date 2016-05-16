@@ -10,6 +10,8 @@ var Rows = require('./rows');
 var ansi = require('./ansi');
 var extend = require('deep-extend');
 
+module.exports = tableLayout;
+
 var _options = new WeakMap();
 
 var Table = function () {
@@ -156,4 +158,14 @@ function padCell(cellValue, padding, width) {
   return (padding.left || '') + cellValue.padEnd(width - padding.length() + ansiLength) + (padding.right || '');
 }
 
-module.exports = Table;
+function tableLayout(data, options) {
+  var table = new Table(data, options);
+  return table.toString();
+}
+
+tableLayout.lines = function (data, options) {
+  var table = new Table(data, options);
+  return table.renderLines();
+};
+
+tableLayout.Table = Table;
