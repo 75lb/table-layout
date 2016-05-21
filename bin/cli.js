@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 'use strict'
-var Table = require('../')
+var tableLayout = require('../')
 var cliArgs = require('command-line-args')
 var collectJson = require('collect-json')
 var ansi = require('ansi-escape-sequences')
@@ -64,7 +64,7 @@ process.stdin
 
     if (columns.length) clOptions.columns = columns
 
-    var table = new Table(json, clOptions)
+    var table = new tableLayout.Table(json, clOptions)
     return options.lines
       ? JSON.stringify(table.renderLines(), null, '  ') + '\n'
       : table.toString()
