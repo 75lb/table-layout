@@ -1,13 +1,14 @@
 #!/usr/bin/env node
 'use strict'
 var tableLayout = require('../')
-var cliArgs = require('command-line-args')
+var commandLineArgs = require('command-line-args')
+var commandLineUsage = require('command-line-usage')
 var collectJson = require('collect-json')
 var ansi = require('ansi-escape-sequences')
 var extend = require('deep-extend')
 var t = require('typical')
 
-var cli = cliArgs([
+var definitions = [
   { name: 'help', type: Boolean, alias: 'h' },
   { name: 'width', type: String, multiple: true, alias: 'w', typeLabel: '<widths>',
   description: 'specify a list of column widths in the format \'<column>:<width>\', for example:\n$ cat <json data> | table-layout --width "column 1: 10" "column 2: 30"' },
@@ -16,18 +17,25 @@ var cli = cliArgs([
   { name: 'padding-right', type: String, alias: 'r',
   description: "One or more characters to pad the right of each column. Defaults to ' '." },
   { name: 'lines', type: Boolean, description: 'return an array of lines' }
-])
-var options = cli.parse()
+]
+var options = commandLineArgs(definitions)
 
 if (options.help) {
-  console.error(cli.getUsage({
-    title: 'table-layout',
-    description: 'Stylable text tables, handling ansi colour. Useful for console output.',
-    synopsis: [
-      '$ cat [underline]{jsonfile} | table-layout [options]'
-    ]
-  }))
-  return
+  console.error(commandLineUsage([
+    {
+      header: 'table-layout',
+      content: 'Stylable text tables, handling ansi colour. Useful for console output.'
+    },
+    {
+      header: 'Synopsis',
+      content: '$ cat [underline]{jsonfile} | table-layout [options]'
+    },
+    {
+      header: 'Options',
+      optionList: definitions
+    }
+  ]))
+  process.exit(0)
 }
 
 var columns = []
