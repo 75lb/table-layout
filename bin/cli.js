@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 'use strict'
 var tableLayout = require('../')
-var commandLineArgs = require('command-line-args')
-var commandLineUsage = require('command-line-usage')
+var tool = require('command-line-tool')
 var collectJson = require('collect-json')
 var ansi = require('ansi-escape-sequences')
 var extend = require('deep-extend')
@@ -18,24 +17,27 @@ var definitions = [
   description: "One or more characters to pad the right of each column. Defaults to ' '." },
   { name: 'lines', type: Boolean, description: 'return an array of lines' }
 ]
-var options = commandLineArgs(definitions)
+
+var usageSections = [
+  {
+    header: 'table-layout',
+    content: 'Stylable text tables, handling ansi colour. Useful for console output.'
+  },
+  {
+    header: 'Synopsis',
+    content: '$ cat [underline]{jsonfile} | table-layout [options]'
+  },
+  {
+    header: 'Options',
+    optionList: definitions
+  }
+]
+
+var cli = tool.getCli(definitions, usageSections)
+var options = cli.options
 
 if (options.help) {
-  console.error(commandLineUsage([
-    {
-      header: 'table-layout',
-      content: 'Stylable text tables, handling ansi colour. Useful for console output.'
-    },
-    {
-      header: 'Synopsis',
-      content: '$ cat [underline]{jsonfile} | table-layout [options]'
-    },
-    {
-      header: 'Options',
-      optionList: definitions
-    }
-  ]))
-  process.exit(0)
+  tool.stop(cli.usage)
 }
 
 var columns = []
@@ -77,8 +79,5 @@ process.stdin
       ? JSON.stringify(table.renderLines(), null, '  ') + '\n'
       : table.toString()
   }))
-  .on('error', function (err) {
-    console.error(ansi.format(err.stack, 'red'))
-    process.exitCode = 1
-  })
+  .on('error', tool.halt)
   .pipe(process.stdout)

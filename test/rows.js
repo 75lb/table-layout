@@ -1,8 +1,9 @@
 'use strict'
-var test = require('tape')
+var test = require('test-runner')
 var Rows = require('../es5/rows')
+var a = require('core-assert')
 
-test('removeEmptyColumns', function (t) {
+test('removeEmptyColumns', function () {
   var input = [
     { name: 'Lloyd', 'age': '' },
     { name: 'Roger', 'age': ' ' },
@@ -10,7 +11,7 @@ test('removeEmptyColumns', function (t) {
     { name: 'Frank' },
     { name: 'Amy' }
   ]
-  t.deepEqual(
+  a.deepEqual(
     Rows.removeEmptyColumns(input),
     [
       { name: 'Lloyd' },
@@ -20,5 +21,4 @@ test('removeEmptyColumns', function (t) {
       { name: 'Amy' }
     ]
   )
-  t.end()
 })

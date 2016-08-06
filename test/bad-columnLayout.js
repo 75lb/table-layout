@@ -1,9 +1,9 @@
 'use strict'
-var test = require('tape')
+var test = require('test-runner')
 var tableLayout = require('../')
+var a = require('core-assert')
 
-test('table.lines(): no data', function (t) {
-  t.deepEqual(tableLayout.lines([]), [])
-  t.deepEqual(tableLayout.lines(), [])
-  t.end()
+test('table.lines(): no data', function () {
+  a.deepEqual(tableLayout.lines([]), [])
+  a.deepEqual(tableLayout.lines(), [])
 })

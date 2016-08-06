@@ -1,8 +1,9 @@
 'use strict'
-var test = require('tape')
+var test = require('test-runner')
 var Columns = require('../es5/columns')
+var a = require('core-assert')
 
-test('columns.autoSize(contentColumns, maxWidth)', function (t) {
+test('columns.autoSize(contentColumns, maxWidth)', function () {
   var columns = new Columns([
     { name: 'one', contentWidth: 10, contentWrappable: true },
     { name: 'two', contentWidth: 20, contentWrappable: true }
@@ -10,8 +11,6 @@ test('columns.autoSize(contentColumns, maxWidth)', function (t) {
 
   columns.maxWidth = 30
   columns.autoSize()
-  t.strictEqual(columns.list[0].generatedWidth, 12)
-  t.strictEqual(columns.list[1].generatedWidth, 18)
-
-  t.end()
+  a.strictEqual(columns.list[0].generatedWidth, 12)
+  a.strictEqual(columns.list[1].generatedWidth, 18)
 })
