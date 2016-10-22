@@ -1,10 +1,12 @@
 'use strict'
-var test = require('test-runner')
+var TestRunner = require('test-runner')
 var Table = require('../').Table
 var os = require('os')
 var a = require('core-assert')
 
-test('new Table()', function () {
+var runner = new TestRunner()
+
+runner.test('new Table()', function () {
   var fixture = require('./fixture/simple-maxWidth')
   var table = new Table(fixture.data, fixture.options)
 
@@ -12,7 +14,7 @@ test('new Table()', function () {
   a.strictEqual(table.columns.list.length, 2)
 })
 
-test('table.getWrapped()', function () {
+runner.test('table.getWrapped()', function () {
   var fixture = require('./fixture/simple-maxWidth')
   var table = new Table(fixture.data, fixture.options)
 
@@ -22,7 +24,7 @@ test('table.getWrapped()', function () {
   ])
 })
 
-test('table.getLines()', function () {
+runner.test('table.getLines()', function () {
   var fixture = require('./fixture/simple-maxWidth')
   var table = new Table(fixture.data, fixture.options)
 
@@ -33,7 +35,7 @@ test('table.getLines()', function () {
   ])
 })
 
-test('table.renderLines()', function () {
+runner.test('table.renderLines()', function () {
   var fixture = require('./fixture/simple-maxWidth')
   var table = new Table(fixture.data, fixture.options)
 
@@ -44,7 +46,7 @@ test('table.renderLines()', function () {
   ])
 })
 
-test('table.toString()', function () {
+runner.test('table.toString()', function () {
   var fixture = require('./fixture/simple-maxWidth')
   var result = [
     '<row 1 column one .. ><r1 c2           >',
@@ -56,7 +58,7 @@ test('table.toString()', function () {
   a.strictEqual(table.toString(), result)
 })
 
-test('table.renderLines() 2', function () {
+runner.test('table.renderLines() 2', function () {
   var fixture = require('./fixture/simple-maxWidth')
   var result = [
     '<row 1 column one .. ><r1 c2           >',
@@ -68,7 +70,7 @@ test('table.renderLines() 2', function () {
   a.deepEqual(table.renderLines(), result)
 })
 
-test('table.renderLines() 3', function () {
+runner.test('table.renderLines() 3', function () {
   var fixture = require('./fixture/primatives')
   var result = [
     '<row 1 column one .. .. ..><3000>',
