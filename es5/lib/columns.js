@@ -5,8 +5,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var t = require('typical');
-var Padding = require('./padding');
 var arrayify = require('array-back');
+var Column = require('./column');
 
 var _maxWidth = new WeakMap();
 
@@ -95,24 +95,19 @@ var Columns = function () {
       };
 
       if (width.diff > 0) {
-        var grownColumns;
-        var shrunkenColumns;
-        var salvagedSpace;
-
         (function () {
           var resizableColumns = _this.getResizable();
           resizableColumns.forEach(function (column) {
             column.generatedWidth = Math.floor(width.totalResizable / resizableColumns.length);
           });
 
-          grownColumns = _this.list.filter(function (column) {
+          var grownColumns = _this.list.filter(function (column) {
             return column.generatedWidth > column.contentWidth;
           });
-          shrunkenColumns = _this.list.filter(function (column) {
+          var shrunkenColumns = _this.list.filter(function (column) {
             return column.generatedWidth < column.contentWidth;
           });
-          salvagedSpace = 0;
-
+          var salvagedSpace = 0;
           grownColumns.forEach(function (column) {
             var currentGeneratedWidth = column.generatedWidth;
             column.generateWidth();
@@ -134,64 +129,6 @@ var Columns = function () {
   }]);
 
   return Columns;
-}();
-
-var _padding = new WeakMap();
-
-var Column = function () {
-  function Column(column) {
-    _classCallCheck(this, Column);
-
-    if (t.isDefined(column.name)) this.name = column.name;
-
-    if (t.isDefined(column.width)) this.width = column.width;
-    if (t.isDefined(column.maxWidth)) this.maxWidth = column.maxWidth;
-    if (t.isDefined(column.minWidth)) this.minWidth = column.minWidth;
-    if (t.isDefined(column.nowrap)) this.nowrap = column.nowrap;
-    if (t.isDefined(column.break)) this.break = column.break;
-    if (t.isDefined(column.contentWrappable)) this.contentWrappable = column.contentWrappable;
-    if (t.isDefined(column.contentWidth)) this.contentWidth = column.contentWidth;
-    if (t.isDefined(column.minContentWidth)) this.minContentWidth = column.minContentWidth;
-    this.padding = column.padding || { left: ' ', right: ' ' };
-    this.generatedWidth = null;
-  }
-
-  _createClass(Column, [{
-    key: 'isResizable',
-    value: function isResizable() {
-      return !this.isFixed();
-    }
-  }, {
-    key: 'isFixed',
-    value: function isFixed() {
-      return t.isDefined(this.width) || this.nowrap || !this.contentWrappable;
-    }
-  }, {
-    key: 'generateWidth',
-    value: function generateWidth() {
-      this.generatedWidth = this.width || this.contentWidth + this.padding.length();
-    }
-  }, {
-    key: 'generateMinWidth',
-    value: function generateMinWidth() {
-      this.minWidth = this.minContentWidth + this.padding.length();
-    }
-  }, {
-    key: 'padding',
-    set: function set(padding) {
-      _padding.set(this, new Padding(padding));
-    },
-    get: function get() {
-      return _padding.get(this);
-    }
-  }, {
-    key: 'wrappedContentWidth',
-    get: function get() {
-      return Math.max(this.generatedWidth - this.padding.length(), 0);
-    }
-  }]);
-
-  return Column;
 }();
 
 module.exports = require('./no-species')(Columns);

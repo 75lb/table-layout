@@ -1,9 +1,13 @@
 'use strict'
-var t = require('typical')
-var Padding = require('./padding')
-var arrayify = require('array-back')
+const t = require('typical')
+const arrayify = require('array-back')
+const Column = require('./column')
 
-var _maxWidth = new WeakMap()
+const _maxWidth = new WeakMap()
+
+/**
+ * @module columns
+ */
 
 class Columns {
   constructor (columns) {
@@ -40,7 +44,7 @@ class Columns {
   }
 
   add (column) {
-    var col = column instanceof Column ? column : new Column(column)
+    const col = column instanceof Column ? column : new Column(column)
     this.list.push(col)
     return col
   }
@@ -54,7 +58,7 @@ class Columns {
    * @chainable
    */
   autoSize () {
-    var maxWidth = _maxWidth.get(this)
+    const maxWidth = _maxWidth.get(this)
 
     /* size */
     this.list.forEach(column => {
@@ -73,7 +77,7 @@ class Columns {
       }
     })
 
-    var width = {
+    const width = {
       total: this.totalWidth(),
       view: maxWidth,
       diff: this.totalWidth() - maxWidth,
@@ -90,11 +94,11 @@ class Columns {
       })
 
       /* at this point, the generatedWidth should never end up bigger than the contentWidth */
-      var grownColumns = this.list.filter(column => column.generatedWidth > column.contentWidth)
-      var shrunkenColumns = this.list.filter(column => column.generatedWidth < column.contentWidth)
-      var salvagedSpace = 0
+      const grownColumns = this.list.filter(column => column.generatedWidth > column.contentWidth)
+      const shrunkenColumns = this.list.filter(column => column.generatedWidth < column.contentWidth)
+      let salvagedSpace = 0
       grownColumns.forEach(column => {
-        var currentGeneratedWidth = column.generatedWidth
+        const currentGeneratedWidth = column.generatedWidth
         column.generateWidth()
         salvagedSpace += currentGeneratedWidth - column.generatedWidth
       })
@@ -109,63 +113,4 @@ class Columns {
   }
 }
 
-var _padding = new WeakMap()
-
-// setting any column property which is a factor of the width should trigger autoSize()
-/**
- * @class
- * @classdesc Represents a table column
- */
-class Column {
-  constructor (column) {
-    /**
-     * @type {string}
-     */
-    if (t.isDefined(column.name)) this.name = column.name
-    /**
-     * @type {number}
-     */
-    if (t.isDefined(column.width)) this.width = column.width
-    if (t.isDefined(column.maxWidth)) this.maxWidth = column.maxWidth
-    if (t.isDefined(column.minWidth)) this.minWidth = column.minWidth
-    if (t.isDefined(column.nowrap)) this.nowrap = column.nowrap
-    if (t.isDefined(column.break)) this.break = column.break
-    if (t.isDefined(column.contentWrappable)) this.contentWrappable = column.contentWrappable
-    if (t.isDefined(column.contentWidth)) this.contentWidth = column.contentWidth
-    if (t.isDefined(column.minContentWidth)) this.minContentWidth = column.minContentWidth
-    this.padding = column.padding || { left: ' ', right: ' ' }
-    this.generatedWidth = null
-  }
-
-  set padding (padding) {
-    _padding.set(this, new Padding(padding))
-  }
-  get padding () {
-    return _padding.get(this)
-  }
-
-  get wrappedContentWidth () {
-    return Math.max(this.generatedWidth - this.padding.length(), 0)
-  }
-
-  isResizable () {
-    return !this.isFixed()
-  }
-
-  isFixed () {
-    return t.isDefined(this.width) || this.nowrap || !this.contentWrappable
-  }
-
-  generateWidth () {
-    this.generatedWidth = this.width || (this.contentWidth + this.padding.length())
-  }
-
-  generateMinWidth () {
-    this.minWidth = this.minContentWidth + this.padding.length()
-  }
-}
-
-/**
- * @module columns
- */
 module.exports = require('./no-species')(Columns)

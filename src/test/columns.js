@@ -1,12 +1,12 @@
 'use strict'
-var TestRunner = require('test-runner')
-var Columns = require('../es5/columns')
-var a = require('core-assert')
+const TestRunner = require('test-runner')
+const Columns = require('../lib/columns')
+const a = require('core-assert')
 
-var runner = new TestRunner()
+const runner = new TestRunner()
 
 runner.test('columns.autoSize(contentColumns, maxWidth)', function () {
-  var columns = new Columns([
+  const columns = new Columns([
     { name: 'one', contentWidth: 10, contentWrappable: true },
     { name: 'two', contentWidth: 20, contentWrappable: true }
   ])

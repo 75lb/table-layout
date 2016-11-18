@@ -1,12 +1,12 @@
 'use strict'
-var TestRunner = require('test-runner')
-var Rows = require('../es5/rows')
-var a = require('core-assert')
+const TestRunner = require('test-runner')
+const Rows = require('../lib/rows')
+const a = require('core-assert')
 
-var runner = new TestRunner()
+const runner = new TestRunner()
 
 runner.test('removeEmptyColumns', function () {
-  var input = [
+  const input = [
     { name: 'Lloyd', 'age': '' },
     { name: 'Roger', 'age': ' ' },
     { name: 'Amir' },

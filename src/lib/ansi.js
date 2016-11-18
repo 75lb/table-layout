@@ -1,6 +1,6 @@
 'use strict'
 
-var ansiEscapeSequence = /\u001b.*?m/g
+const ansiEscapeSequence = /\u001b.*?m/g
 
 /**
 @module ansi
