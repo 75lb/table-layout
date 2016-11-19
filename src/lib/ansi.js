@@ -3,8 +3,8 @@
 const ansiEscapeSequence = /\u001b.*?m/g
 
 /**
-@module ansi
-*/
+ * @module ansi
+ */
 exports.remove = remove
 exports.has = has
 exports.regexp = ansiEscapeSequence

@@ -2,6 +2,9 @@
 const t = require('typical')
 const arrayify = require('array-back')
 const Column = require('./column')
+const wrap = require('wordwrapjs')
+const Cell = require('./cell')
+const ansi = require('./ansi')
 
 const _maxWidth = new WeakMap()
 
@@ -111,6 +114,44 @@ class Columns {
 
     return this
   }
+
+  /**
+   * Factory method returning all distinct columns from input
+   * @param  {object[]} - input recordset
+   * @return {module:columns}
+   */
+  static getColumns (rows) {
+    var columns = new Columns()
+    arrayify(rows).forEach(row => {
+      for (let columnName in row) {
+        let column = columns.get(columnName)
+        if (!column) {
+          column = columns.add({ name: columnName, contentWidth: 0, minContentWidth: 0 })
+        }
+        let cell = new Cell(row[columnName], column)
+        let cellValue = cell.value
+        if (ansi.has(cellValue)) {
+          cellValue = ansi.remove(cellValue)
+        }
+
+        if (cellValue.length > column.contentWidth) column.contentWidth = cellValue.length
+
+        let longestWord = getLongestWord(cellValue)
+        if (longestWord > column.minContentWidth) {
+          column.minContentWidth = longestWord
+        }
+        if (!column.contentWrappable) column.contentWrappable = wrap.isWrappable(cellValue)
+      }
+    })
+    return columns
+  }
 }
 
-module.exports = require('./no-species')(Columns)
+function getLongestWord (line) {
+  const words = wrap.getWords(line)
+  return words.reduce((max, word) => {
+    return Math.max(word.length, max)
+  }, 0)
+}
+
+module.exports = Columns

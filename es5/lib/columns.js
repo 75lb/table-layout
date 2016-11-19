@@ -7,6 +7,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var t = require('typical');
 var arrayify = require('array-back');
 var Column = require('./column');
+var wrap = require('wordwrapjs');
+var Cell = require('./cell');
+var ansi = require('./ansi');
 
 var _maxWidth = new WeakMap();
 
@@ -126,9 +129,43 @@ var Columns = function () {
     set: function set(val) {
       _maxWidth.set(this, val);
     }
+  }], [{
+    key: 'getColumns',
+    value: function getColumns(rows) {
+      var columns = new Columns();
+      arrayify(rows).forEach(function (row) {
+        for (var columnName in row) {
+          var column = columns.get(columnName);
+          if (!column) {
+            column = columns.add({ name: columnName, contentWidth: 0, minContentWidth: 0 });
+          }
+          var cell = new Cell(row[columnName], column);
+          var cellValue = cell.value;
+          if (ansi.has(cellValue)) {
+            cellValue = ansi.remove(cellValue);
+          }
+
+          if (cellValue.length > column.contentWidth) column.contentWidth = cellValue.length;
+
+          var longestWord = getLongestWord(cellValue);
+          if (longestWord > column.minContentWidth) {
+            column.minContentWidth = longestWord;
+          }
+          if (!column.contentWrappable) column.contentWrappable = wrap.isWrappable(cellValue);
+        }
+      });
+      return columns;
+    }
   }]);
 
   return Columns;
 }();
 
-module.exports = require('./no-species')(Columns);
+function getLongestWord(line) {
+  var words = wrap.getWords(line);
+  return words.reduce(function (max, word) {
+    return Math.max(word.length, max);
+  }, 0);
+}
+
+module.exports = Columns;
