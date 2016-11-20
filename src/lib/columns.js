@@ -148,7 +148,7 @@ class Columns {
 }
 
 function getLongestWord (line) {
-  const words = wrap.getWords(line)
+  const words = wrap.getChunks(line)
   return words.reduce((max, word) => {
     return Math.max(word.length, max)
   }, 0)

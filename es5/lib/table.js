@@ -4,14 +4,11 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var wrap = require('wordwrapjs');
 var os = require('os');
 var Rows = require('./rows');
 var Columns = require('./columns');
 var ansi = require('./ansi');
 var extend = require('deep-extend');
-
-var _options = new WeakMap();
 
 var Table = function () {
   function Table(data, options) {
@@ -30,7 +27,7 @@ var Table = function () {
       columns: []
     };
 
-    _options.set(this, extend(defaults, options));
+    this.options = extend(defaults, options);
     this.load(data);
   }
 
@@ -39,7 +36,7 @@ var Table = function () {
     value: function load(data) {
       var _this = this;
 
-      var options = _options.get(this);
+      var options = this.options;
 
       if (options.ignoreEmptyColumns) {
         data = Rows.removeEmptyColumns(data);
@@ -51,7 +48,7 @@ var Table = function () {
       this.columns.maxWidth = options.maxWidth;
       this.columns.list.forEach(function (column) {
         if (options.padding) column.padding = options.padding;
-        if (options.nowrap) column.nowrap = options.nowrap;
+        if (options.noWrap) column.noWrap = options.noWrap;
         if (options.break) {
           column.break = options.break;
           column.contentWrappable = true;
@@ -68,7 +65,7 @@ var Table = function () {
           if (optionColumn.width) column.width = optionColumn.width;
           if (optionColumn.maxWidth) column.maxWidth = optionColumn.maxWidth;
           if (optionColumn.minWidth) column.minWidth = optionColumn.minWidth;
-          if (optionColumn.nowrap) column.nowrap = optionColumn.nowrap;
+          if (optionColumn.noWrap) column.noWrap = optionColumn.noWrap;
           if (optionColumn.break) {
             column.break = optionColumn.break;
             column.contentWrappable = true;
@@ -82,17 +79,21 @@ var Table = function () {
   }, {
     key: 'getWrapped',
     value: function getWrapped() {
+      var _this2 = this;
+
+      var wrap = require('wordwrapjs');
+
       this.columns.autoSize();
       return this.rows.list.map(function (row) {
         var line = [];
         row.forEach(function (cell, column) {
-          if (column.nowrap) {
+          if (column.noWrap) {
             line.push(cell.value.split(/\r\n?|\n/));
           } else {
             line.push(wrap.lines(cell.value, {
               width: column.wrappedContentWidth,
-              ignore: ansi.regexp,
-              break: column.break
+              break: column.break,
+              noTrim: _this2.options.noTrim
             }));
           }
         });
@@ -124,12 +125,12 @@ var Table = function () {
   }, {
     key: 'renderLines',
     value: function renderLines() {
-      var _this2 = this;
+      var _this3 = this;
 
       var lines = this.getLines();
       return lines.map(function (line) {
         return line.reduce(function (prev, cell, index) {
-          var column = _this2.columns.list[index];
+          var column = _this3.columns.list[index];
           return prev + padCell(cell, column.padding, column.generatedWidth);
         }, '');
       });

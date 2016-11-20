@@ -162,7 +162,7 @@ var Columns = function () {
 }();
 
 function getLongestWord(line) {
-  var words = wrap.getWords(line);
+  var words = wrap.getChunks(line);
   return words.reduce(function (max, word) {
     return Math.max(word.length, max);
   }, 0);

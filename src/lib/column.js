@@ -25,7 +25,7 @@ class Column {
     if (t.isDefined(column.width)) this.width = column.width
     if (t.isDefined(column.maxWidth)) this.maxWidth = column.maxWidth
     if (t.isDefined(column.minWidth)) this.minWidth = column.minWidth
-    if (t.isDefined(column.nowrap)) this.nowrap = column.nowrap
+    if (t.isDefined(column.noWrap)) this.noWrap = column.noWrap
     if (t.isDefined(column.break)) this.break = column.break
     if (t.isDefined(column.contentWrappable)) this.contentWrappable = column.contentWrappable
     if (t.isDefined(column.contentWidth)) this.contentWidth = column.contentWidth
@@ -41,6 +41,9 @@ class Column {
     return _padding.get(this)
   }
 
+  /**
+   * the width of the content (excluding padding) after being wrapped
+   */
   get wrappedContentWidth () {
     return Math.max(this.generatedWidth - this.padding.length(), 0)
   }
@@ -50,7 +53,7 @@ class Column {
   }
 
   isFixed () {
-    return t.isDefined(this.width) || this.nowrap || !this.contentWrappable
+    return t.isDefined(this.width) || this.noWrap || !this.contentWrappable
   }
 
   generateWidth () {

@@ -1,12 +1,9 @@
 'use strict'
-const wrap = require('wordwrapjs')
 const os = require('os')
 const Rows = require('./rows')
 const Columns = require('./columns')
 const ansi = require('./ansi')
 const extend = require('deep-extend')
-
-const _options = new WeakMap()
 
 /**
  * Recordset data in (array of objects), text table out.
@@ -17,7 +14,8 @@ class Table {
    * @param {object[]} - input data
    * @param [options] {object} - optional settings
    * @param [options.maxWidth] {number} - maximum width of layout
-   * @param [options.nowrap] {boolean} - disable wrapping on all columns
+   * @param [options.noWrap] {boolean} - disable wrapping on all columns
+   * @param [options.noTrim] {boolean} - disable line-trimming
    * @param [options.break] {boolean} - enable word-breaking on all columns
    * @param [options.columns] {module:table-layout~columnOption} - array of column options
    * @param [options.ignoreEmptyColumns] {boolean} - if set, empty columns or columns containing only whitespace are not rendered.
@@ -52,12 +50,12 @@ class Table {
       columns: []
     }
 
-    _options.set(this, extend(defaults, options))
+    this.options = extend(defaults, options)
     this.load(data)
   }
 
   load (data) {
-    let options = _options.get(this)
+    let options = this.options
 
     /* remove empty columns */
     if (options.ignoreEmptyColumns) {
@@ -71,7 +69,7 @@ class Table {
     this.columns.maxWidth = options.maxWidth
     this.columns.list.forEach(column => {
       if (options.padding) column.padding = options.padding
-      if (options.nowrap) column.nowrap = options.nowrap
+      if (options.noWrap) column.noWrap = options.noWrap
       if (options.break) {
         column.break = options.break
         column.contentWrappable = true
@@ -89,7 +87,7 @@ class Table {
         if (optionColumn.width) column.width = optionColumn.width
         if (optionColumn.maxWidth) column.maxWidth = optionColumn.maxWidth
         if (optionColumn.minWidth) column.minWidth = optionColumn.minWidth
-        if (optionColumn.nowrap) column.nowrap = optionColumn.nowrap
+        if (optionColumn.noWrap) column.noWrap = optionColumn.noWrap
         if (optionColumn.break) {
           column.break = optionColumn.break
           column.contentWrappable = true
@@ -102,17 +100,19 @@ class Table {
   }
 
   getWrapped () {
+    const wrap = require('wordwrapjs')
+
     this.columns.autoSize()
     return this.rows.list.map(row => {
       let line = []
       row.forEach((cell, column) => {
-        if (column.nowrap) {
+        if (column.noWrap) {
           line.push(cell.value.split(/\r\n?|\n/))
         } else {
           line.push(wrap.lines(cell.value, {
             width: column.wrappedContentWidth,
-            ignore: ansi.regexp,
-            break: column.break
+            break: column.break,
+            noTrim: this.options.noTrim
           }))
         }
       })

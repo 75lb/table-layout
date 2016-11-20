@@ -12,7 +12,7 @@ module.exports = tableLayout
  * @param {object[]} - input data
  * @param [options] {object} - optional settings
  * @param [options.maxWidth] {number} - maximum width of layout
- * @param [options.nowrap] {boolean} - disable wrapping on all columns
+ * @param [options.noWrap] {boolean} - disable wrapping on all columns
  * @param [options.break] {boolean} - enable word-breaking on all columns
  * @param [options.columns] {module:table-layout~columnOption} - array of column options
  * @param [options.ignoreEmptyColumns] {boolean} - if set, empty columns or columns containing only whitespace are not rendered.

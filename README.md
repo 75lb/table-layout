@@ -124,10 +124,10 @@ Recordset data in (array of objects), text table out.
 - data <code>Array.&lt;object&gt;</code> - input data
 - [options] <code>object</code> - optional settings
     - [.maxWidth] <code>number</code> - maximum width of layout
-    - [.nowrap] <code>boolean</code> - disable wrapping on all columns
+    - [.noWrap] <code>boolean</code> - disable wrapping on all columns
     - [.break] <code>boolean</code> - enable word-breaking on all columns
     - [.columns] <code>[columnOption](#module_table-layout--tableLayout..columnOption)</code> - array of column options
-    - [.ignoreEmptyColumns] <code>boolean</code>
+    - [.ignoreEmptyColumns] <code>boolean</code> - if set, empty columns or columns containing only whitespace are not rendered.
     - [.padding] <code>object</code> - Padding values to set on each column. Per-column overrides can be set in the `options.columns` array.
         - [.left] <code>string</code>
         - [.right] <code>string</code>
