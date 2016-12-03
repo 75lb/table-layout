@@ -1,5 +1,5 @@
 'use strict'
-const tableLayout = require('../../')
+const Table = require('../../')
 const tool = require('command-line-tool')
 const collectJson = require('collect-json')
 const extend = require('deep-extend')
@@ -25,32 +25,32 @@ if (options.width) {
   })
 }
 
+function getTable (json) {
+  let clOptions = {
+    maxWidth: process.stdout.columns,
+    padding: {}
+  }
+
+  if (t.isDefined(options['padding-left'])) clOptions.padding.left = options['padding-left']
+  if (t.isDefined(options['padding-right'])) clOptions.padding.right = options['padding-right']
+
+  /* split input into data and options */
+  if (!Array.isArray(json)) {
+    if (json.options && json.data) {
+      clOptions = extend(clOptions, json.options)
+      json = json.data
+    } else {
+      throw new Error('Invalid input data')
+    }
+  }
+
+  if (columns.length) clOptions.columns = columns
+
+  const table = new Table(json, clOptions)
+  return table.toString()
+}
+
 process.stdin
-  .pipe(collectJson(function (json) {
-    let clOptions = {
-      maxWidth: process.stdout.columns,
-      padding: {}
-    }
-
-    if (t.isDefined(options['padding-left'])) clOptions.padding.left = options['padding-left']
-    if (t.isDefined(options['padding-right'])) clOptions.padding.right = options['padding-right']
-
-    /* split input into data and options */
-    if (!Array.isArray(json)) {
-      if (json.options && json.data) {
-        clOptions = extend(clOptions, json.options)
-        json = json.data
-      } else {
-        throw new Error('Invalid input data')
-      }
-    }
-
-    if (columns.length) clOptions.columns = columns
-
-    const table = new tableLayout.Table(json, clOptions)
-    return options.lines
-      ? JSON.stringify(table.renderLines(), null, '  ') + '\n'
-      : table.toString()
-  }))
+  .pipe(collectJson(getTable))
   .on('error', tool.halt)
   .pipe(process.stdout)

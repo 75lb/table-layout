@@ -1,10 +1,6 @@
 'use strict';
 
 exports.definitions = [{
-  name: 'help',
-  type: Boolean,
-  alias: 'h'
-}, {
   name: 'width',
   type: String,
   multiple: true,
@@ -22,14 +18,14 @@ exports.definitions = [{
   alias: 'r',
   description: "One or more characters to pad the right of each column. Defaults to ' '."
 }, {
-  name: 'lines',
+  name: 'help',
   type: Boolean,
-  description: 'return an array of lines'
+  alias: 'h'
 }];
 
 exports.usageSections = [{
   header: 'table-layout',
-  content: 'Stylable text tables, handling ansi colour. Useful for console output.'
+  content: 'Styleable plain-text table generator. Useful for formatting console output.'
 }, {
   header: 'Synopsis',
   content: '$ cat [underline]{jsonfile} | table-layout [options]'

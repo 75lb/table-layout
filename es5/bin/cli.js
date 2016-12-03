@@ -1,6 +1,6 @@
 'use strict';
 
-var tableLayout = require('../../');
+var Table = require('../../');
 var tool = require('command-line-tool');
 var collectJson = require('collect-json');
 var extend = require('deep-extend');
@@ -26,7 +26,7 @@ if (options.width) {
   });
 }
 
-process.stdin.pipe(collectJson(function (json) {
+function getTable(json) {
   var clOptions = {
     maxWidth: process.stdout.columns,
     padding: {}
@@ -46,6 +46,8 @@ process.stdin.pipe(collectJson(function (json) {
 
   if (columns.length) clOptions.columns = columns;
 
-  var table = new tableLayout.Table(json, clOptions);
-  return options.lines ? JSON.stringify(table.renderLines(), null, '  ') + '\n' : table.toString();
-})).on('error', tool.halt).pipe(process.stdout);
+  var table = new Table(json, clOptions);
+  return table.toString();
+}
+
+process.stdin.pipe(collectJson(getTable)).on('error', tool.halt).pipe(process.stdout);
