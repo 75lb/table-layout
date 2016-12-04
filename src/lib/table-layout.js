@@ -11,6 +11,7 @@ const extend = require('deep-extend')
 
 /**
  * Recordset data in (array of objects), text table out.
+ * @alias module:table-layout
  */
 class Table {
 
@@ -28,12 +29,13 @@ class Table {
    * @param [options.padding.right] {string}
    * @alias module:table-layout
    * @example
-   * > tableLayout = require('table-layout')
+   * > Table = require('table-layout')
    * > jsonData = [{
    *   col1: 'Some text you wish to read in table layout',
    *   col2: 'And some more text in column two. '
    * }]
-   * > tableLayout(jsonData, { maxWidth: 30 })
+   * > table = new Table(jsonData, { maxWidth: 30 })
+   * > console.log(table.toString())
    *  Some text you  And some more
    *  wish to read   text in
    *  in table      column two.
@@ -140,6 +142,10 @@ class Table {
     return lines
   }
 
+  /**
+   * Identical to `.toString()` with the exception that the result will be an array of lines, rather than a single, multi-line string.
+   * @returns {string[]}
+   */
   renderLines () {
     var lines = this.getLines()
     return lines.map(line => {
@@ -151,7 +157,7 @@ class Table {
   }
 
   /**
-   * Returns the data as a text table.
+   * Returns the input data as a text table.
    * @returns {string}
    */
   toString () {

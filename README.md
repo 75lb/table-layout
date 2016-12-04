@@ -9,8 +9,8 @@ Generates plain-text tables from JSON recordset input (array of objects). Useful
 
 ## Synopsis
 
-```js
-> cont Table = require('table-layout')
+```
+> const Table = require('table-layout')
 > const issues = require('./example/issues')
 
 > const table = new Table(issues, { maxWidth: 60 })
@@ -36,23 +36,19 @@ Generates plain-text tables from JSON recordset input (array of objects). Useful
 ## API Reference
 
 * [table-layout](#module_table-layout)
-    * [~Table](#module_table-layout..Table)
-        * [new Table(data, [options])](#new_module_table-layout..Table_new)
-        * [table.toString()](#module_table-layout..Table+toString) ⇒ <code>string</code>
-    * [~columnOption](#module_table-layout..columnOption)
+    * [Table](#exp_module_table-layout--Table) ⏏
+        * [new Table(data, [options])](#new_module_table-layout--Table_new)
+        * [table.renderLines()](#module_table-layout--Table+renderLines) ⇒ <code>Array.&lt;string&gt;</code>
+        * [table.toString()](#module_table-layout--Table+toString) ⇒ <code>string</code>
+        * [Table~columnOption](#module_table-layout--Table..columnOption)
 
-<a name="module_table-layout..Table"></a>
+<a name="exp_module_table-layout--Table"></a>
 
-### table-layout~Table
+### Table ⏏
 Recordset data in (array of objects), text table out.
 
-**Kind**: inner class of <code>[table-layout](#module_table-layout)</code>  
-
-* [~Table](#module_table-layout..Table)
-    * [new Table(data, [options])](#new_module_table-layout..Table_new)
-    * [table.toString()](#module_table-layout..Table+toString) ⇒ <code>string</code>
-
-<a name="new_module_table-layout..Table_new"></a>
+**Kind**: Exported class  
+<a name="new_module_table-layout--Table_new"></a>
 
 #### new Table(data, [options])
 **Params**
@@ -63,7 +59,7 @@ Recordset data in (array of objects), text table out.
     - [.noWrap] <code>boolean</code> - disable wrapping on all columns
     - [.noTrim] <code>boolean</code> - disable line-trimming
     - [.break] <code>boolean</code> - enable word-breaking on all columns
-    - [.columns] <code>[columnOption](#module_table-layout..columnOption)</code> - array of column options
+    - [.columns] <code>[columnOption](#module_table-layout--Table..columnOption)</code> - array of column options
     - [.ignoreEmptyColumns] <code>boolean</code> - if set, empty columns or columns containing only whitespace are not rendered.
     - [.padding] <code>object</code> - Padding values to set on each column. Per-column overrides can be set in the `options.columns` array.
         - [.left] <code>string</code>
@@ -71,27 +67,34 @@ Recordset data in (array of objects), text table out.
 
 **Example**  
 ```js
-> tableLayout = require('table-layout')
+> Table = require('table-layout')
 > jsonData = [{
   col1: 'Some text you wish to read in table layout',
   col2: 'And some more text in column two. '
 }]
-> tableLayout(jsonData, { maxWidth: 30 })
+> table = new Table(jsonData, { maxWidth: 30 })
+> console.log(table.toString())
  Some text you  And some more
  wish to read   text in
  in table      column two.
  layout
 ```
-<a name="module_table-layout..Table+toString"></a>
+<a name="module_table-layout--Table+renderLines"></a>
+
+#### table.renderLines() ⇒ <code>Array.&lt;string&gt;</code>
+Identical to `.toString()` with the exception that the result will be an array of lines, rather than a single, multi-line string.
+
+**Kind**: instance method of <code>[Table](#exp_module_table-layout--Table)</code>  
+<a name="module_table-layout--Table+toString"></a>
 
 #### table.toString() ⇒ <code>string</code>
-Returns the data as a text table.
+Returns the input data as a text table.
 
-**Kind**: instance method of <code>[Table](#module_table-layout..Table)</code>  
-<a name="module_table-layout..columnOption"></a>
+**Kind**: instance method of <code>[Table](#exp_module_table-layout--Table)</code>  
+<a name="module_table-layout--Table..columnOption"></a>
 
-### table-layout~columnOption
-**Kind**: inner typedef of <code>[table-layout](#module_table-layout)</code>  
+#### Table~columnOption
+**Kind**: inner typedef of <code>[Table](#exp_module_table-layout--Table)</code>  
 **Properties**
 
 | Name | Type | Description |
