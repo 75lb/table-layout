@@ -59,11 +59,11 @@ Recordset data in (array of objects), text table out.
     - [.noWrap] <code>boolean</code> - disable wrapping on all columns
     - [.noTrim] <code>boolean</code> - disable line-trimming
     - [.break] <code>boolean</code> - enable word-breaking on all columns
-    - [.columns] <code>[columnOption](#module_table-layout--Table..columnOption)</code> - array of column options
+    - [.columns] <code>[columnOption](#module_table-layout--Table..columnOption)</code> - array of column-specific options
     - [.ignoreEmptyColumns] <code>boolean</code> - if set, empty columns or columns containing only whitespace are not rendered.
     - [.padding] <code>object</code> - Padding values to set on each column. Per-column overrides can be set in the `options.columns` array.
-        - [.left] <code>string</code>
-        - [.right] <code>string</code>
+        - [.left] <code>string</code> - Defaults to a single space.
+        - [.right] <code>string</code> - Defaults to a single space.
 
 **Example**  
 ```js
@@ -100,7 +100,7 @@ Returns the input data as a text table.
 | Name | Type | Description |
 | --- | --- | --- |
 | name | <code>string</code> | column name, must match a property name in the input |
-| width | <code>number</code> | column width |
+| width | <code>number</code> | A specific column width. Supply either this or a min and/or max width. |
 | minWidth | <code>number</code> | column min width |
 | maxWidth | <code>number</code> | column max width |
 | nowrap | <code>boolean</code> | disable wrapping for this column |

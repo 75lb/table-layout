@@ -22,11 +22,11 @@ class Table {
    * @param [options.noWrap] {boolean} - disable wrapping on all columns
    * @param [options.noTrim] {boolean} - disable line-trimming
    * @param [options.break] {boolean} - enable word-breaking on all columns
-   * @param [options.columns] {module:table-layout~columnOption} - array of column options
+   * @param [options.columns] {module:table-layout~columnOption} - array of column-specific options
    * @param [options.ignoreEmptyColumns] {boolean} - if set, empty columns or columns containing only whitespace are not rendered.
    * @param [options.padding] {object} - Padding values to set on each column. Per-column overrides can be set in the `options.columns` array.
-   * @param [options.padding.left] {string}
-   * @param [options.padding.right] {string}
+   * @param [options.padding.left] {string} - Defaults to a single space.
+   * @param [options.padding.right] {string} - Defaults to a single space.
    * @alias module:table-layout
    * @example
    * > Table = require('table-layout')
@@ -186,7 +186,7 @@ function padCell (cellValue, padding, width) {
 /**
  * @typedef module:table-layout~columnOption
  * @property name {string} - column name, must match a property name in the input
- * @property [width] {number} - column width
+ * @property [width] {number} - A specific column width. Supply either this or a min and/or max width.
  * @property [minWidth] {number} - column min width
  * @property [maxWidth] {number} - column max width
  * @property [nowrap] {boolean} - disable wrapping for this column
