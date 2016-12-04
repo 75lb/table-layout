@@ -15,6 +15,7 @@ Generates plain-text tables from JSON recordset input (array of objects). Useful
 
 > const table = new Table(issues, { maxWidth: 60 })
 > console.log(table.toString())
+
  15134  Coveralls has no source available   ndelangen     0
  15133  Fixing --preserve-symlinks.         phestermcs    0
         Enhancing node to exploit.
