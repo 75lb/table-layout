@@ -1,11 +1,14 @@
 'use strict'
 const TestRunner = require('test-runner')
-const tableLayout = require('../../')
+const Table = require('../../')
 const a = require('core-assert')
 
 const runner = new TestRunner()
 
 runner.test('table.lines(): no data', function () {
-  a.deepEqual(tableLayout.lines([]), [])
-  a.deepEqual(tableLayout.lines(), [])
+  let table = new Table([])
+  a.deepEqual(table.getLines([]), [])
+
+  table = new Table([])
+  a.deepEqual(table.getLines(), [])
 })

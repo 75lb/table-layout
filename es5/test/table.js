@@ -1,7 +1,7 @@
 'use strict';
 
 var TestRunner = require('test-runner');
-var Table = require('../../').Table;
+var Table = require('../../');
 var os = require('os');
 var a = require('core-assert');
 

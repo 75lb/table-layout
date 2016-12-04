@@ -1,6 +1,6 @@
 'use strict'
 const TestRunner = require('test-runner')
-const Table = require('../../').Table
+const Table = require('../../')
 const os = require('os')
 const a = require('core-assert')
 
