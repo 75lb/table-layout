@@ -1,7 +1,7 @@
 'use strict'
 const TestRunner = require('test-runner')
 const Columns = require('../lib/columns')
-const a = require('core-assert')
+const a = require('assert')
 
 const runner = new TestRunner()
 

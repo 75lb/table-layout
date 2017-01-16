@@ -1,8 +1,8 @@
 'use strict'
 const TestRunner = require('test-runner')
-const Table = require('../../')
+const Table = require('../')
 const os = require('os')
-const a = require('core-assert')
+const a = require('assert')
 
 const runner = new TestRunner()
 
