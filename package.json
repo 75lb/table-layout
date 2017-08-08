@@ -1,7 +1,7 @@
 {
   "name": "table-layout",
   "author": "Lloyd Brookes <75pound@gmail.com>",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Stylable text tables, handling ansi colour. Useful for console output.",
   "repository": "https://github.com/75lb/table-layout.git",
   "license": "MIT",
