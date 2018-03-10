@@ -1,10 +1,5 @@
 'use strict'
 const os = require('os')
-const Rows = require('./rows')
-const Columns = require('./columns')
-const ansi = require('./ansi')
-const extend = require('deep-extend')
-const padEnd = require('lodash.padend')
 
 /**
  * @module table-layout
@@ -13,6 +8,18 @@ const padEnd = require('lodash.padend')
 /**
  * Recordset data in (array of objects), text table out.
  * @alias module:table-layout
+ * @example
+ * > Table = require('table-layout')
+ * > jsonData = [{
+ *   col1: 'Some text you wish to read in table layout',
+ *   col2: 'And some more text in column two. '
+ * }]
+ * > table = new Table(jsonData, { maxWidth: 30 })
+ * > console.log(table.toString())
+ *  Some text you  And some more
+ *  wish to read   text in
+ *  in table      column two.
+ *  layout
  */
 class Table {
 
@@ -29,18 +36,6 @@ class Table {
    * @param [options.padding.left] {string} - Defaults to a single space.
    * @param [options.padding.right] {string} - Defaults to a single space.
    * @alias module:table-layout
-   * @example
-   * > Table = require('table-layout')
-   * > jsonData = [{
-   *   col1: 'Some text you wish to read in table layout',
-   *   col2: 'And some more text in column two. '
-   * }]
-   * > table = new Table(jsonData, { maxWidth: 30 })
-   * > console.log(table.toString())
-   *  Some text you  And some more
-   *  wish to read   text in
-   *  in table      column two.
-   *  layout
    */
   constructor (data, options) {
     let ttyWidth = (process && (process.stdout.columns || process.stderr.columns)) || 0
@@ -57,11 +52,15 @@ class Table {
       columns: []
     }
 
+    const extend = require('deep-extend')
     this.options = extend(defaults, options)
     this.load(data)
   }
 
   load (data) {
+    const Rows = require('./lib/rows')
+    const Columns = require('./lib/columns')
+
     let options = this.options
 
     /* remove empty columns */
@@ -177,6 +176,8 @@ function getLongestArray (arrays) {
 }
 
 function padCell (cellValue, padding, width) {
+  const ansi = require('./lib/ansi')
+  const padEnd = require('lodash.padend')
   var ansiLength = cellValue.length - ansi.remove(cellValue).length
   cellValue = cellValue || ''
   return (padding.left || '') +

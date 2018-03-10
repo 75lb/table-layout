@@ -60,7 +60,7 @@ Recordset data in (array of objects), text table out.
     - [.noWrap] <code>boolean</code> - disable wrapping on all columns
     - [.noTrim] <code>boolean</code> - disable line-trimming
     - [.break] <code>boolean</code> - enable word-breaking on all columns
-    - [.columns] <code>[columnOption](#module_table-layout--Table..columnOption)</code> - array of column-specific options
+    - [.columns] [<code>columnOption</code>](#module_table-layout--Table..columnOption) - array of column-specific options
     - [.ignoreEmptyColumns] <code>boolean</code> - if set, empty columns or columns containing only whitespace are not rendered.
     - [.padding] <code>object</code> - Padding values to set on each column. Per-column overrides can be set in the `options.columns` array.
         - [.left] <code>string</code> - Defaults to a single space.
@@ -85,32 +85,32 @@ Recordset data in (array of objects), text table out.
 #### table.renderLines() ⇒ <code>Array.&lt;string&gt;</code>
 Identical to `.toString()` with the exception that the result will be an array of lines, rather than a single, multi-line string.
 
-**Kind**: instance method of <code>[Table](#exp_module_table-layout--Table)</code>  
+**Kind**: instance method of [<code>Table</code>](#exp_module_table-layout--Table)  
 <a name="module_table-layout--Table+toString"></a>
 
 #### table.toString() ⇒ <code>string</code>
 Returns the input data as a text table.
 
-**Kind**: instance method of <code>[Table](#exp_module_table-layout--Table)</code>  
+**Kind**: instance method of [<code>Table</code>](#exp_module_table-layout--Table)  
 <a name="module_table-layout--Table..columnOption"></a>
 
 #### Table~columnOption
-**Kind**: inner typedef of <code>[Table](#exp_module_table-layout--Table)</code>  
+**Kind**: inner typedef of [<code>Table</code>](#exp_module_table-layout--Table)  
 **Properties**
 
 | Name | Type | Description |
 | --- | --- | --- |
 | name | <code>string</code> | column name, must match a property name in the input |
-| width | <code>number</code> | A specific column width. Supply either this or a min and/or max width. |
-| minWidth | <code>number</code> | column min width |
-| maxWidth | <code>number</code> | column max width |
-| nowrap | <code>boolean</code> | disable wrapping for this column |
-| break | <code>boolean</code> | enable word-breaking for this columns |
-| padding | <code>object</code> | padding options |
-| padding.left | <code>string</code> | a string to pad the left of each cell (default: `' '`) |
-| padding.right | <code>string</code> | a string to pad the right of each cell (default: `' '`) |
+| [width] | <code>number</code> | A specific column width. Supply either this or a min and/or max width. |
+| [minWidth] | <code>number</code> | column min width |
+| [maxWidth] | <code>number</code> | column max width |
+| [nowrap] | <code>boolean</code> | disable wrapping for this column |
+| [break] | <code>boolean</code> | enable word-breaking for this columns |
+| [padding] | <code>object</code> | padding options |
+| [padding.left] | <code>string</code> | a string to pad the left of each cell (default: `' '`) |
+| [padding.right] | <code>string</code> | a string to pad the right of each cell (default: `' '`) |
 
 
 * * *
 
-&copy; 2015-16 Lloyd Brookes \<75pound@gmail.com\>. Documented by [jsdoc-to-markdown](https://github.com/jsdoc2md/jsdoc-to-markdown).
+&copy; 2015-18 Lloyd Brookes \<75pound@gmail.com\>. Documented by [jsdoc-to-markdown](https://github.com/jsdoc2md/jsdoc-to-markdown).

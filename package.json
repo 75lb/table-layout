@@ -5,7 +5,6 @@
   "description": "Stylable text tables, handling ansi colour. Useful for console output.",
   "repository": "https://github.com/75lb/table-layout.git",
   "license": "MIT",
-  "main": "lib/table-layout.js",
   "keywords": [
     "wrap",
     "terminal",
@@ -20,7 +19,7 @@
   },
   "scripts": {
     "test": "test-runner test/*.js",
-    "docs": "jsdoc2md -t jsdoc2md/README.hbs lib/*.js -p list --member-index-format list > README.md; echo",
+    "docs": "jsdoc2md -t jsdoc2md/README.hbs index.js -p list --member-index-format list > README.md; echo",
     "cover": "istanbul cover test-runner -- test/*.js && cat coverage/lcov.info | ./node_modules/.bin/coveralls && rm -rf coverage; echo"
   },
   "dependencies": {
@@ -31,8 +30,8 @@
     "wordwrapjs": "^3.0.0"
   },
   "devDependencies": {
-    "coveralls": "^2.13.1",
-    "jsdoc-to-markdown": "^3.0.0",
-    "test-runner": "~0.4.0"
+    "coveralls": "^3.0.0",
+    "jsdoc-to-markdown": "^4.0.1",
+    "test-runner": "~0.5.0"
   }
 }
