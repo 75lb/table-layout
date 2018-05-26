@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "array-back": "^2.0.0",
-    "deep-extend": "~0.5.0",
+    "deep-extend": "~0.5.1",
     "lodash.padend": "^4.6.1",
     "typical": "^2.6.1",
     "wordwrapjs": "^3.0.0"
