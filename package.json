@@ -30,8 +30,12 @@
     "wordwrapjs": "^3.0.0"
   },
   "devDependencies": {
-    "coveralls": "^3.0.1",
+    "coveralls": "^3.0.4",
     "jsdoc-to-markdown": "^4.0.1",
     "test-runner": "~0.5.0"
-  }
+  },
+  "files": [
+    "index.js",
+    "lib/*.js"
+  ]
 }
