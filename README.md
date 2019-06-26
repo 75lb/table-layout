@@ -5,7 +5,6 @@
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](https://github.com/feross/standard)
 
 # table-layout
-
 Generates plain-text tables from JSON recordset input (array of objects). Useful for presenting text in column layout or data in table layout in text-based user interfaces. Also [available as a command-line tool](https://github.com/75lb/table-layout-cli).
 
 ## Synopsis

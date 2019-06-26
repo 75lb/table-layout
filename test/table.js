@@ -80,3 +80,29 @@ tom.test('table.renderLines() 3', function () {
   const table = new Table(fixture.data, fixture.options)
   a.deepStrictEqual(table.renderLines(), result)
 })
+
+tom.test('column options', function () {
+  const options = {
+    maxWidth: 40,
+    padding: { 'left': '<', 'right': '>'},
+    columns: [
+      { name: 'one' },
+      { name: 'two', width: 10 }
+    ]
+  }
+
+  const data = [
+    { one: 'row 1 column one .. .. ..', two: 3000 },
+    { one: true, two: null },
+    { one: 'yeah' }
+  ]
+
+  const expected = [
+    '<row 1 column one .. .. ..><3000    >',
+    '<true                     ><null    >',
+    '<yeah                     ><        >'
+  ]
+
+  const table = new Table(data, options)
+  a.deepStrictEqual(table.renderLines(), expected)
+})
