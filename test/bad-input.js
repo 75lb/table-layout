@@ -1,14 +1,13 @@
-'use strict'
-const TestRunner = require('test-runner')
+const Tom = require('test-runner').Tom
 const Table = require('../')
 const a = require('assert')
 
-const runner = new TestRunner()
+const tom = module.exports = new Tom('bad-input')
 
-runner.test('table.lines(): no data', function () {
+tom.test('table.lines(): no data', function () {
   let table = new Table([])
-  a.deepEqual(table.getLines([]), [])
+  a.deepStrictEqual(table.getLines([]), [])
 
   table = new Table([])
-  a.deepEqual(table.getLines(), [])
+  a.deepStrictEqual(table.getLines(), [])
 })

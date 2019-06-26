@@ -1,11 +1,10 @@
-'use strict'
-const TestRunner = require('test-runner')
+const Tom = require('test-runner').Tom
 const Columns = require('../lib/columns')
 const a = require('assert')
 
-const runner = new TestRunner()
+const tom = module.exports = new Tom('columns')
 
-runner.test('columns.autoSize(contentColumns, maxWidth)', function () {
+tom.test('columns.autoSize(contentColumns, maxWidth)', function () {
   const columns = new Columns([
     { name: 'one', contentWidth: 10, contentWrappable: true },
     { name: 'two', contentWidth: 20, contentWrappable: true }

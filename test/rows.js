@@ -1,11 +1,10 @@
-'use strict'
-const TestRunner = require('test-runner')
+const Tom = require('test-runner').Tom
 const Rows = require('../lib/rows')
 const a = require('assert')
 
-const runner = new TestRunner()
+const tom = module.exports = new Tom('rows')
 
-runner.test('removeEmptyColumns', function () {
+tom.test('removeEmptyColumns', function () {
   const input = [
     { name: 'Lloyd', 'age': '' },
     { name: 'Roger', 'age': ' ' },
@@ -13,7 +12,7 @@ runner.test('removeEmptyColumns', function () {
     { name: 'Frank' },
     { name: 'Amy' }
   ]
-  a.deepEqual(
+  a.deepStrictEqual(
     Rows.removeEmptyColumns(input),
     [
       { name: 'Lloyd' },

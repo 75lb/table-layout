@@ -1,12 +1,11 @@
-'use strict'
-const TestRunner = require('test-runner')
+const Tom = require('test-runner').Tom
 const Table = require('../')
 const os = require('os')
 const a = require('assert')
 
-const runner = new TestRunner()
+const tom = module.exports = new Tom('table')
 
-runner.test('new Table()', function () {
+tom.test('new Table()', function () {
   const fixture = require('./fixture/simple-maxWidth')
   const table = new Table(fixture.data, fixture.options)
 
@@ -14,39 +13,39 @@ runner.test('new Table()', function () {
   a.strictEqual(table.columns.list.length, 2)
 })
 
-runner.test('table.getWrapped()', function () {
+tom.test('table.getWrapped()', function () {
   const fixture = require('./fixture/simple-maxWidth')
   const table = new Table(fixture.data, fixture.options)
 
-  a.deepEqual(table.getWrapped(), [
+  a.deepStrictEqual(table.getWrapped(), [
     [ ['row 1 column one ..', '.. ..'], ['r1 c2'] ],
     [ ['r2 c1'], ['row two column 2'] ]
   ])
 })
 
-runner.test('table.getLines()', function () {
+tom.test('table.getLines()', function () {
   const fixture = require('./fixture/simple-maxWidth')
   const table = new Table(fixture.data, fixture.options)
 
-  a.deepEqual(table.getLines(), [
+  a.deepStrictEqual(table.getLines(), [
     [ 'row 1 column one ..', 'r1 c2' ],
     [ '.. ..', '' ],
     [ 'r2 c1', 'row two column 2' ]
   ])
 })
 
-runner.test('table.renderLines()', function () {
+tom.test('table.renderLines()', function () {
   const fixture = require('./fixture/simple-maxWidth')
   const table = new Table(fixture.data, fixture.options)
 
-  a.deepEqual(table.renderLines(), [
+  a.deepStrictEqual(table.renderLines(), [
     '<row 1 column one .. ><r1 c2           >',
     '<.. ..               ><                >',
     '<r2 c1               ><row two column 2>'
   ])
 })
 
-runner.test('table.toString()', function () {
+tom.test('table.toString()', function () {
   const fixture = require('./fixture/simple-maxWidth')
   const result = [
     '<row 1 column one .. ><r1 c2           >',
@@ -58,7 +57,7 @@ runner.test('table.toString()', function () {
   a.strictEqual(table.toString(), result)
 })
 
-runner.test('table.renderLines() 2', function () {
+tom.test('table.renderLines() 2', function () {
   const fixture = require('./fixture/simple-maxWidth')
   const result = [
     '<row 1 column one .. ><r1 c2           >',
@@ -67,10 +66,10 @@ runner.test('table.renderLines() 2', function () {
   ]
 
   const table = new Table(fixture.data, fixture.options)
-  a.deepEqual(table.renderLines(), result)
+  a.deepStrictEqual(table.renderLines(), result)
 })
 
-runner.test('table.renderLines() 3', function () {
+tom.test('table.renderLines() 3', function () {
   const fixture = require('./fixture/primatives')
   const result = [
     '<row 1 column one .. .. ..><3000>',
@@ -79,5 +78,5 @@ runner.test('table.renderLines() 3', function () {
   ]
 
   const table = new Table(fixture.data, fixture.options)
-  a.deepEqual(table.renderLines(), result)
+  a.deepStrictEqual(table.renderLines(), result)
 })
