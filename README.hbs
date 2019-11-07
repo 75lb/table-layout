@@ -9,13 +9,49 @@ Generates plain-text tables from JSON recordset input (array of objects). Useful
 
 ## Synopsis
 
+Where input looks like this:
+
+```json
+[
+  {
+    "number": 15134,
+    "title": "Coveralls has no source available ",
+    "login": "ndelangen",
+    "comments": 0
+  },
+  {
+    "number": 15133,
+    "title": "Fixing --preserve-symlinks. Enhancing node to exploit.",
+    "login": "phestermcs",
+    "comments": 0
+  },
+  {
+    "number": 15131,
+    "title": "Question - Confused about NPM's local installation philosophy",
+    "login": "the1mills",
+    "comments": 0
+  },
+  {
+    "number": 15130,
+    "title": "Question - global npm cache directory if user is root?",
+    "login": "ORESoftware",
+    "comments": 0
+  }
+]
 ```
-> const Table = require('table-layout')
-> const issues = require('./example/issues')
 
-> const table = new Table(issues, { maxWidth: 60 })
-> console.log(table.toString())
+This code...
 
+```js
+const Table = require('table-layout')
+const issues = require('./issues.json')
+const table = new Table(issues, { maxWidth: 60 })
+console.log(table.toString())
+```
+
+...produces this output:
+
+```
  15134  Coveralls has no source available   ndelangen     0
  15133  Fixing --preserve-symlinks.         phestermcs    0
         Enhancing node to exploit.
@@ -31,7 +67,6 @@ Generates plain-text tables from JSON recordset input (array of objects). Useful
  15067  npm "SELF_SIGNED_CERT_IN_CHAIN"     LegendsLyfe   3
         error when installing discord.js
         with .log
-
 ```
 
 ## API Reference
