@@ -36,7 +36,7 @@ class Table {
    * @alias module:table-layout
    */
   constructor (data, options) {
-    let ttyWidth = (process && (process.stdout.columns || process.stderr.columns)) || 0
+    let ttyWidth = (process && process.stdout && (process.stdout.columns || process.stderr.columns)) || 0
 
     /* Windows quirk workaround  */
     if (ttyWidth && os.platform() === 'win32') ttyWidth--
