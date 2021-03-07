@@ -34,7 +34,7 @@
     "test-runner": "^0.8.13"
   },
   "files": [
-    "index.js",
-    "lib/*.js"
+    "index.mjs",
+    "lib/*.mjs"
   ]
 }
