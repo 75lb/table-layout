@@ -1,8 +1,8 @@
-import extend from 'deep-extend'
 import Rows from './lib/rows.mjs'
 import Columns from './lib/columns.mjs'
 import wrap from 'wordwrapjs'
 import { remove } from './lib/ansi.mjs'
+import t from 'typical/index.mjs'
 
 /**
  * @module table-layout
@@ -40,7 +40,7 @@ class Table {
    * @param [options.eol] {string} - EOL character used. Defaults to `\n`.
    * @alias module:table-layout
    */
-  constructor (data, options) {
+  constructor (data, options = {}) {
     const defaults = {
       padding: {
         left: ' ',
@@ -50,8 +50,13 @@ class Table {
       columns: [],
       eol: '\n'
     }
-
-    this.options = extend(defaults, options)
+    if (!options.padding) options.padding = defaults.padding
+    if (options.padding && t.isUndefined(options.padding.left)) options.padding.left = defaults.padding.left
+    if (options.padding && t.isUndefined(options.padding.right)) options.padding.right = defaults.padding.right
+    if (t.isUndefined(options.maxWidth)) options.maxWidth = defaults.maxWidth
+    if (t.isUndefined(options.eol)) options.eol = defaults.eol
+    options.columns = options.columns || []
+    this.options = options
     this.load(data)
   }
 

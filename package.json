@@ -24,7 +24,6 @@
   },
   "dependencies": {
     "array-back": "^5.0.0",
-    "deep-extend": "~0.6.0",
     "typical": "^6.0.1",
     "wordwrapjs": "^4.0.0"
   },
