@@ -1,4 +1,9 @@
-const os = require('os')
+import os from 'os'
+import extend from 'deep-extend'
+import Rows from './lib/rows.mjs'
+import Columns from './lib/columns.mjs'
+import wrap from 'wordwrapjs'
+import { remove } from './lib/ansi.mjs'
 
 /**
  * @module table-layout
@@ -41,7 +46,7 @@ class Table {
     /* Windows quirk workaround  */
     if (ttyWidth && os.platform() === 'win32') ttyWidth--
 
-    let defaults = {
+    const defaults = {
       padding: {
         left: ' ',
         right: ' '
@@ -50,16 +55,12 @@ class Table {
       columns: []
     }
 
-    const extend = require('deep-extend')
     this.options = extend(defaults, options)
     this.load(data)
   }
 
   load (data) {
-    const Rows = require('./lib/rows')
-    const Columns = require('./lib/columns')
-
-    let options = this.options
+    const options = this.options
 
     /* remove empty columns */
     if (options.ignoreEmptyColumns) {
@@ -82,7 +83,7 @@ class Table {
 
     /* load column properties from options.columns */
     options.columns.forEach(optionColumn => {
-      let column = this.columns.get(optionColumn.name)
+      const column = this.columns.get(optionColumn.name)
       if (column) {
         if (optionColumn.padding) {
           column.padding.left = optionColumn.padding.left
@@ -104,11 +105,9 @@ class Table {
   }
 
   getWrapped () {
-    const wrap = require('wordwrapjs')
-
     this.columns.autoSize()
     return this.rows.list.map(row => {
-      let line = []
+      const line = []
       row.forEach((cell, column) => {
         if (column.noWrap) {
           line.push(cell.value.split(/\r\n?|\n/))
@@ -125,12 +124,12 @@ class Table {
   }
 
   getLines () {
-    var wrappedLines = this.getWrapped()
-    var lines = []
+    const wrappedLines = this.getWrapped()
+    const lines = []
     wrappedLines.forEach(wrapped => {
-      let mostLines = getLongestArray(wrapped)
+      const mostLines = getLongestArray(wrapped)
       for (let i = 0; i < mostLines; i++) {
-        let line = []
+        const line = []
         wrapped.forEach(cell => {
           line.push(cell[i] || '')
         })
@@ -145,10 +144,10 @@ class Table {
    * @returns {string[]}
    */
   renderLines () {
-    var lines = this.getLines()
+    const lines = this.getLines()
     return lines.map(line => {
       return line.reduce((prev, cell, index) => {
-        let column = this.columns.list[index]
+        const column = this.columns.list[index]
         return prev + padCell(cell, column.padding, column.generatedWidth)
       }, '')
     })
@@ -169,13 +168,12 @@ class Table {
  * @private
  */
 function getLongestArray (arrays) {
-  var lengths = arrays.map(array => array.length)
+  const lengths = arrays.map(array => array.length)
   return Math.max.apply(null, lengths)
 }
 
 function padCell (cellValue, padding, width) {
-  const ansi = require('./lib/ansi')
-  var ansiLength = cellValue.length - ansi.remove(cellValue).length
+  const ansiLength = cellValue.length - remove(cellValue).length
   cellValue = cellValue || ''
   return (padding.left || '') +
   cellValue.padEnd(width - padding.length() + ansiLength) + (padding.right || '')
@@ -193,5 +191,4 @@ function padCell (cellValue, padding, width) {
  * @property [padding.left] {string} - a string to pad the left of each cell (default: `' '`)
  * @property [padding.right] {string} - a string to pad the right of each cell (default: `' '`)
  */
-
-module.exports = Table
+export default Table

@@ -1,13 +1,14 @@
-const Tom = require('test-runner').Tom
-const Rows = require('../lib/rows')
-const a = require('assert')
+import TestRunner from 'test-runner'
+import assert from 'assert'
+import Rows from '../lib/rows.mjs'
+const a = assert.strict
 
-const tom = module.exports = new Tom('rows')
+const tom = new TestRunner.Tom()
 
 tom.test('removeEmptyColumns', function () {
   const input = [
-    { name: 'Lloyd', 'age': '' },
-    { name: 'Roger', 'age': ' ' },
+    { name: 'Lloyd', age: '' },
+    { name: 'Roger', age: ' ' },
     { name: 'Amir' },
     { name: 'Frank' },
     { name: 'Amy' }
@@ -23,3 +24,5 @@ tom.test('removeEmptyColumns', function () {
     ]
   )
 })
+
+export default tom

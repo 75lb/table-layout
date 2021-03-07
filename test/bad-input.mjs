@@ -1,8 +1,9 @@
-const Tom = require('test-runner').Tom
-const Table = require('../')
-const a = require('assert').strict
+import TestRunner from 'test-runner'
+import assert from 'assert'
+import Table from '../index.mjs'
+const a = assert.strict
 
-const tom = module.exports = new Tom('bad-input')
+const tom = new TestRunner.Tom()
 
 tom.test('table.lines(): no data', function () {
   let table = new Table([])
@@ -25,3 +26,5 @@ tom.test('process.stdout.columns not available: default maxWidth to 80', async f
   process.stdout.columns = prevOut
   process.stderr.columns = prevErr
 })
+
+export default tom

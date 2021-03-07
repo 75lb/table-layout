@@ -1,8 +1,9 @@
-const Tom = require('test-runner').Tom
-const Columns = require('../lib/columns')
-const a = require('assert')
+import TestRunner from 'test-runner'
+import assert from 'assert'
+import Columns from '../lib/columns.mjs'
+const a = assert.strict
 
-const tom = module.exports = new Tom('columns')
+const tom = new TestRunner.Tom()
 
 tom.test('columns.autoSize(contentColumns, maxWidth)', function () {
   const columns = new Columns([
@@ -15,3 +16,5 @@ tom.test('columns.autoSize(contentColumns, maxWidth)', function () {
   a.strictEqual(columns.list[0].generatedWidth, 12)
   a.strictEqual(columns.list[1].generatedWidth, 18)
 })
+
+export default tom
