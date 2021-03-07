@@ -1,4 +1,3 @@
-import os from 'os'
 import extend from 'deep-extend'
 import Rows from './lib/rows.mjs'
 import Columns from './lib/columns.mjs'
@@ -38,21 +37,18 @@ class Table {
    * @param [options.padding] {object} - Padding values to set on each column. Per-column overrides can be set in the `options.columns` array.
    * @param [options.padding.left] {string} - Defaults to a single space.
    * @param [options.padding.right] {string} - Defaults to a single space.
+   * @param [options.eol] {string} - EOL character used. Defaults to `\n`.
    * @alias module:table-layout
    */
   constructor (data, options) {
-    let ttyWidth = (process && (process.stdout.columns || process.stderr.columns)) || 0
-
-    /* Windows quirk workaround  */
-    if (ttyWidth && os.platform() === 'win32') ttyWidth--
-
     const defaults = {
       padding: {
         left: ' ',
         right: ' '
       },
-      maxWidth: ttyWidth || 80,
-      columns: []
+      maxWidth: 80,
+      columns: [],
+      eol: '\n'
     }
 
     this.options = extend(defaults, options)
@@ -158,7 +154,7 @@ class Table {
    * @returns {string}
    */
   toString () {
-    return this.renderLines().join(os.EOL) + os.EOL
+    return this.renderLines().join(this.options.eol) + this.options.eol
   }
 }
 
