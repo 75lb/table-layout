@@ -103,6 +103,7 @@ Recordset data in (array of objects), text table out.
     - [.padding] <code>object</code> - Padding values to set on each column. Per-column overrides can be set in the `options.columns` array.
         - [.left] <code>string</code> - Defaults to a single space.
         - [.right] <code>string</code> - Defaults to a single space.
+    - [.eol] <code>string</code> - EOL character used. Defaults to `\n`.
 
 **Example**  
 ```js

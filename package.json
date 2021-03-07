@@ -19,7 +19,7 @@
   },
   "scripts": {
     "test": "test-runner test/*.mjs",
-    "docs": "jsdoc2md -t README.hbs index.js -p list --member-index-format list > README.md; echo",
+    "docs": "jsdoc2md -c jsdoc.conf -t README.hbs index.mjs -p list --member-index-format list > README.md; echo",
     "cover": "nyc npm test && nyc report --reporter=text-lcov | coveralls"
   },
   "dependencies": {
