@@ -72,6 +72,34 @@ console.log(table.toString())
         with .log
 ```
 
+## Load anywhere
+
+This library is compatible with Node.js, the Web and any style of module loader. It can be loaded anywhere, natively without transpilation.
+
+Node.js:
+
+```js
+const TableLayout = require('table-layout')
+```
+
+Within Node.js with ECMAScript Module support enabled:
+
+```js
+import TableLayout from 'table-layout'
+```
+
+Within an modern browser ECMAScript Module:
+
+```js
+import TableLayout from './node_modules/table-layout/dist/index.mjs'
+```
+
+Old browser (adds `window.TableLayout`):
+
+```html
+<script nomodule src="./node_modules/table-layout/dist/index.js"></script>
+```
+
 ## API Reference
 {{#module name="table-layout"}}
 {{>body~}}

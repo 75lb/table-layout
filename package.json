@@ -19,23 +19,26 @@
     "node": ">=14"
   },
   "scripts": {
-    "test": "test-runner test/*.mjs",
+    "test": "npm run dist && test-runner test/*.mjs",
     "docs": "jsdoc2md -c jsdoc.conf -t README.hbs index.mjs -p list --member-index-format list > README.md; echo",
-    "cover": "nyc npm test && nyc report --reporter=text-lcov | coveralls"
+    "cover": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
+    "dist": "rollup -c"
   },
   "dependencies": {
     "array-back": "^5.0.0",
     "typical": "^6.0.1",
-    "wordwrapjs": "^4.0.1"
+    "wordwrapjs": "^5.0.1"
   },
   "devDependencies": {
     "coveralls": "^3.1.0",
     "jsdoc-to-markdown": "^7.0.0",
     "nyc": "^15.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
     "test-runner": "^0.8.14"
   },
   "files": [
     "index.mjs",
-    "lib/*.mjs"
+    "lib/*.mjs",
+    "dist"
   ]
 }
