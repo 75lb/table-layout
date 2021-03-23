@@ -19,7 +19,7 @@
   "exports": {
     "require": "./dist/index.js",
     "import": "./dist/index.mjs"
-  },`
+  },
   "engines": {
     "node": ">=14"
   },
