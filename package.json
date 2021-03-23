@@ -14,7 +14,12 @@
     "json",
     "command line"
   ],
-  "main": "index.mjs",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "exports": {
+    "require": "./dist/index.js",
+    "import": "./dist/index.mjs"
+  },`
   "engines": {
     "node": ">=14"
   },
