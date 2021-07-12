@@ -2,7 +2,7 @@ import Rows from './lib/rows.mjs'
 import Columns from './lib/columns.mjs'
 import wrap from 'wordwrapjs'
 import { remove } from './lib/ansi.mjs'
-import t from 'typical/index.mjs'
+import t from 'typical'
 
 /**
  * @module table-layout

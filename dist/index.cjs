@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Takes any input and guarantees an array back.
  *
@@ -1282,4 +1284,4 @@ function padCell (cellValue, padding, width) {
   cellValue.padEnd(width - padding.length() + ansiLength) + (padding.right || '')
 }
 
-export default Table;
+module.exports = Table;

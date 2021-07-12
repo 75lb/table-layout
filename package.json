@@ -3,7 +3,7 @@
   "author": "Lloyd Brookes <75pound@gmail.com>",
   "version": "2.1.0",
   "description": "Stylable text tables, handling ansi colour. Useful for console output.",
-  "repository": "https://github.com/75lb/table-layout.git",
+  "repository": "https://github.com/75lb/table-layout",
   "license": "MIT",
   "keywords": [
     "wrap",
@@ -14,7 +14,10 @@
     "json",
     "command line"
   ],
-  "main": "index.mjs",
+  "exports": {
+    "import": "./index.mjs",
+    "require": "./dist/index.cjs"
+  },
   "engines": {
     "node": ">=14"
   },
@@ -25,17 +28,17 @@
     "dist": "rollup -c"
   },
   "dependencies": {
-    "array-back": "^5.0.0",
-    "typical": "^6.0.1",
-    "wordwrapjs": "^5.0.1"
+    "array-back": "^6.1.2",
+    "typical": "^7.0.0",
+    "wordwrapjs": "^5.0.2"
   },
   "devDependencies": {
-    "coveralls": "^3.1.0",
-    "jsdoc-to-markdown": "^7.0.0",
+    "@rollup/plugin-node-resolve": "^13.0.0",
+    "coveralls": "^3.1.1",
+    "jsdoc-to-markdown": "^7.0.1",
     "nyc": "^15.1.0",
-    "rollup": "^2.42.3",
-    "rollup-plugin-node-resolve": "^5.2.0",
-    "test-runner": "^0.8.14"
+    "rollup": "^2.53.1",
+    "test-runner": "^0.9.6"
   },
   "files": [
     "index.mjs",
