@@ -18,6 +18,7 @@
     "import": "./index.mjs",
     "require": "./dist/index.cjs"
   },
+  "bin": "./bin/cli.mjs",
   "engines": {
     "node": ">=14"
   },
@@ -28,7 +29,9 @@
     "dist": "rollup -c"
   },
   "dependencies": {
+    "@75lb/deep-merge": "^1.0.0",
     "array-back": "^6.1.2",
+    "stream-read-all": "^3.0.1",
     "typical": "^7.0.0",
     "wordwrapjs": "^5.0.2"
   },
@@ -42,7 +45,8 @@
   },
   "files": [
     "index.mjs",
-    "lib/*.mjs",
-    "dist"
+    "lib",
+    "dist",
+    "bin"
   ]
 }

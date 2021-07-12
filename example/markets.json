@@ -1,0 +1,32 @@
+[
+  {
+    "name": "\u001b[4mname\u001b[0m",
+    "type": "\u001b[4mtype\u001b[0m",
+    "expiry": "\u001b[4mexpiry\u001b[0m",
+    "bid": "\u001b[4mbid\u001b[0m",
+    "offer": "\u001b[4moffer\u001b[0m",
+    "change": "\u001b[4mchange\u001b[0m",
+    "change %": "\u001b[4mchange %\u001b[0m",
+    "epic": "\u001b[4mepic\u001b[0m"
+  },
+  {
+    "name": "Blink Charging Company",
+    "type": "SHARES",
+    "expiry": "DFB",
+    "bid": "3,478",
+    "offer": "3,496",
+    "change": "\u001b[31m-53\u001b[0m",
+    "change %": "\u001b[31m-1.5\u001b[0m",
+    "epic": "UA.D.BLNKUS.DAILY.IP"
+  },
+  {
+    "name": "Charlottes Web Holdings Inc (US)",
+    "type": "SHARES",
+    "expiry": "DFB",
+    "bid": "341",
+    "offer": "343",
+    "change": "\u001b[31m0\u001b[0m",
+    "change %": "\u001b[31m0\u001b[0m",
+    "epic": "SI.D.CWBHFUS.DAILY.IP"
+  }
+]
