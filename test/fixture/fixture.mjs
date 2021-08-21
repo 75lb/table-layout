@@ -10,6 +10,22 @@ export const primatives = {
   ]
 }
 
+export const transformTest = {
+  options: {
+    columns: [{
+      name:"two",
+      transform: function(two) {
+        return two + 2;
+      }
+    }]
+  },
+  data: [
+    { one: 'a', two: 3 },
+    { one: 'b', two: 5 },
+    { one: 'c', two: 7 },
+  ]
+}
+
 export const simpleMaxWidth = {
   options: {
     maxWidth: 40,

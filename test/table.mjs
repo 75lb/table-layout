@@ -2,7 +2,7 @@ import TestRunner from 'test-runner'
 import os from 'os'
 import assert from 'assert'
 import Table from '../index.mjs'
-import { simpleMaxWidth, primatives } from './fixture/fixture.mjs'
+import { simpleMaxWidth, primatives, transformTest } from './fixture/fixture.mjs'
 const a = assert.strict
 
 const tom = new TestRunner.Tom()
@@ -100,6 +100,17 @@ tom.test('column options', function () {
 
   const table = new Table(data, options)
   a.deepStrictEqual(table.renderLines(), expected)
+})
+
+tom.test('Column Transform', function () {
+  const result = [
+    ' a  5 ',
+    ' b  7 ',
+    ' c  9 '
+  ].join(os.EOL) + os.EOL
+
+  const table = new Table(transformTest.data, transformTest.options)
+  a.strictEqual(table.toString(), result)
 })
 
 export default tom

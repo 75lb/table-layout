@@ -94,10 +94,13 @@ class Table {
         if (optionColumn.maxWidth) column.maxWidth = optionColumn.maxWidth
         if (optionColumn.minWidth) column.minWidth = optionColumn.minWidth
         if (optionColumn.noWrap) column.noWrap = optionColumn.noWrap
+
         if (optionColumn.break) {
           column.break = optionColumn.break
           column.contentWrappable = true
         }
+
+        if (optionColumn.transform) column.transform = optionColumn.transform
       }
     })
 
@@ -191,5 +194,6 @@ function padCell (cellValue, padding, width) {
  * @property [padding] {object} - padding options
  * @property [padding.left] {string} - a string to pad the left of each cell (default: `' '`)
  * @property [padding.right] {string} - a string to pad the right of each cell (default: `' '`)
+ * @property [transform] {function} - a function which will be ran for each value of this column. Transforming it.
  */
 export default Table

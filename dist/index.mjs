@@ -70,7 +70,11 @@ class Cell {
 
   get value () {
     let cellValue = _value.get(this);
-    if (typeof cellValue === 'function') cellValue = cellValue.call(_column.get(this));
+    let column = _column.get(this);
+    if (column.transform !== undefined) {
+      cellValue = column.transform.call(column, cellValue);
+    }
+    if (typeof cellValue === 'function') cellValue = cellValue.call(column);
     if (cellValue === undefined) {
       cellValue = '';
     } else {
@@ -466,6 +470,8 @@ class Column {
     if (t$1.isDefined(column.contentWrappable)) this.contentWrappable = column.contentWrappable;
     if (t$1.isDefined(column.contentWidth)) this.contentWidth = column.contentWidth;
     if (t$1.isDefined(column.minContentWidth)) this.minContentWidth = column.minContentWidth;
+    
+    if (t$1.isDefined(column.transform)) this.transform = column.transform;
     this.padding = column.padding || { left: ' ', right: ' ' };
     this.generatedWidth = null;
   }
@@ -1196,10 +1202,13 @@ class Table {
         if (optionColumn.maxWidth) column.maxWidth = optionColumn.maxWidth;
         if (optionColumn.minWidth) column.minWidth = optionColumn.minWidth;
         if (optionColumn.noWrap) column.noWrap = optionColumn.noWrap;
+
         if (optionColumn.break) {
           column.break = optionColumn.break;
           column.contentWrappable = true;
         }
+
+        if (optionColumn.transform) column.transform = optionColumn.transform;
       }
     });
 

@@ -176,6 +176,7 @@ Returns the input data as a text table.
 | [padding] | <code>object</code> | padding options |
 | [padding.left] | <code>string</code> | a string to pad the left of each cell (default: `' '`) |
 | [padding.right] | <code>string</code> | a string to pad the right of each cell (default: `' '`) |
+| [transform] | <code>function</code> | a function which will be ran for each value of this column. Transforming it. |
 
 
 * * *
