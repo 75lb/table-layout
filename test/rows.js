@@ -1,6 +1,6 @@
 import TestRunner from 'test-runner'
 import assert from 'assert'
-import Rows from '../lib/rows.mjs'
+import Rows from '../lib/rows.js'
 const a = assert.strict
 
 const tom = new TestRunner.Tom()

@@ -1,4 +1,4 @@
-import TableLayoutCli from '../bin/lib/index.mjs'
+import TableLayoutCli from '../bin/lib/index.js'
 import TestRunner from 'test-runner'
 import { strict as a } from 'assert'
 

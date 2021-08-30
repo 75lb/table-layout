@@ -1,6 +1,6 @@
 import TestRunner from 'test-runner'
 import assert from 'assert'
-import Table from '../index.mjs'
+import Table from 'table-layout'
 const a = assert.strict
 
 const tom = new TestRunner.Tom()

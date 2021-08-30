@@ -12,19 +12,22 @@
     "columns",
     "format",
     "json",
-    "command line"
+    "command line",
+    "table",
+    "view"
   ],
+  "type": "module",
   "exports": {
-    "import": "./index.mjs",
+    "import": "./index.js",
     "require": "./dist/index.cjs"
   },
-  "bin": "./bin/cli.mjs",
+  "bin": "./bin/cli.js",
   "engines": {
     "node": ">=12.17"
   },
   "scripts": {
-    "test": "npm run dist && test-runner test/*.mjs",
-    "docs": "jsdoc2md -c jsdoc.conf -t README.hbs index.mjs -p list --member-index-format list > README.md; echo",
+    "test": "npm run dist && test-runner test/*.js",
+    "docs": "jsdoc2md -t README.hbs index.js -p list --member-index-format list > README.md; echo",
     "cover": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "dist": "rollup -c"
   },
@@ -44,7 +47,7 @@
     "test-runner": "^0.9.8"
   },
   "files": [
-    "index.mjs",
+    "index.js",
     "lib",
     "dist",
     "bin"

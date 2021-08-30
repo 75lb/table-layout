@@ -1,7 +1,7 @@
-import Rows from './lib/rows.mjs'
-import Columns from './lib/columns.mjs'
+import Rows from './lib/rows.js'
+import Columns from './lib/columns.js'
 import wrap from 'wordwrapjs'
-import { remove } from './lib/ansi.mjs'
+import { remove } from './lib/ansi.js'
 import t from 'typical'
 
 /**

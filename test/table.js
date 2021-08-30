@@ -1,7 +1,7 @@
 import TestRunner from 'test-runner'
 import os from 'os'
 import { strict as a } from 'assert'
-import Table from '../index.mjs'
+import Table from 'table-layout'
 
 const tom = new TestRunner.Tom()
 

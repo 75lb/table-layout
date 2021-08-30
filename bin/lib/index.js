@@ -3,7 +3,7 @@ import streamReadAll from 'stream-read-all'
 import commandLineArgs from 'command-line-args'
 import extend from '@75lb/deep-merge'
 import t from 'typical'
-import * as cliData from './cli-data.mjs'
+import * as cliData from './cli-data.js'
 import commandLineUsage from 'command-line-usage'
 
 class TableLayoutCli {
