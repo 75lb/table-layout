@@ -26,9 +26,9 @@
     "node": ">=12.17"
   },
   "scripts": {
-    "test": "npm run dist && test-runner test/*.js",
+    "test": "npm run dist && test-runner 'test/**/*.js'",
     "docs": "jsdoc2md -t README.hbs index.js -p list --member-index-format list > README.md; echo",
-    "cover": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
+    "cover": "c8 npm test",
     "dist": "rollup -c"
   },
   "dependencies": {
@@ -40,9 +40,8 @@
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^13.0.4",
-    "coveralls": "^3.1.1",
+    "c8": "^7.8.0",
     "jsdoc-to-markdown": "^7.0.1",
-    "nyc": "^15.1.0",
     "rollup": "^2.56.3",
     "test-runner": "^0.9.8"
   },

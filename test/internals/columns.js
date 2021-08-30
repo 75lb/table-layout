@@ -1,7 +1,6 @@
 import TestRunner from 'test-runner'
-import assert from 'assert'
-import Columns from '../lib/columns.js'
-const a = assert.strict
+import { strict as a } from 'assert'
+import Columns from '../../lib/columns.js'
 
 const tom = new TestRunner.Tom()
 
@@ -13,8 +12,8 @@ tom.test('columns.autoSize(contentColumns, maxWidth)', function () {
 
   columns.maxWidth = 30
   columns.autoSize()
-  a.strictEqual(columns.list[0].generatedWidth, 12)
-  a.strictEqual(columns.list[1].generatedWidth, 18)
+  a.equal(columns.list[0].generatedWidth, 12)
+  a.equal(columns.list[1].generatedWidth, 18)
 })
 
 export default tom

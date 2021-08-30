@@ -1,7 +1,6 @@
 import TestRunner from 'test-runner'
-import assert from 'assert'
-import Rows from '../lib/rows.js'
-const a = assert.strict
+import { strict as a } from 'assert'
+import Rows from '../../lib/rows.js'
 
 const tom = new TestRunner.Tom()
 
@@ -13,7 +12,7 @@ tom.test('removeEmptyColumns', function () {
     { name: 'Frank' },
     { name: 'Amy' }
   ]
-  a.deepStrictEqual(
+  a.deepEqual(
     Rows.removeEmptyColumns(input),
     [
       { name: 'Lloyd' },
