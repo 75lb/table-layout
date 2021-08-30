@@ -30,12 +30,12 @@
  * [ 1, 2, 3 ]
  */
 
-function isObject$2 (input) {
+function isObject$1 (input) {
   return typeof input === 'object' && input !== null
 }
 
-function isArrayLike$2 (input) {
-  return isObject$2(input) && typeof input.length === 'number'
+function isArrayLike$1 (input) {
+  return isObject$1(input) && typeof input.length === 'number'
 }
 
 /**
@@ -48,7 +48,7 @@ function arrayify (input) {
     return input
   } else if (input === undefined) {
     return []
-  } else if (isArrayLike$2(input) || input instanceof Set) {
+  } else if (isArrayLike$1(input) || input instanceof Set) {
     return Array.from(input)
   } else {
     return [input]
@@ -89,15 +89,15 @@ class Cell {
  * @module typical
  * @typicalname t
  * @example
- * const t = require('typical')
+ * import * as t from 'typical'
  * const allDefined = array.every(t.isDefined)
  */
 
 /**
  * Returns true if input is a number (including infinity). It is a more reasonable alternative to `typeof n` which returns `number` for `NaN`.
  *
- * @param {*} - the input to test
- * @returns {boolean}
+ * @param {*} n - The input to test
+ * @returns {boolean} `true` if input is a number
  * @static
  * @example
  * > t.isNumber(0)
@@ -117,14 +117,14 @@ class Cell {
  * > t.isNumber(Infinity)
  * true
  */
-function isNumber$1 (n) {
+function isNumber (n) {
   return !isNaN(parseFloat(n))
 }
 
 /**
  * Returns true if input is a finite number. Identical to `isNumber` beside excluding infinity.
  *
- * @param {*} - the input to test
+ * @param {*} n - The input to test
  * @returns {boolean}
  * @static
  * @example
@@ -152,403 +152,7 @@ function isFiniteNumber (n) {
 /**
  * A plain object is a simple object literal, it is not an instance of a class. Returns true if the input `typeof` is `object` and directly decends from `Object`.
  *
- * @param {*} - the input to test
- * @returns {boolean}
- * @static
- * @example
- * > t.isPlainObject({ something: 'one' })
- * true
- * > t.isPlainObject(new Date())
- * false
- * > t.isPlainObject([ 0, 1 ])
- * false
- * > t.isPlainObject(/test/)
- * false
- * > t.isPlainObject(1)
- * false
- * > t.isPlainObject('one')
- * false
- * > t.isPlainObject(null)
- * false
- * > t.isPlainObject((function * () {})())
- * false
- * > t.isPlainObject(function * () {})
- * false
- */
-function isPlainObject$1 (input) {
-  return input !== null && typeof input === 'object' && input.constructor === Object
-}
-
-/**
- * An array-like value has all the properties of an array yet is not an array instance. An example is the `arguments` object. Returns `true`` if the input value is an object, not `null`` and has a `length` property set with a numeric value.
- *
- * @param {*} - the input to test
- * @returns {boolean}
- * @static
- * @example
- * function sum(x, y){
- *   console.log(t.isArrayLike(arguments))
- *   // prints `true`
- * }
- */
-function isArrayLike$1 (input) {
-  return isObject$1(input) && typeof input.length === 'number'
-}
-
-/**
- * Returns true if the typeof input is `'object'` but not null.
- * @param {*} - the input to test
- * @returns {boolean}
- * @static
- */
-function isObject$1 (input) {
-  return typeof input === 'object' && input !== null
-}
-
-/**
- * Returns true if the input value is defined.
- * @param {*} - the input to test
- * @returns {boolean}
- * @static
- */
-function isDefined$1 (input) {
-  return typeof input !== 'undefined'
-}
-
-/**
- * Returns true if the input value is undefined.
- * @param {*} - the input to test
- * @returns {boolean}
- * @static
- */
-function isUndefined$1 (input) {
-  return !isDefined$1(input)
-}
-
-/**
- * Returns true if the input value is null.
- * @param {*} - the input to test
- * @returns {boolean}
- * @static
- */
-function isNull$1 (input) {
- return input === null
-}
-
-/**
- * Returns true if the input value is not one of `undefined`, `null`, or `NaN`.
- * @param {*} - the input to test
- * @returns {boolean}
- * @static
- */
-function isDefinedValue$1 (input) {
- return isDefined$1(input) && !isNull$1(input) && !Number.isNaN(input)
-}
-
-/**
- * Returns true if the input value is an ES2015 `class`.
- * @param {*} - the input to test
- * @returns {boolean}
- * @static
- */
-function isClass$1 (input) {
-  if (typeof input === 'function') {
-    return /^class /.test(Function.prototype.toString.call(input))
-  } else {
-    return false
-  }
-}
-
-/**
- * Returns true if the input is a string, number, symbol, boolean, null or undefined value.
- * @param {*} - the input to test
- * @returns {boolean}
- * @static
- */
-function isPrimitive$1 (input) {
-  if (input === null) return true
-  switch (typeof input) {
-    case 'string':
-    case 'number':
-    case 'symbol':
-    case 'undefined':
-    case 'boolean':
-      return true
-    default:
-      return false
-  }
-}
-
-/**
- * Returns true if the input is a Promise.
- * @param {*} - the input to test
- * @returns {boolean}
- * @static
- */
-function isPromise$1 (input) {
-  if (input) {
-    const isPromise = isDefined$1(Promise) && input instanceof Promise;
-    const isThenable = input.then && typeof input.then === 'function';
-    return !!(isPromise || isThenable)
-  } else {
-    return false
-  }
-}
-
-/**
- * Returns true if the input is an iterable (`Map`, `Set`, `Array`, Generator etc.).
- * @param {*} - the input to test
- * @returns {boolean}
- * @static
- * @example
- * > t.isIterable('string')
- * true
- * > t.isIterable(new Map())
- * true
- * > t.isIterable([])
- * true
- * > t.isIterable((function * () {})())
- * true
- * > t.isIterable(Promise.resolve())
- * false
- * > t.isIterable(Promise)
- * false
- * > t.isIterable(true)
- * false
- * > t.isIterable({})
- * false
- * > t.isIterable(0)
- * false
- * > t.isIterable(1.1)
- * false
- * > t.isIterable(NaN)
- * false
- * > t.isIterable(Infinity)
- * false
- * > t.isIterable(function () {})
- * false
- * > t.isIterable(Date)
- * false
- * > t.isIterable()
- * false
- * > t.isIterable({ then: function () {} })
- * false
- */
-function isIterable$1 (input) {
-  if (input === null || !isDefined$1(input)) {
-    return false
-  } else {
-    return (
-      typeof input[Symbol.iterator] === 'function' ||
-      typeof input[Symbol.asyncIterator] === 'function'
-    )
-  }
-}
-
-/**
- * Returns true if the input value is a string. The equivalent of `typeof input === 'string'` for use in funcitonal contexts.
- * @param {*} - the input to test
- * @returns {boolean}
- * @static
- */
-function isString$1 (input) {
-  return typeof input === 'string'
-}
-
-/**
- * Returns true if the input value is a function. The equivalent of `typeof input === 'function'` for use in funcitonal contexts.
- * @param {*} - the input to test
- * @returns {boolean}
- * @static
- */
-function isFunction$1 (input) {
-  return typeof input === 'function'
-}
-
-var t$1 = {
-  isNumber: isNumber$1,
-  isFiniteNumber,
-  isPlainObject: isPlainObject$1,
-  isArrayLike: isArrayLike$1,
-  isObject: isObject$1,
-  isDefined: isDefined$1,
-  isUndefined: isUndefined$1,
-  isNull: isNull$1,
-  isDefinedValue: isDefinedValue$1,
-  isClass: isClass$1,
-  isPrimitive: isPrimitive$1,
-  isPromise: isPromise$1,
-  isIterable: isIterable$1,
-  isString: isString$1,
-  isFunction: isFunction$1
-};
-
-/**
- *
- */
-class Rows {
-  constructor (rows, columns) {
-    this.list = [];
-    this.load(rows, columns);
-  }
-
-  load (rows, columns) {
-    arrayify(rows).forEach(row => {
-      this.list.push(new Map(objectToIterable(row, columns)));
-    });
-  }
-
-  static removeEmptyColumns (data) {
-    const distinctColumnNames = data.reduce((columnNames, row) => {
-      Object.keys(row).forEach(key => {
-        if (columnNames.indexOf(key) === -1) columnNames.push(key);
-      });
-      return columnNames
-    }, []);
-
-    const emptyColumns = distinctColumnNames.filter(columnName => {
-      const hasValue = data.some(row => {
-        const value = row[columnName];
-        return (t$1.isDefined(value) && typeof value !== 'string') || (typeof value === 'string' && /\S+/.test(value))
-      });
-      return !hasValue
-    });
-
-    return data.map(row => {
-      emptyColumns.forEach(emptyCol => delete row[emptyCol]);
-      return row
-    })
-  }
-}
-
-function objectToIterable (row, columns) {
-  return columns.list.map(column => {
-    return [column, new Cell(row[column.name], column)]
-  })
-}
-
-/**
- * @module padding
- */
-
-class Padding {
-  constructor (padding) {
-    this.left = padding.left;
-    this.right = padding.right;
-  }
-
-  length () {
-    return this.left.length + this.right.length
-  }
-}
-
-/**
- * @module column
- */
-
-const _padding = new WeakMap();
-
-// setting any column property which is a factor of the width should trigger autoSize()
-
-/**
- * Represents a table column
- */
-class Column {
-  constructor (column) {
-    /**
-     * @type {string}
-     */
-    if (t$1.isDefined(column.name)) this.name = column.name;
-    /**
-     * @type {number}
-     */
-    if (t$1.isDefined(column.width)) this.width = column.width;
-    if (t$1.isDefined(column.maxWidth)) this.maxWidth = column.maxWidth;
-    if (t$1.isDefined(column.minWidth)) this.minWidth = column.minWidth;
-    if (t$1.isDefined(column.noWrap)) this.noWrap = column.noWrap;
-    if (t$1.isDefined(column.break)) this.break = column.break;
-    if (t$1.isDefined(column.contentWrappable)) this.contentWrappable = column.contentWrappable;
-    if (t$1.isDefined(column.contentWidth)) this.contentWidth = column.contentWidth;
-    if (t$1.isDefined(column.minContentWidth)) this.minContentWidth = column.minContentWidth;
-
-    if (t$1.isDefined(column.transform)) this.transform = column.transform;
-    this.padding = column.padding || { left: ' ', right: ' ' };
-    this.generatedWidth = null;
-  }
-
-  set padding (padding) {
-    _padding.set(this, new Padding(padding));
-  }
-
-  get padding () {
-    return _padding.get(this)
-  }
-
-  /**
-   * the width of the content (excluding padding) after being wrapped
-   */
-  get wrappedContentWidth () {
-    return Math.max(this.generatedWidth - this.padding.length(), 0)
-  }
-
-  isResizable () {
-    return !this.isFixed()
-  }
-
-  isFixed () {
-    return t$1.isDefined(this.width) || this.noWrap || !this.contentWrappable
-  }
-
-  generateWidth () {
-    this.generatedWidth = this.width || (this.contentWidth + this.padding.length());
-  }
-
-  generateMinWidth () {
-    this.minWidth = this.minContentWidth + this.padding.length();
-  }
-}
-
-/**
- * Isomorphic, functional type-checking for Javascript.
- * @module typical
- * @typicalname t
- * @example
- * const t = require('typical')
- * const allDefined = array.every(t.isDefined)
- */
-
-/**
- * Returns true if input is a number. It is a more reasonable alternative to `typeof n` which returns `number` for `NaN` and `Infinity`.
- *
- * @param {*} - the input to test
- * @returns {boolean}
- * @static
- * @example
- * > t.isNumber(0)
- * true
- * > t.isNumber(1)
- * true
- * > t.isNumber(1.1)
- * true
- * > t.isNumber(0xff)
- * true
- * > t.isNumber(0644)
- * true
- * > t.isNumber(6.2e5)
- * true
- * > t.isNumber(NaN)
- * false
- * > t.isNumber(Infinity)
- * false
- */
-function isNumber (n) {
-  return !isNaN(parseFloat(n)) && isFinite(n)
-}
-
-/**
- * A plain object is a simple object literal, it is not an instance of a class. Returns true if the input `typeof` is `object` and directly decends from `Object`.
- *
- * @param {*} - the input to test
+ * @param {*} input - The input to test
  * @returns {boolean}
  * @static
  * @example
@@ -578,7 +182,7 @@ function isPlainObject (input) {
 /**
  * An array-like value has all the properties of an array yet is not an array instance. An example is the `arguments` object. Returns `true`` if the input value is an object, not `null`` and has a `length` property set with a numeric value.
  *
- * @param {*} - the input to test
+ * @param {*} input - The input to test
  * @returns {boolean}
  * @static
  * @example
@@ -593,7 +197,7 @@ function isArrayLike (input) {
 
 /**
  * Returns true if the typeof input is `'object'` but not null.
- * @param {*} - the input to test
+ * @param {*} input - The input to test
  * @returns {boolean}
  * @static
  */
@@ -603,7 +207,7 @@ function isObject (input) {
 
 /**
  * Returns true if the input value is defined.
- * @param {*} - the input to test
+ * @param {*} input - The input to test
  * @returns {boolean}
  * @static
  */
@@ -613,7 +217,7 @@ function isDefined (input) {
 
 /**
  * Returns true if the input value is undefined.
- * @param {*} - the input to test
+ * @param {*} input - The input to test
  * @returns {boolean}
  * @static
  */
@@ -623,27 +227,27 @@ function isUndefined (input) {
 
 /**
  * Returns true if the input value is null.
- * @param {*} - the input to test
+ * @param {*} input - The input to test
  * @returns {boolean}
  * @static
  */
 function isNull (input) {
- return input === null
+  return input === null
 }
 
 /**
  * Returns true if the input value is not one of `undefined`, `null`, or `NaN`.
- * @param {*} - the input to test
+ * @param {*} input - The input to test
  * @returns {boolean}
  * @static
  */
 function isDefinedValue (input) {
- return isDefined(input) && !isNull(input) && !Number.isNaN(input)
+  return isDefined(input) && !isNull(input) && !Number.isNaN(input)
 }
 
 /**
  * Returns true if the input value is an ES2015 `class`.
- * @param {*} - the input to test
+ * @param {*} input - The input to test
  * @returns {boolean}
  * @static
  */
@@ -657,7 +261,7 @@ function isClass (input) {
 
 /**
  * Returns true if the input is a string, number, symbol, boolean, null or undefined value.
- * @param {*} - the input to test
+ * @param {*} input - The input to test
  * @returns {boolean}
  * @static
  */
@@ -677,7 +281,7 @@ function isPrimitive (input) {
 
 /**
  * Returns true if the input is a Promise.
- * @param {*} - the input to test
+ * @param {*} input - The input to test
  * @returns {boolean}
  * @static
  */
@@ -693,7 +297,7 @@ function isPromise (input) {
 
 /**
  * Returns true if the input is an iterable (`Map`, `Set`, `Array`, Generator etc.).
- * @param {*} - the input to test
+ * @param {*} input - The input to test
  * @returns {boolean}
  * @static
  * @example
@@ -743,7 +347,7 @@ function isIterable (input) {
 
 /**
  * Returns true if the input value is a string. The equivalent of `typeof input === 'string'` for use in funcitonal contexts.
- * @param {*} - the input to test
+ * @param {*} input - The input to test
  * @returns {boolean}
  * @static
  */
@@ -753,7 +357,7 @@ function isString (input) {
 
 /**
  * Returns true if the input value is a function. The equivalent of `typeof input === 'function'` for use in funcitonal contexts.
- * @param {*} - the input to test
+ * @param {*} input - The input to test
  * @returns {boolean}
  * @static
  */
@@ -763,6 +367,7 @@ function isFunction (input) {
 
 var t = {
   isNumber,
+  isFiniteNumber,
   isPlainObject,
   isArrayLike,
   isObject,
@@ -779,31 +384,141 @@ var t = {
 };
 
 /**
- * Isomorphic map-reduce function to flatten an array into the supplied array.
  *
- * @module reduce-flatten
- * @example
- * const flatten = require('reduce-flatten')
  */
+class Rows {
+  constructor (rows, columns) {
+    this.list = [];
+    this.load(rows, columns);
+  }
+
+  load (rows, columns) {
+    arrayify(rows).forEach(row => {
+      this.list.push(new Map(objectToIterable(row, columns)));
+    });
+  }
+
+  static removeEmptyColumns (data) {
+    const distinctColumnNames = data.reduce((columnNames, row) => {
+      Object.keys(row).forEach(key => {
+        if (columnNames.indexOf(key) === -1) columnNames.push(key);
+      });
+      return columnNames
+    }, []);
+
+    const emptyColumns = distinctColumnNames.filter(columnName => {
+      const hasValue = data.some(row => {
+        const value = row[columnName];
+        return (t.isDefined(value) && typeof value !== 'string') || (typeof value === 'string' && /\S+/.test(value))
+      });
+      return !hasValue
+    });
+
+    return data.map(row => {
+      emptyColumns.forEach(emptyCol => delete row[emptyCol]);
+      return row
+    })
+  }
+}
+
+function objectToIterable (row, columns) {
+  return columns.list.map(column => {
+    return [column, new Cell(row[column.name], column)]
+  })
+}
 
 /**
- * @alias module:reduce-flatten
- * @example
- * > numbers = [ 1, 2, [ 3, 4 ], 5 ]
- * > numbers.reduce(flatten, [])
- * [ 1, 2, 3, 4, 5 ]
+ * @module padding
  */
-function flatten (arr, curr) {
-  if (Array.isArray(curr)) {
-    arr.push(...curr);
-  } else {
-    arr.push(curr);
+
+class Padding {
+  constructor (padding) {
+    this.left = padding.left;
+    this.right = padding.right;
   }
-  return arr
+
+  length () {
+    return this.left.length + this.right.length
+  }
+}
+
+/**
+ * @module column
+ */
+
+const _padding = new WeakMap();
+
+// setting any column property which is a factor of the width should trigger autoSize()
+
+/**
+ * Represents a table column
+ */
+class Column {
+  constructor (column) {
+    /**
+     * @type {string}
+     */
+    if (t.isDefined(column.name)) this.name = column.name;
+    /**
+     * @type {number}
+     */
+    if (t.isDefined(column.width)) this.width = column.width;
+    if (t.isDefined(column.maxWidth)) this.maxWidth = column.maxWidth;
+    if (t.isDefined(column.minWidth)) this.minWidth = column.minWidth;
+    if (t.isDefined(column.noWrap)) this.noWrap = column.noWrap;
+    if (t.isDefined(column.break)) this.break = column.break;
+    if (t.isDefined(column.contentWrappable)) this.contentWrappable = column.contentWrappable;
+    if (t.isDefined(column.contentWidth)) this.contentWidth = column.contentWidth;
+    if (t.isDefined(column.minContentWidth)) this.minContentWidth = column.minContentWidth;
+
+    if (t.isDefined(column.transform)) this.transform = column.transform;
+    this.padding = column.padding || { left: ' ', right: ' ' };
+    this.generatedWidth = null;
+  }
+
+  set padding (padding) {
+    _padding.set(this, new Padding(padding));
+  }
+
+  get padding () {
+    return _padding.get(this)
+  }
+
+  /**
+   * the width of the content (excluding padding) after being wrapped
+   */
+  get wrappedContentWidth () {
+    return Math.max(this.generatedWidth - this.padding.length(), 0)
+  }
+
+  isResizable () {
+    return !this.isFixed()
+  }
+
+  isFixed () {
+    return t.isDefined(this.width) || this.noWrap || !this.contentWrappable
+  }
+
+  generateWidth () {
+    this.generatedWidth = this.width || (this.contentWidth + this.padding.length());
+  }
+
+  generateMinWidth () {
+    this.minWidth = this.minContentWidth + this.padding.length();
+  }
 }
 
 /**
  * @module wordwrapjs
+ */
+
+/**
+ * Wordwrap options.
+ * @typedef {Object} WordwrapOptions
+ * @property {number} [width=30] - The max column width in characters.
+ * @property {boolean} [break=false] - If true, words exceeding the specified `width` will be forcefully broken
+ * @property {boolean} [noTrim=false] - By default, each line output is trimmed. If `noTrim` is set, no line-trimming occurs - all whitespace from the input text is left in.
+ * @property {string} [eol='\n'] - The end of line character to use. Defaults to `\n`.
  */
 
 const re = {
@@ -815,51 +530,51 @@ const re = {
  * @alias module:wordwrapjs
  * @typicalname wordwrap
  */
-class WordWrap {
-  constructor (text, options = {}) {
-    if (!t.isDefined(text)) text = '';
-
+class Wordwrap {
+  /**
+   * @param {string} text - The input text to wrap.
+   * @param {module:wordwrapjs~WordwrapOptions} [options]
+   */
+  constructor (text = '', options = {}) {
     this._lines = String(text).split(/\r\n|\n/g);
-    this.options = Object.assign({
-        eol: '\n',
-        width: 30
-    }, options);
+    this.options = {
+      eol: '\n',
+      width: 30,
+      ...options
+    };
   }
 
   lines () {
     /* trim each line of the supplied text */
-    return this._lines.map(trimLine.bind(this))
+    return this._lines.map(trimLine, this)
 
       /* split each line into an array of chunks, else mark it empty */
-      .map(line => line.match(re.chunk) || [ '~~empty~~' ])
+      .map(line => line.match(re.chunk) || ['~~empty~~'])
 
       /* optionally, break each word on the line into pieces */
-      .map(lineWords => {
-        if (this.options.break) {
-          return lineWords.map(breakWord.bind(this))
-        } else {
-          return lineWords
-        }
-      })
-      .map(lineWords => lineWords.reduce(flatten, []))
+      .map(lineWords => this.options.break
+        ? lineWords.map(breakWord, this)
+        : lineWords
+      )
+      .map(lineWords => lineWords.flat())
 
       /* transforming the line of words to one or more new lines wrapped to size */
       .map(lineWords => {
         return lineWords
           .reduce((lines, word) => {
-            let currentLine = lines[lines.length - 1];
+            const currentLine = lines[lines.length - 1];
             if (replaceAnsi(word).length + replaceAnsi(currentLine).length > this.options.width) {
               lines.push(word);
             } else {
               lines[lines.length - 1] += word;
             }
             return lines
-          }, [ '' ])
+          }, [''])
       })
-      .reduce(flatten, [])
+      .flat()
 
       /* trim the wrapped lines */
-      .map(trimLine.bind(this))
+      .map(trimLine, this)
 
       /* filter out empty lines */
       .filter(line => line.trim())
@@ -877,13 +592,8 @@ class WordWrap {
   }
 
   /**
-   * @param {string} - the input text to wrap
-   * @param [options] {object} - optional configuration
-   * @param [options.width] {number} - the max column width in characters (defaults to 30).
-   * @param [options.break] {boolean} - if true, words exceeding the specified `width` will be forcefully broken
-   * @param [options.noTrim] {boolean} - By default, each line output is trimmed. If `noTrim` is set, no line-trimming occurs - all whitespace from the input text is left in.
-   * @param [options.eol] {string} - The end of line character to use. Defaults to `\n`.
-   * @return {string}
+   * @param {string} text - the input text to wrap
+   * @param {module:wordwrapjs~WordwrapOptions} [options]
    */
   static wrap (text, options) {
     const block = new this(text, options);
@@ -892,8 +602,8 @@ class WordWrap {
 
   /**
    * Wraps the input text, returning an array of strings (lines).
-   * @param {string} - input text
-   * @param {object} - Accepts same options as constructor.
+   * @param {string} text - input text
+   * @param {module:wordwrapjs~WordwrapOptions} [options]
    */
   static lines (text, options) {
     const block = new this(text, options);
@@ -902,20 +612,17 @@ class WordWrap {
 
   /**
    * Returns true if the input text would be wrapped if passed into `.wrap()`.
-   * @param {string} - input text
+   * @param {string} text - input text
    * @return {boolean}
    */
-  static isWrappable (text) {
-    if (t.isDefined(text)) {
-      text = String(text);
-      var matches = text.match(re.chunk);
-      return matches ? matches.length > 1 : false
-    }
+  static isWrappable (text = '') {
+    const matches = String(text).match(re.chunk);
+    return matches ? matches.length > 1 : false
   }
 
   /**
    * Splits the input text into an array of words and whitespace.
-   * @param {string} - input text
+   * @param {string} text - input text
    * @returns {string[]}
    */
   static getChunks (text) {
@@ -931,7 +638,11 @@ function replaceAnsi (string) {
   return string.replace(re.ansiEscapeSequence, '')
 }
 
-/* break a word into several pieces */
+/**
+ * break a word into several pieces
+ * @param {string} word
+ * @private
+ */
 function breakWord (word) {
   if (replaceAnsi(word).length > this.options.width) {
     const letters = word.split('');
@@ -1029,11 +740,11 @@ class Columns {
 
     /* adjust if user set a min or maxWidth */
     this.list.forEach(column => {
-      if (t$1.isDefined(column.maxWidth) && column.generatedWidth > column.maxWidth) {
+      if (t.isDefined(column.maxWidth) && column.generatedWidth > column.maxWidth) {
         column.generatedWidth = column.maxWidth;
       }
 
-      if (t$1.isDefined(column.minWidth) && column.generatedWidth < column.minWidth) {
+      if (t.isDefined(column.minWidth) && column.generatedWidth < column.minWidth) {
         column.generatedWidth = column.minWidth;
       }
     });
@@ -1098,7 +809,7 @@ class Columns {
         if (longestWord > column.minContentWidth) {
           column.minContentWidth = longestWord;
         }
-        if (!column.contentWrappable) column.contentWrappable = WordWrap.isWrappable(cellValue);
+        if (!column.contentWrappable) column.contentWrappable = Wordwrap.isWrappable(cellValue);
       }
     });
     return columns
@@ -1106,7 +817,7 @@ class Columns {
 }
 
 function getLongestWord (line) {
-  const words = WordWrap.getChunks(line);
+  const words = Wordwrap.getChunks(line);
   return words.reduce((max, word) => {
     return Math.max(word.length, max)
   }, 0)
@@ -1159,10 +870,10 @@ class Table {
       eol: '\n'
     };
     if (!options.padding) options.padding = defaults.padding;
-    if (options.padding && t$1.isUndefined(options.padding.left)) options.padding.left = defaults.padding.left;
-    if (options.padding && t$1.isUndefined(options.padding.right)) options.padding.right = defaults.padding.right;
-    if (t$1.isUndefined(options.maxWidth)) options.maxWidth = defaults.maxWidth;
-    if (t$1.isUndefined(options.eol)) options.eol = defaults.eol;
+    if (options.padding && t.isUndefined(options.padding.left)) options.padding.left = defaults.padding.left;
+    if (options.padding && t.isUndefined(options.padding.right)) options.padding.right = defaults.padding.right;
+    if (t.isUndefined(options.maxWidth)) options.maxWidth = defaults.maxWidth;
+    if (t.isUndefined(options.eol)) options.eol = defaults.eol;
     options.columns = options.columns || [];
     this.options = options;
     this.load(data);
@@ -1224,7 +935,7 @@ class Table {
         if (column.noWrap) {
           line.push(cell.value.split(/\r\n?|\n/));
         } else {
-          line.push(WordWrap.lines(cell.value, {
+          line.push(Wordwrap.lines(cell.value, {
             width: column.wrappedContentWidth,
             break: column.break,
             noTrim: this.options.noTrim
@@ -1291,4 +1002,4 @@ function padCell (cellValue, padding, width) {
   cellValue.padEnd(width - padding.length() + ansiLength) + (padding.right || '')
 }
 
-export default Table;
+export { Table as default };

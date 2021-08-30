@@ -20,7 +20,7 @@
   },
   "bin": "./bin/cli.mjs",
   "engines": {
-    "node": ">=14"
+    "node": ">=12.17"
   },
   "scripts": {
     "test": "npm run dist && test-runner test/*.mjs",
@@ -29,19 +29,19 @@
     "dist": "rollup -c"
   },
   "dependencies": {
-    "@75lb/deep-merge": "^1.0.0",
-    "array-back": "^6.1.2",
+    "@75lb/deep-merge": "^1.1.0",
+    "array-back": "^6.2.0",
     "stream-read-all": "^3.0.1",
-    "typical": "^7.0.0",
-    "wordwrapjs": "^5.0.2"
+    "typical": "^7.1.1",
+    "wordwrapjs": "^5.1.0"
   },
   "devDependencies": {
-    "@rollup/plugin-node-resolve": "^13.0.0",
+    "@rollup/plugin-node-resolve": "^13.0.4",
     "coveralls": "^3.1.1",
     "jsdoc-to-markdown": "^7.0.1",
     "nyc": "^15.1.0",
-    "rollup": "^2.53.1",
-    "test-runner": "^0.9.6"
+    "rollup": "^2.56.3",
+    "test-runner": "^0.9.8"
   },
   "files": [
     "index.mjs",
