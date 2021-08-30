@@ -48,5 +48,11 @@
     "lib",
     "dist",
     "bin"
-  ]
+  ],
+  "standard": {
+    "ignore": [
+      "dist"
+    ],
+    "envs": []
+  }
 }

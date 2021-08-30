@@ -2,13 +2,13 @@
 [![npm module downloads](https://badgen.net/npm/dt/table-layout)](https://www.npmjs.org/package/table-layout)
 [![Gihub repo dependents](https://badgen.net/github/dependents-repo/75lb/table-layout)](https://github.com/75lb/table-layout/network/dependents?dependent_type=REPOSITORY)
 [![Gihub package dependents](https://badgen.net/github/dependents-pkg/75lb/table-layout)](https://github.com/75lb/table-layout/network/dependents?dependent_type=PACKAGE)
-[![Build Status](https://travis-ci.org/75lb/table-layout.svg?branch=master)](https://travis-ci.org/75lb/table-layout)
+[![Node.js CI](https://github.com/75lb/table-layout/actions/workflows/node.js.yml/badge.svg)](https://github.com/75lb/table-layout/actions/workflows/node.js.yml)
 [![Coverage Status](https://coveralls.io/repos/github/75lb/table-layout/badge.svg)](https://coveralls.io/github/75lb/table-layout)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](https://github.com/feross/standard)
 
 # table-layout
 
-Generates plain-text tables from JSON recordset input (array of objects). Useful for presenting text in column layout or data in table layout in text-based user interfaces. Also [available as a command-line tool](https://github.com/75lb/table-layout-cli).
+Generates plain-text tables from JSON recordset input (array of objects). Useful for presenting text in column layout or data in table layout in text-based user interfaces. Available as both a command-line tool and isomorphic Javascript library.
 
 ## Synopsis
 

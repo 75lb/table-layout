@@ -70,7 +70,7 @@ class Cell {
 
   get value () {
     let cellValue = _value.get(this);
-    let column = _column.get(this);
+    const column = _column.get(this);
     if (column.transform !== undefined) {
       cellValue = column.transform.call(column, cellValue);
     }
@@ -470,7 +470,7 @@ class Column {
     if (t$1.isDefined(column.contentWrappable)) this.contentWrappable = column.contentWrappable;
     if (t$1.isDefined(column.contentWidth)) this.contentWidth = column.contentWidth;
     if (t$1.isDefined(column.minContentWidth)) this.minContentWidth = column.minContentWidth;
-    
+
     if (t$1.isDefined(column.transform)) this.transform = column.transform;
     this.padding = column.padding || { left: ' ', right: ' ' };
     this.generatedWidth = null;
