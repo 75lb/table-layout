@@ -10,7 +10,7 @@ tom.test('new Table()', function () {
     maxWidth: 40,
     padding: { left: '<', right: '>' }
   }
-  const data =[
+  const data = [
     { one: 'row 1 column one .. .. ..', two: 'r1 c2' },
     { one: 'r2 c1', two: 'row two column 2' }
   ]
@@ -25,7 +25,7 @@ tom.test('table.getWrapped()', function () {
     maxWidth: 40,
     padding: { left: '<', right: '>' }
   }
-  const data =[
+  const data = [
     { one: 'row 1 column one .. .. ..', two: 'r1 c2' },
     { one: 'r2 c1', two: 'row two column 2' }
   ]
@@ -42,7 +42,7 @@ tom.test('table.getLines()', function () {
     maxWidth: 40,
     padding: { left: '<', right: '>' }
   }
-  const data =[
+  const data = [
     { one: 'row 1 column one .. .. ..', two: 'r1 c2' },
     { one: 'r2 c1', two: 'row two column 2' }
   ]
@@ -60,7 +60,7 @@ tom.test('table.renderLines()', function () {
     maxWidth: 40,
     padding: { left: '<', right: '>' }
   }
-  const data =[
+  const data = [
     { one: 'row 1 column one .. .. ..', two: 'r1 c2' },
     { one: 'r2 c1', two: 'row two column 2' }
   ]
@@ -78,7 +78,7 @@ tom.test('table.toString()', function () {
     maxWidth: 40,
     padding: { left: '<', right: '>' }
   }
-  const data =[
+  const data = [
     { one: 'row 1 column one .. .. ..', two: 'r1 c2' },
     { one: 'r2 c1', two: 'row two column 2' }
   ]
@@ -97,7 +97,7 @@ tom.test('table.renderLines() 2', function () {
     maxWidth: 40,
     padding: { left: '<', right: '>' }
   }
-  const data =[
+  const data = [
     { one: 'row 1 column one .. .. ..', two: 'r1 c2' },
     { one: 'r2 c1', two: 'row two column 2' }
   ]
@@ -157,26 +157,36 @@ tom.test('column options', function () {
   a.deepEqual(table.renderLines(), expected)
 })
 
-tom.test('Column Transform', function () {
-  const options = {
-    columns: [{
-      name: 'two',
-      transform: function (two) {
-        return two + 2
-      }
-    }]
-  }
+tom.test('Cell getter 1', function () {
   const data = [
     { one: 'a', two: 3 },
     { one: 'b', two: 5 },
     { one: 'c', two: 7 }
   ]
+  const options = {
+    columns: [{
+      name: 'two',
+      get: function (cell) {
+        return cell + 2
+      }
+    }]
+  }
   const expected = [
     ' a  5 ',
     ' b  7 ',
     ' c  9 '
   ].join(os.EOL) + os.EOL
 
+  const table = new Table(data, options)
+  a.equal(table.toString(), expected)
+})
+
+tom.test('Cell getter: deep value', function () {
+  const data = [
+    { one: 'a', two: { value: 2 } }
+  ]
+  const options = { columns: [{ name: 'two', get: cell => cell.value }] }
+  const expected = [' a  2 '].join(os.EOL) + os.EOL
   const table = new Table(data, options)
   a.equal(table.toString(), expected)
 })

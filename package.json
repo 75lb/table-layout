@@ -29,7 +29,8 @@
     "test": "npm run dist && test-runner 'test/**/*.js'",
     "docs": "jsdoc2md -t README.hbs index.js -p list --member-index-format list > README.md; echo",
     "cover": "c8 npm test",
-    "dist": "rollup -c"
+    "dist": "rollup -c",
+    "examples": "for FILE in example/*.json; do echo \"# $FILE\"; echo; cat $FILE | node bin/cli.js; done"
   },
   "dependencies": {
     "@75lb/deep-merge": "^1.1.0",
@@ -39,6 +40,7 @@
     "wordwrapjs": "^5.1.0"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^20.0.0",
     "@rollup/plugin-node-resolve": "^13.0.4",
     "c8": "^7.8.0",
     "jsdoc-to-markdown": "^7.0.1",

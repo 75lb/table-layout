@@ -1,4 +1,5 @@
 import { nodeResolve } from '@rollup/plugin-node-resolve'
+import commonJs from '@rollup/plugin-commonjs'
 
 export default [
   {
@@ -8,7 +9,7 @@ export default [
       format: 'esm'
     },
     external: [],
-    plugins: [nodeResolve({ preferBuiltins: true })]
+    plugins: [nodeResolve({ preferBuiltins: true }), commonJs()]
   },
   {
     input: 'index.js',
@@ -18,6 +19,6 @@ export default [
       exports: 'auto'
     },
     external: [],
-    plugins: [nodeResolve({ preferBuiltins: true })]
+    plugins: [nodeResolve({ preferBuiltins: true }), commonJs()]
   }
 ]

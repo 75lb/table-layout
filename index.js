@@ -3,6 +3,10 @@ import Columns from './lib/columns.js'
 import wrap from 'wordwrapjs'
 import { remove } from './lib/ansi.js'
 import t from 'typical'
+import deepMerge from '@75lb/deep-merge'
+import Cell from './lib/cell.js'
+import arrayify from 'array-back'
+import * as ansi from './lib/ansi.js'
 
 /**
  * @module table-layout
@@ -33,7 +37,7 @@ class Table {
    * @param [options.noTrim] {boolean} - disable line-trimming
    * @param [options.break] {boolean} - enable word-breaking on all columns
    * @param [options.columns] {module:table-layout~columnOption} - array of column-specific options
-   * @param [options.ignoreEmptyColumns] {boolean} - if set, empty columns or columns containing only whitespace are not rendered.
+   * @param [options.ignoreEmptyColumns] {boolean} - If set, empty columns or columns containing only whitespace are not rendered.
    * @param [options.padding] {object} - Padding values to set on each column. Per-column overrides can be set in the `options.columns` array.
    * @param [options.padding.left] {string} - Defaults to a single space.
    * @param [options.padding.right] {string} - Defaults to a single space.
@@ -50,13 +54,7 @@ class Table {
       columns: [],
       eol: '\n'
     }
-    if (!options.padding) options.padding = defaults.padding
-    if (options.padding && t.isUndefined(options.padding.left)) options.padding.left = defaults.padding.left
-    if (options.padding && t.isUndefined(options.padding.right)) options.padding.right = defaults.padding.right
-    if (t.isUndefined(options.maxWidth)) options.maxWidth = defaults.maxWidth
-    if (t.isUndefined(options.eol)) options.eol = defaults.eol
-    options.columns = options.columns || []
-    this.options = options
+    this.options = deepMerge(defaults, options)
     this.load(data)
   }
 
@@ -68,43 +66,73 @@ class Table {
       data = Rows.removeEmptyColumns(data)
     }
 
+    /* Create columns.. also removes ansi characters and measures column content width */
     this.columns = Columns.getColumns(data)
-    this.rows = new Rows(data, this.columns)
 
     /* load default column properties from options */
     this.columns.maxWidth = options.maxWidth
     this.columns.list.forEach(column => {
-      if (options.padding) column.padding = options.padding
-      if (options.noWrap) column.noWrap = options.noWrap
+      column.padding = options.padding
+      column.noWrap = options.noWrap
+      column.break = options.break
       if (options.break) {
-        column.break = options.break
+        /* Force column to be wrappable */
         column.contentWrappable = true
       }
     })
 
     /* load column properties from options.columns */
-    options.columns.forEach(optionColumn => {
+    for (const optionColumn of options.columns) {
       const column = this.columns.get(optionColumn.name)
       if (column) {
         if (optionColumn.padding) {
           column.padding.left = optionColumn.padding.left
           column.padding.right = optionColumn.padding.right
         }
-        if (optionColumn.width) column.width = optionColumn.width
-        if (optionColumn.maxWidth) column.maxWidth = optionColumn.maxWidth
-        if (optionColumn.minWidth) column.minWidth = optionColumn.minWidth
-        if (optionColumn.noWrap) column.noWrap = optionColumn.noWrap
+        column.width = optionColumn.width
+        column.maxWidth = optionColumn.maxWidth
+        column.minWidth = optionColumn.minWidth
+        column.noWrap = optionColumn.noWrap
+        column.break = optionColumn.break
 
         if (optionColumn.break) {
-          column.break = optionColumn.break
+          /* Force column to be wrappable */
           column.contentWrappable = true
         }
 
-        if (optionColumn.transform) column.transform = optionColumn.transform
+        column.get = optionColumn.get
       }
-    })
+    }
+
+    for (const row of arrayify(data)) {
+      for (const columnName in row) {
+        let column = this.columns.get(columnName)
+
+        /* Remove ansi characters from cell value before calculating widths */
+        const cell = new Cell(row[columnName], column)
+        let cellValue = cell.value
+        if (ansi.has(cellValue)) {
+          cellValue = ansi.remove(cellValue)
+        }
+
+        /* Update column content width if this if this cell is wider */
+        if (cellValue.length > column.contentWidth) {
+          column.contentWidth = cellValue.length
+        }
+
+        /* Update column minContentWidth if this cell has a longer word */
+        const longestWord = getLongestWord(cellValue)
+        if (longestWord > column.minContentWidth) {
+          column.minContentWidth = longestWord
+        }
+        if (!column.contentWrappable) {
+          column.contentWrappable = wrap.isWrappable(cellValue)
+        }
+      }
+    }
 
     this.columns.autoSize()
+    this.rows = new Rows(data, this.columns)
     return this
   }
 
@@ -181,6 +209,11 @@ function padCell (cellValue, padding, width) {
   cellValue = cellValue || ''
   return (padding.left || '') +
   cellValue.padEnd(width - padding.length() + ansiLength) + (padding.right || '')
+}
+
+function getLongestWord (line) {
+  const words = wrap.getChunks(line)
+  return words.reduce((max, word) => Math.max(word.length, max), 0)
 }
 
 /**
