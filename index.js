@@ -227,6 +227,6 @@ function getLongestWord (line) {
  * @property [padding] {object} - padding options
  * @property [padding.left] {string} - a string to pad the left of each cell (default: `' '`)
  * @property [padding.right] {string} - a string to pad the right of each cell (default: `' '`)
- * @property [transform] {function} - a function which will be ran for each value of this column. Transforming it.
+ * @property [get] {function(cell)} - A getter function to return the cell value.
  */
 export default Table

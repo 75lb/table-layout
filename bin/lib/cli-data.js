@@ -1,5 +1,12 @@
 export const definitions = [
   {
+    name: 'files',
+    type: String,
+    description: 'One or more JSON input files to read. If not present, table-layout will look for input on stdin.',
+    multiple: true,
+    defaultOption: true
+  },
+  {
     name: 'width',
     type: String,
     multiple: true,
@@ -33,7 +40,10 @@ export const usageSections = [
   },
   {
     header: 'Synopsis',
-    content: '$ cat {underline jsonfile} | table-layout [options]'
+    content: [
+      '$ cat {underline jsonfile} | table-layout [options]',
+      '$ table-layout [options] <files>'
+    ]
   },
   {
     header: 'Options',
