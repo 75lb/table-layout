@@ -16,4 +16,10 @@ tom.test('help', async function () {
   a.ok(/Synopsis/.test(result))
 })
 
+tom.test('render file', async function () {
+  const cli = new TableLayoutCli()
+  const result = await cli.start(['./test/fixture/one.json'])
+  a.ok(/China/.test(result))
+})
+
 export default tom

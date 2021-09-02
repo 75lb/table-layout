@@ -35,6 +35,8 @@
   "dependencies": {
     "@75lb/deep-merge": "^1.1.0",
     "array-back": "^6.2.0",
+    "command-line-args": "^5.2.0",
+    "command-line-usage": "^6.1.1",
     "stream-read-all": "^3.0.1",
     "typical": "^7.1.1",
     "wordwrapjs": "^5.1.0"

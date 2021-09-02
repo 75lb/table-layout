@@ -5,17 +5,22 @@ import extend from '@75lb/deep-merge'
 import t from 'typical'
 import * as cliData from './cli-data.js'
 import commandLineUsage from 'command-line-usage'
+import { promises as fs } from 'fs'
 
 class TableLayoutCli {
   async start (argv, testInput) {
     const options = commandLineArgs(cliData.definitions, { argv })
     if (options.help) {
       return commandLineUsage(cliData.usageSections)
+    } else if (options.file) {
+      const input = testInput || await fs.readFile(options.file, 'utf8')
+      const json = JSON.parse(input)
+      return getTable(json, options)
+    } else {
+      const input = testInput || await this.fetchInput()
+      const json = JSON.parse(input)
+      return getTable(json, options)
     }
-
-    const input = testInput || await this.fetchInput()
-    const json = JSON.parse(input)
-    return getTable(json, options)
   }
 
   async fetchInput () {
