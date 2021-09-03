@@ -103,7 +103,7 @@ Formatting long chunks of text into columns for display side by side.
 ]
 ```
 
-Output
+Output:
 
 ```
 $ cat example/two-columns.json | table-layout
@@ -153,25 +153,38 @@ Kingdom of England.
 
 <u>Synopsis</u>
 
-  $ cat {underline jsonfile} | table-layout [options]
-  $ table-layout [options] <files>
+  $ cat <u>json-file</u> | table-layout [options]
+  $ table-layout [options] <u>json-file</u>
 
 <u>Options</u>
 
-  --files string[]             One or more JSON input files to read. If not present, table-layout will look
-                               for input on stdin.
-  -w, --width <widths>         specify a list of column widths in the format '<column>:<width>', for
+  --file string                A JSON input file to read. If not present, table-layout will look for input
+                               on stdin.
+  -w, --width widths           specify a list of column widths in the format '<column>:<width>', for
                                example:
-                               $ cat \<json data\> | table-layout --width "column 1: 10" "column 2: 30"
+                               $ cat <file> | table-layout --width "column 1: 10" "column 2: 30"
   -l, --padding-left string    One or more characters to pad the left of each column. Defaults to ' '.
   -r, --padding-right string   One or more characters to pad the right of each column. Defaults to ' '.
   -h, --help
 </code></pre>
 
 
-## Programmatic 
+## Programmatic Usage
 
-Where input looks like this:
+An example of how to use table-layout from Node.js.
+
+```js
+import Table from 'table-layout'
+import { promises as fs } from 'fs'
+
+const issues = await fs.readFile('./issues.json', 'utf8')
+const table = new Table(JSON.parse(issues), { maxWidth: 60 })
+
+console.log(table.toString())
+
+```
+
+If the input file looks like this: 
 
 ```json
 [
@@ -202,16 +215,7 @@ Where input looks like this:
 ]
 ```
 
-This code...
-
-```js
-const Table = require('table-layout')
-const issues = require('./issues.json')
-const table = new Table(issues, { maxWidth: 60 })
-console.log(table.toString())
-```
-
-...produces this output:
+This is the output:
 
 ```
  15134  Coveralls has no source available   ndelangen     0
@@ -231,11 +235,15 @@ console.log(table.toString())
         with .log
 ```
 
+### API Reference
+
+Full the full API documentation, see [here]()
+
 ## Load anywhere
 
 This library is compatible with Node.js, the Web and any style of module loader. It can be loaded anywhere, natively without transpilation.
 
-Node.js:
+Within a Node.js CommonJS Module:
 
 ```js
 const TableLayout = require('table-layout')
