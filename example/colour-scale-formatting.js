@@ -17,11 +17,10 @@ function getColour (value) {
     return new Proxy(row, {
       get (target, property, receiver) {
         if (property === 'return') {
-          if (target.return >= 0) {
-            return ansi.format(target.return + '%', `fg-rgb(0, ${getColour(target.return)}, 0)`)
-          } else {
-            return ansi.format(target.return + '%', `fg-rgb(${getColour(target.return)}, 0, 0)`)
-          }
+          const ansiColour = target.return >= 0
+            ? `fg-rgb(0, ${getColour(target.return)}, 0)`
+            : `fg-rgb(${getColour(target.return)}, 0, 0)`
+          return ansi.format(target.return + '%', ansiColour)
         } else {
           return Reflect.get(target, property, receiver)
         }
