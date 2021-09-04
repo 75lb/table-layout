@@ -1,0 +1,17 @@
+[
+  {
+    "country": { "name": "USA" },
+    "GDP": 19485394000000,
+    "population": 325084756
+ },
+  {
+    "country": { "name": "China" },
+    "GDP": 12237700479375,
+    "population": 1421021791
+  },
+  {
+    "country": { "name": "Japan" },
+    "GDP": 4872415104315,
+    "population": 127502725
+ }
+]

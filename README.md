@@ -40,7 +40,7 @@ As input, table-layout takes a JSON file containing an array of objects.
 ]
 ```
 
-The output of table-layout is plain-text table. 
+The output of table-layout is a configurable plain-text table. 
 
 ```
 $ cat example/gdp.json | table-layout
@@ -53,7 +53,7 @@ $ cat example/gdp.json | table-layout
 
 ## Examples
 
-Please see below for example usage. 
+Please see below for example usage on the command-line. Programmatic examples are further down the page.
 
 ### View Github issues
 
@@ -143,20 +143,43 @@ border to the south with the
 Kingdom of England.
 ```
 
+## Include configuration options with the input
+
+Table-layout expects an array of objects as the input. However, if the input data is a plain object with the fields `options` and `data` defined then these properties will be used as the table options and data respectively. Example: 
+
+```
+{
+    "options": {
+        "noTrim": true,
+        "columns": [
+            { "name": "name", "width": 25 },
+            { "name": "description", "width": 20 },
+            { "name": "html_url", "width": 20, "break": true },
+            { "name": "stargazers_count", "width": 5 }
+        ]
+    },
+    "data": [
+      ...
+    ]
+}
+```
+
+
+Please see [this folder]() for examples of input containing both options and data.
+
 ## Full command-line usage guide:
 
-<pre><code>$ table-layout --help
-
-<u>table-layout</u>
+```
+table-layout
 
   Styleable plain-text table generator. Useful for formatting console output.
 
-<u>Synopsis</u>
+Synopsis
 
-  $ cat <u>json-file</u> | table-layout [options]
-  $ table-layout [options] <u>json-file</u>
+  $ cat json-file | table-layout [options]
+  $ table-layout [options] json-file
 
-<u>Options</u>
+Options
 
   --file string                A JSON input file to read. If not present, table-layout will look for input
                                on stdin.
@@ -166,12 +189,15 @@ Kingdom of England.
   -l, --padding-left string    One or more characters to pad the left of each column. Defaults to ' '.
   -r, --padding-right string   One or more characters to pad the right of each column. Defaults to ' '.
   -h, --help
-</code></pre>
-
+```
 
 ## Programmatic Usage
 
-An example of how to use table-layout from Node.js.
+Using the table-layout API directly from Javascript gives you a little more power and flexibility over the output.
+
+### Format a JSON file as a table.
+
+Trivial example. Read a JSON file from disk and output a table with a maximum width (in characters) of 60.
 
 ```js
 import Table from 'table-layout'
@@ -184,7 +210,7 @@ console.log(table.toString())
 
 ```
 
-If the input file looks like this: 
+An example input file:
 
 ```json
 [
@@ -234,6 +260,10 @@ This is the output:
         error when installing discord.js
         with .log
 ```
+
+### Cherry-picked and computed values
+
+
 
 ### API Reference
 
