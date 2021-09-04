@@ -1,13 +1,13 @@
 import Table from 'table-layout'
 import { promises as fs } from 'fs'
 
-const issues = JSON.parse(await fs.readFile('./example/deep-data/gdp.json', 'utf8'))
+const rows = JSON.parse(await fs.readFile('./example/deep-data/gdp.json', 'utf8'))
 const germanCurrency = new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' })
 const germanNumber = new Intl.NumberFormat('de-DE', { notation: 'compact', maximumSignificantDigits: 3, maximumFractionDigits: 0 })
 
 /* solved via library - maintainer has control */
 {
-  const table = new Table(issues, {
+  const table = new Table(rows, {
     maxWidth: 60,
     columns: [
       {
@@ -30,8 +30,8 @@ const germanNumber = new Intl.NumberFormat('de-DE', { notation: 'compact', maxim
 
 /* solved via language - user has control */
 {
-  const proxy = issues.map(issue => {
-    return new Proxy(issue, {
+  const proxy = rows.map(row => {
+    return new Proxy(row, {
       get (target, property, receiver) {
         if (property === 'country') {
           return target.country.name
