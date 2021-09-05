@@ -334,6 +334,12 @@ $ node example/computed-values.js
  Japan  4.872.415.104.315,00 €   128 Mio.
  ```
 
+### Colour-scale conditional formatting
+
+See [this file](https://github.com/75lb/table-layout/blob/master/example/colour-scale-formatting.js) for a example of colour-scale formatting (increasing intensity of red/green for more positive/negative values).
+
+<img src="https://s9.gifyu.com/images/Screenshot-2021-09-04-at-17.53.16.png" width="600px" title="Colour-scale">
+
 ### API Reference
 
 For the full API documentation, see [here](https://github.com/75lb/table-layout/blob/master/docs/API.md).
@@ -362,6 +368,6 @@ import TableLayout from './node_modules/table-layout/dist/index.mjs'
 
 * * *
 
-&copy; 2021 [Lloyd Brookes](https://github.com/75lb) \<75pound@gmail.com\>.
+&copy; 2015-21 [Lloyd Brookes](https://github.com/75lb) \<75pound@gmail.com\>.
 
 Isomorphic test suite by [test-runner](https://github.com/test-runner-js/test-runner) and [web-runner](https://github.com/test-runner-js/web-runner). Documented by [jsdoc-to-markdown](https://github.com/jsdoc2md/jsdoc-to-markdown).

@@ -11,26 +11,20 @@ function getColour (value) {
   return Math.round((100 * ratio) + 155)
 }
 
-/* solved via language - user has control */
-{
-  const proxy = rows.map(row => {
-    return new Proxy(row, {
-      get (target, property, receiver) {
-        if (property === 'return') {
-          const ansiColour = target.return >= 0
-            ? `fg-rgb(0, ${getColour(target.return)}, 0)`
-            : `fg-rgb(${getColour(target.return)}, 0, 0)`
-          return ansi.format(target.return + '%', ansiColour)
-        } else {
-          return Reflect.get(target, property, receiver)
-        }
+const proxy = rows.map(row => {
+  return new Proxy(row, {
+    get (target, property, receiver) {
+      if (property === 'return') {
+        const ansiColour = target.return >= 0
+          ? `fg-rgb(0, ${getColour(target.return)}, 0)`
+          : `fg-rgb(${getColour(target.return)}, 0, 0)`
+        return ansi.format(target.return + '%', ansiColour)
+      } else {
+        return Reflect.get(target, property, receiver)
       }
-    })
+    }
   })
-  const table = new Table(proxy, {
-    maxWidth: 60
-  })
+})
 
-  console.log(table.toString())
-}
-
+const table = new Table(proxy)
+console.log(table.toString())
