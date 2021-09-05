@@ -1,195 +1,201 @@
-import TestRunner from 'test-runner'
-import os from 'os'
-import { strict as a } from 'assert'
+import Tom from '@test-runner/tom'
 import Table from 'table-layout'
+import getAssert from 'isomorphic-assert'
 
-const tom = new TestRunner.Tom()
+const eol = '\n'
 
-tom.test('new Table()', function () {
-  const options = {
-    maxWidth: 40,
-    padding: { left: '<', right: '>' }
-  }
-  const data = [
-    { one: 'row 1 column one .. .. ..', two: 'r1 c2' },
-    { one: 'r2 c1', two: 'row two column 2' }
-  ]
-  const table = new Table(data, options)
+async function getTom () {
+  const a = await getAssert()
+  const tom = new Tom()
 
-  a.equal(table.rows.list.length, 2)
-  a.equal(table.columns.list.length, 2)
-})
-
-tom.test('table.getWrapped()', function () {
-  const options = {
-    maxWidth: 40,
-    padding: { left: '<', right: '>' }
-  }
-  const data = [
-    { one: 'row 1 column one .. .. ..', two: 'r1 c2' },
-    { one: 'r2 c1', two: 'row two column 2' }
-  ]
-  const table = new Table(data, options)
-  const result = table.getWrapped()
-
-  a.deepEqual(result, [
-    [['row 1 column one ..', '.. ..'], ['r1 c2']],
-    [['r2 c1'], ['row two column 2']]
-  ])
-})
-
-tom.test('table.getLines()', function () {
-  const options = {
-    maxWidth: 40,
-    padding: { left: '<', right: '>' }
-  }
-  const data = [
-    { one: 'row 1 column one .. .. ..', two: 'r1 c2' },
-    { one: 'r2 c1', two: 'row two column 2' }
-  ]
-  const table = new Table(data, options)
-
-  a.deepEqual(table.getLines(), [
-    ['row 1 column one ..', 'r1 c2'],
-    ['.. ..', ''],
-    ['r2 c1', 'row two column 2']
-  ])
-})
-
-tom.test('table.renderLines()', function () {
-  const options = {
-    maxWidth: 40,
-    padding: { left: '<', right: '>' }
-  }
-  const data = [
-    { one: 'row 1 column one .. .. ..', two: 'r1 c2' },
-    { one: 'r2 c1', two: 'row two column 2' }
-  ]
-  const table = new Table(data, options)
-
-  a.deepEqual(table.renderLines(), [
-    '<row 1 column one .. ><r1 c2           >',
-    '<.. ..               ><                >',
-    '<r2 c1               ><row two column 2>'
-  ])
-})
-
-tom.test('table.toString()', function () {
-  const options = {
-    maxWidth: 40,
-    padding: { left: '<', right: '>' }
-  }
-  const data = [
-    { one: 'row 1 column one .. .. ..', two: 'r1 c2' },
-    { one: 'r2 c1', two: 'row two column 2' }
-  ]
-  const table = new Table(data, options)
-  const expected = [
-    '<row 1 column one .. ><r1 c2           >',
-    '<.. ..               ><                >',
-    '<r2 c1               ><row two column 2>'
-  ].join(os.EOL) + os.EOL
-
-  a.equal(table.toString(), expected)
-})
-
-tom.test('table.renderLines() 2', function () {
-  const options = {
-    maxWidth: 40,
-    padding: { left: '<', right: '>' }
-  }
-  const data = [
-    { one: 'row 1 column one .. .. ..', two: 'r1 c2' },
-    { one: 'r2 c1', two: 'row two column 2' }
-  ]
-  const table = new Table(data, options)
-  const expected = [
-    '<row 1 column one .. ><r1 c2           >',
-    '<.. ..               ><                >',
-    '<r2 c1               ><row two column 2>'
-  ]
-
-  a.deepEqual(table.renderLines(), expected)
-})
-
-tom.test('table.renderLines() 3', function () {
-  const options = {
-    maxWidth: 40,
-    padding: { left: '<', right: '>' }
-  }
-  const data = [
-    { one: 'row 1 column one .. .. ..', two: 3000 },
-    { one: true, two: null },
-    { one: { yeah: true } }
-  ]
-  const expected = [
-    '<row 1 column one .. .. ..><3000>',
-    '<true                     ><null>',
-    '<[object Object]          ><    >'
-  ]
-
-  const table = new Table(data, options)
-  a.deepEqual(table.renderLines(), expected)
-})
-
-tom.test('column options', function () {
-  const options = {
-    maxWidth: 40,
-    padding: { left: '<', right: '>' },
-    columns: [
-      { name: 'one' },
-      { name: 'two', width: 10 }
+  tom.test('new Table()', function () {
+    const options = {
+      maxWidth: 40,
+      padding: { left: '<', right: '>' }
+    }
+    const data = [
+      { one: 'row 1 column one .. .. ..', two: 'r1 c2' },
+      { one: 'r2 c1', two: 'row two column 2' }
     ]
-  }
+    const table = new Table(data, options)
 
-  const data = [
-    { one: 'row 1 column one .. .. ..', two: 3000 },
-    { one: true, two: null },
-    { one: 'yeah' }
-  ]
+    a.equal(table.rows.list.length, 2)
+    a.equal(table.columns.list.length, 2)
+  })
 
-  const expected = [
-    '<row 1 column one .. .. ..><3000    >',
-    '<true                     ><null    >',
-    '<yeah                     ><        >'
-  ]
+  tom.test('table.getWrapped()', function () {
+    const options = {
+      maxWidth: 40,
+      padding: { left: '<', right: '>' }
+    }
+    const data = [
+      { one: 'row 1 column one .. .. ..', two: 'r1 c2' },
+      { one: 'r2 c1', two: 'row two column 2' }
+    ]
+    const table = new Table(data, options)
+    const result = table.getWrapped()
 
-  const table = new Table(data, options)
-  a.deepEqual(table.renderLines(), expected)
-})
+    a.deepEqual(result, [
+      [['row 1 column one ..', '.. ..'], ['r1 c2']],
+      [['r2 c1'], ['row two column 2']]
+    ])
+  })
 
-tom.test('Cell getter 1', function () {
-  const data = [
-    { one: 'a', two: 3 },
-    { one: 'b', two: 5 },
-    { one: 'c', two: 7 }
-  ]
-  const options = {
-    columns: [{
-      name: 'two',
-      get: function (cell) {
-        return cell + 2
-      }
-    }]
-  }
-  const expected = [
-    ' a  5 ',
-    ' b  7 ',
-    ' c  9 '
-  ].join(os.EOL) + os.EOL
+  tom.test('table.getLines()', function () {
+    const options = {
+      maxWidth: 40,
+      padding: { left: '<', right: '>' }
+    }
+    const data = [
+      { one: 'row 1 column one .. .. ..', two: 'r1 c2' },
+      { one: 'r2 c1', two: 'row two column 2' }
+    ]
+    const table = new Table(data, options)
 
-  const table = new Table(data, options)
-  a.equal(table.toString(), expected)
-})
+    a.deepEqual(table.getLines(), [
+      ['row 1 column one ..', 'r1 c2'],
+      ['.. ..', ''],
+      ['r2 c1', 'row two column 2']
+    ])
+  })
 
-tom.test('Cell getter: deep value', function () {
-  const data = [
-    { one: 'a', two: { value: 2 } }
-  ]
-  const options = { columns: [{ name: 'two', get: cell => cell.value }] }
-  const expected = [' a  2 '].join(os.EOL) + os.EOL
-  const table = new Table(data, options)
-  a.equal(table.toString(), expected)
-})
+  tom.test('table.renderLines()', function () {
+    const options = {
+      maxWidth: 40,
+      padding: { left: '<', right: '>' }
+    }
+    const data = [
+      { one: 'row 1 column one .. .. ..', two: 'r1 c2' },
+      { one: 'r2 c1', two: 'row two column 2' }
+    ]
+    const table = new Table(data, options)
 
-export default tom
+    a.deepEqual(table.renderLines(), [
+      '<row 1 column one .. ><r1 c2           >',
+      '<.. ..               ><                >',
+      '<r2 c1               ><row two column 2>'
+    ])
+  })
+
+  tom.test('table.toString()', function () {
+    const options = {
+      maxWidth: 40,
+      padding: { left: '<', right: '>' }
+    }
+    const data = [
+      { one: 'row 1 column one .. .. ..', two: 'r1 c2' },
+      { one: 'r2 c1', two: 'row two column 2' }
+    ]
+    const table = new Table(data, options)
+    const expected = [
+      '<row 1 column one .. ><r1 c2           >',
+      '<.. ..               ><                >',
+      '<r2 c1               ><row two column 2>'
+    ].join(eol) + eol
+
+    a.equal(table.toString(), expected)
+  })
+
+  tom.test('table.renderLines() 2', function () {
+    const options = {
+      maxWidth: 40,
+      padding: { left: '<', right: '>' }
+    }
+    const data = [
+      { one: 'row 1 column one .. .. ..', two: 'r1 c2' },
+      { one: 'r2 c1', two: 'row two column 2' }
+    ]
+    const table = new Table(data, options)
+    const expected = [
+      '<row 1 column one .. ><r1 c2           >',
+      '<.. ..               ><                >',
+      '<r2 c1               ><row two column 2>'
+    ]
+
+    a.deepEqual(table.renderLines(), expected)
+  })
+
+  tom.test('table.renderLines() 3', function () {
+    const options = {
+      maxWidth: 40,
+      padding: { left: '<', right: '>' }
+    }
+    const data = [
+      { one: 'row 1 column one .. .. ..', two: 3000 },
+      { one: true, two: null },
+      { one: { yeah: true } }
+    ]
+    const expected = [
+      '<row 1 column one .. .. ..><3000>',
+      '<true                     ><null>',
+      '<[object Object]          ><    >'
+    ]
+
+    const table = new Table(data, options)
+    a.deepEqual(table.renderLines(), expected)
+  })
+
+  tom.test('column options', function () {
+    const options = {
+      maxWidth: 40,
+      padding: { left: '<', right: '>' },
+      columns: [
+        { name: 'one' },
+        { name: 'two', width: 10 }
+      ]
+    }
+
+    const data = [
+      { one: 'row 1 column one .. .. ..', two: 3000 },
+      { one: true, two: null },
+      { one: 'yeah' }
+    ]
+
+    const expected = [
+      '<row 1 column one .. .. ..><3000    >',
+      '<true                     ><null    >',
+      '<yeah                     ><        >'
+    ]
+
+    const table = new Table(data, options)
+    a.deepEqual(table.renderLines(), expected)
+  })
+
+  tom.test('Cell getter 1', function () {
+    const data = [
+      { one: 'a', two: 3 },
+      { one: 'b', two: 5 },
+      { one: 'c', two: 7 }
+    ]
+    const options = {
+      columns: [{
+        name: 'two',
+        get: function (cell) {
+          return cell + 2
+        }
+      }]
+    }
+    const expected = [
+      ' a  5 ',
+      ' b  7 ',
+      ' c  9 '
+    ].join(eol) + eol
+
+    const table = new Table(data, options)
+    a.equal(table.toString(), expected)
+  })
+
+  tom.test('Cell getter: deep value', function () {
+    const data = [
+      { one: 'a', two: { value: 2 } }
+    ]
+    const options = { columns: [{ name: 'two', get: cell => cell.value }] }
+    const expected = [' a  2 '].join(eol) + eol
+    const table = new Table(data, options)
+    a.equal(table.toString(), expected)
+  })
+
+  return tom
+}
+
+export default getTom()

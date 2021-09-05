@@ -26,8 +26,9 @@
     "node": ">=12.17"
   },
   "scripts": {
-    "test": "npm run dist && npm run test:ci",
+    "test": "npm run dist && npm run test:ci && npm run test:web",
     "test:ci": "test-runner 'test/**/*.js'",
+    "test:web": "web-runner 'test/table.js'",
     "docs": "jsdoc2md index.js -p list --member-index-format list > docs/API.md",
     "cover": "c8 npm test",
     "dist": "rollup -c",
@@ -45,11 +46,14 @@
   "devDependencies": {
     "@rollup/plugin-commonjs": "^20.0.0",
     "@rollup/plugin-node-resolve": "^13.0.4",
+    "@test-runner/tom": "^0.8.0",
     "ansi-escape-sequences": "^6.2.0",
     "c8": "^7.8.0",
+    "isomorphic-assert": "^1.0.0",
     "jsdoc-to-markdown": "^7.0.1",
     "rollup": "^2.56.3",
-    "test-runner": "^0.9.8"
+    "test-runner": "^0.9.8",
+    "web-runner": "^0.4.6"
   },
   "files": [
     "index.js",
