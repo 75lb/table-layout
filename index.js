@@ -55,6 +55,8 @@ class Table {
       eol: '\n'
     }
     this.options = deepMerge(defaults, options)
+    this.rows = null
+    this.columns = null
     this.load(data)
   }
 
@@ -63,7 +65,7 @@ class Table {
 
     /* remove empty columns */
     if (options.ignoreEmptyColumns) {
-      data = Rows.removeEmptyColumns(data)
+      data = removeEmptyColumns(data)
     }
 
     /* Create columns.. also removes ansi characters and measures column content width */
@@ -71,7 +73,7 @@ class Table {
 
     /* load default column properties from options */
     this.columns.maxWidth = options.maxWidth
-    this.columns.list.forEach(column => {
+    for (const column of this.columns.list) {
       column.padding = options.padding
       column.noWrap = options.noWrap
       column.break = options.break
@@ -79,7 +81,7 @@ class Table {
         /* Force column to be wrappable */
         column.contentWrappable = true
       }
-    })
+    }
 
     /* load column properties from options.columns */
     for (const optionColumn of options.columns) {
@@ -106,7 +108,7 @@ class Table {
 
     for (const row of arrayify(data)) {
       for (const columnName in row) {
-        let column = this.columns.get(columnName)
+        const column = this.columns.get(columnName)
 
         /* Remove ansi characters from cell value before calculating widths */
         const cell = new Cell(row[columnName], column)
@@ -214,6 +216,32 @@ function padCell (cellValue, padding, width) {
 function getLongestWord (line) {
   const words = wrap.getChunks(line)
   return words.reduce((max, word) => Math.max(word.length, max), 0)
+}
+
+function removeEmptyColumns (data) {
+  const distinctColumnNames = data.reduce((columnNames, row) => {
+    for (const key of Object.keys(row)) {
+      if (!columnNames.includes(key)) {
+        columnNames.push(key)
+      }
+    }
+    return columnNames
+  }, [])
+
+  const emptyColumns = distinctColumnNames.filter(columnName => {
+    const hasValue = data.some(row => {
+      const value = row[columnName]
+      return (t.isDefined(value) && typeof value !== 'string') || (typeof value === 'string' && /\S+/.test(value))
+    })
+    return !hasValue
+  })
+
+  return data.map(row => {
+    for (const emptyCol of emptyColumns) {
+      delete row[emptyCol]
+    }
+    return row
+  })
 }
 
 /**

@@ -68,7 +68,10 @@ class Cell {
     _value.set(this, val);
   }
 
-  /* Expensive? */
+  /**
+  * Must return a string or object with a `.toString()` method.
+  * @returns {string}
+  */
   get value () {
     let cellValue = _value.get(this);
     const column = _column.get(this);
@@ -81,6 +84,27 @@ class Cell {
       cellValue = String(cellValue);
     }
     return cellValue
+  }
+}
+
+/**
+ * @module rows
+ */
+
+/**
+≈ Each row is a map of column/cell pairs.
+*/
+class Rows {
+  constructor (rows, columns) {
+    this.list = [];
+    this.load(rows, columns);
+  }
+
+  load (rows, columns) {
+    for (const row of arrayify(rows)) {
+      const map = new Map(columns.list.map(column => [column, new Cell(row[column.name], column)]));
+      this.list.push(map);
+    }
   }
 }
 
@@ -384,54 +408,6 @@ var t = {
 };
 
 /**
- * @module rows
- */
-
-
-/**
-≈ Each row is a map of column/cell pairs.
-*/
-class Rows {
-  constructor (rows, columns) {
-    this.list = [];
-    this.load(rows, columns);
-  }
-
-  load (rows, columns) {
-    for (const row of arrayify(rows)) {
-      const map = new Map(columns.list.map(column => [column, new Cell(row[column.name], column)]));
-      this.list.push(map);
-    }
-  }
-
-  static removeEmptyColumns (data) {
-    const distinctColumnNames = data.reduce((columnNames, row) => {
-      for (const key of Object.keys(row)) {
-        if (!columnNames.includes(key)) {
-          columnNames.push(key);
-        }
-      }
-      return columnNames
-    }, []);
-
-    const emptyColumns = distinctColumnNames.filter(columnName => {
-      const hasValue = data.some(row => {
-        const value = row[columnName];
-        return (t.isDefined(value) && typeof value !== 'string') || (typeof value === 'string' && /\S+/.test(value))
-      });
-      return !hasValue
-    });
-
-    return data.map(row => {
-      for (const emptyCol of emptyColumns) {
-        delete row[emptyCol];
-      }
-      return row
-    })
-  }
-}
-
-/**
  * @module padding
  */
 
@@ -502,6 +478,141 @@ class Column {
 
   generateMinWidth () {
     this.minWidth = this.minContentWidth + this.padding.length();
+  }
+}
+
+const _maxWidth = new WeakMap();
+
+/**
+ * @module columns
+ */
+
+class Columns {
+  constructor (columns) {
+    this.list = [];
+    for (const column of arrayify(columns)) {
+      this.add(column);
+    }
+  }
+
+  /**
+   * sum of all generatedWidth fields
+   * @return {number}
+   */
+  totalWidth () {
+    return this.list.length
+      ? this.list.map(col => col.generatedWidth).reduce((a, b) => a + b)
+      : 0
+  }
+
+  totalFixedWidth () {
+    return this.getFixed()
+      .map(col => col.generatedWidth)
+      .reduce((a, b) => a + b, 0)
+  }
+
+  get (columnName) {
+    return this.list.find(column => column.name === columnName)
+  }
+
+  getResizable () {
+    return this.list.filter(column => column.isResizable())
+  }
+
+  getFixed () {
+    return this.list.filter(column => column.isFixed())
+  }
+
+  add (column) {
+    const col = column instanceof Column ? column : new Column(column);
+    this.list.push(col);
+    return col
+  }
+
+  get maxWidth () {
+    _maxWidth.get(this);
+  }
+
+  set maxWidth (val) {
+    _maxWidth.set(this, val);
+  }
+
+  /**
+   * sets `generatedWidth` for each column
+   * @chainable
+   */
+  autoSize () {
+    const maxWidth = _maxWidth.get(this);
+
+    /* size */
+    for (const column of this.list) {
+      column.generateWidth();
+      column.generateMinWidth();
+    }
+
+    /* adjust if user set a min or maxWidth */
+    for (const column of this.list) {
+      if (t.isDefined(column.maxWidth) && column.generatedWidth > column.maxWidth) {
+        column.generatedWidth = column.maxWidth;
+      }
+
+      if (t.isDefined(column.minWidth) && column.generatedWidth < column.minWidth) {
+        column.generatedWidth = column.minWidth;
+      }
+    }
+
+    const width = {
+      total: this.totalWidth(),
+      view: maxWidth,
+      diff: this.totalWidth() - maxWidth,
+      totalFixed: this.totalFixedWidth(),
+      totalResizable: Math.max(maxWidth - this.totalFixedWidth(), 0)
+    };
+
+    /* adjust if short of space */
+    if (width.diff > 0) {
+      /* share the available space between resizeable columns */
+      const resizableColumns = this.getResizable();
+      for (const column of resizableColumns) {
+        column.generatedWidth = Math.floor(width.totalResizable / resizableColumns.length);
+      }
+
+      /* at this point, the generatedWidth should never end up bigger than the contentWidth */
+      const grownColumns = this.list.filter(column => column.generatedWidth > column.contentWidth);
+      const shrunkenColumns = this.list.filter(column => column.generatedWidth < column.contentWidth);
+      let salvagedSpace = 0;
+      for (const column of grownColumns) {
+        const currentGeneratedWidth = column.generatedWidth;
+        column.generateWidth();
+        salvagedSpace += currentGeneratedWidth - column.generatedWidth;
+      }
+      for (const column of shrunkenColumns) {
+        column.generatedWidth += Math.floor(salvagedSpace / shrunkenColumns.length);
+      }
+
+    /* if, after autosizing, we still don't fit within maxWidth then give up */
+    }
+
+    return this
+  }
+
+  /**
+   * Factory method returning all distinct columns from input
+   * @param  {object[]} - input recordset
+   * @return {module:columns}
+   */
+  static getColumns (rows) {
+    const columns = new Columns();
+    for (const row of arrayify(rows)) {
+      for (const columnName in row) {
+        let column = columns.get(columnName);
+        if (!column) {
+          /* The default column if not specified */
+          column = columns.add({ name: columnName, contentWidth: 0, minContentWidth: 0 });
+        }
+      }
+    }
+    return columns
   }
 }
 
@@ -651,141 +762,6 @@ function breakWord (word) {
     return pieces
   } else {
     return word
-  }
-}
-
-const _maxWidth = new WeakMap();
-
-/**
- * @module columns
- */
-
-class Columns {
-  constructor (columns) {
-    this.list = [];
-    for (const column of arrayify(columns)) {
-      this.add(column);
-    }
-  }
-
-  /**
-   * sum of all generatedWidth fields
-   * @return {number}
-   */
-  totalWidth () {
-    return this.list.length
-      ? this.list.map(col => col.generatedWidth).reduce((a, b) => a + b)
-      : 0
-  }
-
-  totalFixedWidth () {
-    return this.getFixed()
-      .map(col => col.generatedWidth)
-      .reduce((a, b) => a + b, 0)
-  }
-
-  get (columnName) {
-    return this.list.find(column => column.name === columnName)
-  }
-
-  getResizable () {
-    return this.list.filter(column => column.isResizable())
-  }
-
-  getFixed () {
-    return this.list.filter(column => column.isFixed())
-  }
-
-  add (column) {
-    const col = column instanceof Column ? column : new Column(column);
-    this.list.push(col);
-    return col
-  }
-
-  get maxWidth () {
-    _maxWidth.get(this);
-  }
-
-  set maxWidth (val) {
-    _maxWidth.set(this, val);
-  }
-
-  /**
-   * sets `generatedWidth` for each column
-   * @chainable
-   */
-  autoSize () {
-    const maxWidth = _maxWidth.get(this);
-
-    /* size */
-    for (const column of this.list) {
-      column.generateWidth();
-      column.generateMinWidth();
-    }
-
-    /* adjust if user set a min or maxWidth */
-    for (const column of this.list) {
-      if (t.isDefined(column.maxWidth) && column.generatedWidth > column.maxWidth) {
-        column.generatedWidth = column.maxWidth;
-      }
-
-      if (t.isDefined(column.minWidth) && column.generatedWidth < column.minWidth) {
-        column.generatedWidth = column.minWidth;
-      }
-    }
-
-    const width = {
-      total: this.totalWidth(),
-      view: maxWidth,
-      diff: this.totalWidth() - maxWidth,
-      totalFixed: this.totalFixedWidth(),
-      totalResizable: Math.max(maxWidth - this.totalFixedWidth(), 0)
-    };
-
-    /* adjust if short of space */
-    if (width.diff > 0) {
-      /* share the available space between resizeable columns */
-      const resizableColumns = this.getResizable();
-      for (const column of resizableColumns) {
-        column.generatedWidth = Math.floor(width.totalResizable / resizableColumns.length);
-      }
-
-      /* at this point, the generatedWidth should never end up bigger than the contentWidth */
-      const grownColumns = this.list.filter(column => column.generatedWidth > column.contentWidth);
-      const shrunkenColumns = this.list.filter(column => column.generatedWidth < column.contentWidth);
-      let salvagedSpace = 0;
-      for (const column of grownColumns) {
-        const currentGeneratedWidth = column.generatedWidth;
-        column.generateWidth();
-        salvagedSpace += currentGeneratedWidth - column.generatedWidth;
-      }
-      for (const column of shrunkenColumns) {
-        column.generatedWidth += Math.floor(salvagedSpace / shrunkenColumns.length);
-      }
-
-    /* if, after autosizing, we still don't fit within maxWidth then give up */
-    }
-
-    return this
-  }
-
-  /**
-   * Factory method returning all distinct columns from input
-   * @param  {object[]} - input recordset
-   * @return {module:columns}
-   */
-  static getColumns (rows) {
-    const columns = new Columns();
-    for (const row of arrayify(rows)) {
-      for (const columnName in row) {
-        let column = columns.get(columnName);
-        if (!column) {
-          /* The default column if not specified */
-          column = columns.add({ name: columnName, contentWidth: 0, minContentWidth: 0 });
-        }
-      }
-    }
-    return columns
   }
 }
 
@@ -1492,6 +1468,8 @@ class Table {
       eol: '\n'
     };
     this.options = deepMerge(defaults, options);
+    this.rows = null;
+    this.columns = null;
     this.load(data);
   }
 
@@ -1500,7 +1478,7 @@ class Table {
 
     /* remove empty columns */
     if (options.ignoreEmptyColumns) {
-      data = Rows.removeEmptyColumns(data);
+      data = removeEmptyColumns(data);
     }
 
     /* Create columns.. also removes ansi characters and measures column content width */
@@ -1508,7 +1486,7 @@ class Table {
 
     /* load default column properties from options */
     this.columns.maxWidth = options.maxWidth;
-    this.columns.list.forEach(column => {
+    for (const column of this.columns.list) {
       column.padding = options.padding;
       column.noWrap = options.noWrap;
       column.break = options.break;
@@ -1516,7 +1494,7 @@ class Table {
         /* Force column to be wrappable */
         column.contentWrappable = true;
       }
-    });
+    }
 
     /* load column properties from options.columns */
     for (const optionColumn of options.columns) {
@@ -1543,7 +1521,7 @@ class Table {
 
     for (const row of arrayify(data)) {
       for (const columnName in row) {
-        let column = this.columns.get(columnName);
+        const column = this.columns.get(columnName);
 
         /* Remove ansi characters from cell value before calculating widths */
         const cell = new Cell(row[columnName], column);
@@ -1651,6 +1629,32 @@ function padCell (cellValue, padding, width) {
 function getLongestWord (line) {
   const words = Wordwrap.getChunks(line);
   return words.reduce((max, word) => Math.max(word.length, max), 0)
+}
+
+function removeEmptyColumns (data) {
+  const distinctColumnNames = data.reduce((columnNames, row) => {
+    for (const key of Object.keys(row)) {
+      if (!columnNames.includes(key)) {
+        columnNames.push(key);
+      }
+    }
+    return columnNames
+  }, []);
+
+  const emptyColumns = distinctColumnNames.filter(columnName => {
+    const hasValue = data.some(row => {
+      const value = row[columnName];
+      return (t.isDefined(value) && typeof value !== 'string') || (typeof value === 'string' && /\S+/.test(value))
+    });
+    return !hasValue
+  });
+
+  return data.map(row => {
+    for (const emptyCol of emptyColumns) {
+      delete row[emptyCol];
+    }
+    return row
+  })
 }
 
 export { Table as default };

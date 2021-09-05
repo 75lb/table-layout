@@ -5,7 +5,7 @@ import Columns from '../../lib/columns.js'
 
 const tom = new TestRunner.Tom()
 
-tom.test('Rows.removeEmptyColumns', function () {
+tom.skip('Rows.removeEmptyColumns', function () {
   const input = [
     { name: 'Lloyd', age: '' },
     { name: 'Roger', age: ' ' },
@@ -34,11 +34,11 @@ tom.skip('new Rows(data)', function () {
     {
       one: 'oneB oneB oneB',
       two: 'twoB twoB twoB twoB twoB twoB twoB twoB twoB twoB'
-    },
+    }
   ]
   const columns = new Columns([
     { name: 'one' },
-    { name: 'two' },
+    { name: 'two' }
   ])
   const result = new Rows(data, columns)
   this.data = result

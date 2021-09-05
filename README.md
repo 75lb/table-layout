@@ -263,7 +263,68 @@ This is the output:
 
 ### Cherry-picked and computed values
 
+Sometimes, your input data might contain a deeper structure or you want to transform or compute some values. Some example input data with structural depth and large numbers you'd like to reformat:
 
+```json
+[
+  {
+    "country": { "name": "USA" },
+    "GDP": 19485394000000,
+    "population": 325084756
+ },
+  {
+    "country": { "name": "China" },
+    "GDP": 12237700479375,
+    "population": 1421021791
+  },
+  {
+    "country": { "name": "Japan" },
+    "GDP": 4872415104315,
+    "population": 127502725
+ }
+]
+```
+
+Example usage of the column getter function: 
+
+```
+import Table from 'table-layout'
+import { promises as fs } from 'fs'
+
+const rows = JSON.parse(await fs.readFile('./example/deep-data/gdp.json', 'utf8'))
+const germanCurrency = new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' })
+const germanNumber = new Intl.NumberFormat('de-DE', { notation: 'compact', maximumSignificantDigits: 3, maximumFractionDigits: 0 })
+
+const table = new Table(rows, {
+  maxWidth: 60,
+  columns: [
+    {
+      name: 'country',
+      get: (cellValue) => cellValue.name
+    },
+    {
+      name: 'GDP',
+      get: (cellValue) => germanCurrency.format(cellValue)
+    },
+    {
+      name: 'population',
+      get: (cellValue) => germanNumber.format(cellValue)
+    },
+  ]
+})
+
+console.log(table.toString())
+```
+
+Output.
+
+```
+$ node example/computed-values.js
+
+ USA    19.485.394.000.000,00 €  325 Mio.
+ China  12.237.700.479.375,00 €  1,42 Mrd.
+ Japan  4.872.415.104.315,00 €   128 Mio.
+ ```
 
 ### API Reference
 
