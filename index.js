@@ -1,12 +1,11 @@
 import Rows from './lib/rows.js'
 import Columns from './lib/columns.js'
 import wrap from 'wordwrapjs'
-import { remove } from './lib/ansi.js'
-import t from 'typical'
 import deepMerge from '@75lb/deep-merge'
 import Cell from './lib/cell.js'
 import arrayify from 'array-back'
 import * as ansi from './lib/ansi.js'
+import { removeEmptyColumns, getLongestWord, getLongestArray, padCell } from './lib/util.js'
 
 /**
  * @module table-layout
@@ -60,6 +59,10 @@ class Table {
     this.load(data)
   }
 
+  /**
+  * Set the input data to display. Must be an array of objects.
+  * @param data {object[]}
+  */
   load (data) {
     const options = this.options
 
@@ -142,7 +145,7 @@ class Table {
     this.columns.autoSize()
     return this.rows.list.map(row => {
       const line = []
-      row.forEach((cell, column) => {
+      for (const [column, cell] of row.entries()) {
         if (column.noWrap) {
           line.push(cell.value.split(/\r\n?|\n/))
         } else {
@@ -152,7 +155,7 @@ class Table {
             noTrim: this.options.noTrim
           }))
         }
-      })
+      }
       return line
     })
   }
@@ -194,54 +197,6 @@ class Table {
   toString () {
     return this.renderLines().join(this.options.eol) + this.options.eol
   }
-}
-
-/**
- * Array of arrays in.. Returns the length of the longest one
- * @returns {number}
- * @private
- */
-function getLongestArray (arrays) {
-  const lengths = arrays.map(array => array.length)
-  return Math.max.apply(null, lengths)
-}
-
-function padCell (cellValue, padding, width) {
-  const ansiLength = cellValue.length - remove(cellValue).length
-  cellValue = cellValue || ''
-  return (padding.left || '') +
-  cellValue.padEnd(width - padding.length() + ansiLength) + (padding.right || '')
-}
-
-function getLongestWord (line) {
-  const words = wrap.getChunks(line)
-  return words.reduce((max, word) => Math.max(word.length, max), 0)
-}
-
-function removeEmptyColumns (data) {
-  const distinctColumnNames = data.reduce((columnNames, row) => {
-    for (const key of Object.keys(row)) {
-      if (!columnNames.includes(key)) {
-        columnNames.push(key)
-      }
-    }
-    return columnNames
-  }, [])
-
-  const emptyColumns = distinctColumnNames.filter(columnName => {
-    const hasValue = data.some(row => {
-      const value = row[columnName]
-      return (t.isDefined(value) && typeof value !== 'string') || (typeof value === 'string' && /\S+/.test(value))
-    })
-    return !hasValue
-  })
-
-  return data.map(row => {
-    for (const emptyCol of emptyColumns) {
-      delete row[emptyCol]
-    }
-    return row
-  })
 }
 
 /**

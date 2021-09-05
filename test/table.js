@@ -30,8 +30,9 @@ tom.test('table.getWrapped()', function () {
     { one: 'r2 c1', two: 'row two column 2' }
   ]
   const table = new Table(data, options)
+  const result = table.getWrapped()
 
-  a.deepEqual(table.getWrapped(), [
+  a.deepEqual(result, [
     [['row 1 column one ..', '.. ..'], ['r1 c2']],
     [['r2 c1'], ['row two column 2']]
   ])

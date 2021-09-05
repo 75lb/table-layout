@@ -195,7 +195,15 @@ Options
 
 Using the table-layout API directly from Javascript gives you a little more power and flexibility over the output.
 
-### Format a JSON file as a table.
+### Install as a library
+
+Add table-output to your project: 
+
+```
+$ npm install --save table-layout
+```
+
+### Display an array of objects as a table
 
 Trivial example. Read a JSON file from disk and output a table with a maximum width (in characters) of 60.
 
@@ -287,7 +295,7 @@ Sometimes, your input data might contain a deeper structure or you want to trans
 
 Example usage of the column getter function: 
 
-```
+```js
 import Table from 'table-layout'
 import { promises as fs } from 'fs'
 
@@ -328,7 +336,7 @@ $ node example/computed-values.js
 
 ### API Reference
 
-Full the full API documentation, see [here]()
+For the full API documentation, see [here](https://github.com/75lb/table-layout/blob/master/docs/API.md).
 
 ## Load anywhere
 

@@ -58,6 +58,8 @@
   ],
   "standard": {
     "ignore": [
+      "tmp",
+      "dist"
     ],
     "envs": []
   }

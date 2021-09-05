@@ -5,6 +5,7 @@
 * [table-layout](#module_table-layout)
     * [Table](#exp_module_table-layout--Table) ⏏
         * [new Table(data, [options])](#new_module_table-layout--Table_new)
+        * [table.load(data)](#module_table-layout--Table+load)
         * [table.renderLines()](#module_table-layout--Table+renderLines) ⇒ <code>Array.&lt;string&gt;</code>
         * [table.toString()](#module_table-layout--Table+toString) ⇒ <code>string</code>
         * [Table~columnOption](#module_table-layout--Table..columnOption)
@@ -47,6 +48,16 @@ Recordset data in (array of objects), text table out.
  in table      column two.
  layout
 ```
+<a name="module_table-layout--Table+load"></a>
+
+#### table.load(data)
+Set the input data to display. Must be an array of objects.
+
+**Kind**: instance method of [<code>Table</code>](#exp_module_table-layout--Table)  
+**Params**
+
+- data <code>Array.&lt;object&gt;</code>
+
 <a name="module_table-layout--Table+renderLines"></a>
 
 #### table.renderLines() ⇒ <code>Array.&lt;string&gt;</code>
