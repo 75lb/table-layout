@@ -32,7 +32,7 @@
     "docs": "jsdoc2md index.js -p list --member-index-format list > docs/API.md",
     "cover": "c8 npm test",
     "dist": "rollup -c",
-    "examples": "for FILE in example/*.json; do echo \"# $FILE\"; echo; cat $FILE | node bin/cli.js; done"
+    "examples": "for FILE in example/*/*.json; do echo \"# $FILE\"; echo; cat \"$FILE\" | node bin/cli.js; done"
   },
   "dependencies": {
     "@75lb/deep-merge": "^1.1.0",
