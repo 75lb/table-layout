@@ -26,7 +26,8 @@
     "node": ">=12.17"
   },
   "scripts": {
-    "test": "npm run dist && test-runner 'test/**/*.js'",
+    "test": "npm run dist && npm run test:ci",
+    "test:ci": "test-runner 'test/**/*.js'",
     "docs": "jsdoc2md index.js -p list --member-index-format list > docs/API.md",
     "cover": "c8 npm test",
     "dist": "rollup -c",

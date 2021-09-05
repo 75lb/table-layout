@@ -1476,18 +1476,6 @@ function removeEmptyColumns (data) {
 /**
  * Recordset data in (array of objects), text table out.
  * @alias module:table-layout
- * @example
- * > Table = require('table-layout')
- * > jsonData = [{
- *   col1: 'Some text you wish to read in table layout',
- *   col2: 'And some more text in column two. '
- * }]
- * > table = new Table(jsonData, { maxWidth: 30 })
- * > console.log(table.toString())
- *  Some text you  And some more
- *  wish to read   text in
- *  in table      column two.
- *  layout
  */
 class Table {
   /**
