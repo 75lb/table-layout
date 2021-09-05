@@ -34,20 +34,6 @@ Recordset data in (array of objects), text table out.
         - [.right] <code>string</code> - Defaults to a single space.
     - [.eol] <code>string</code> - EOL character used. Defaults to `\n`.
 
-**Example**  
-```js
-> Table = require('table-layout')
-> jsonData = [{
-  col1: 'Some text you wish to read in table layout',
-  col2: 'And some more text in column two. '
-}]
-> table = new Table(jsonData, { maxWidth: 30 })
-> console.log(table.toString())
- Some text you  And some more
- wish to read   text in
- in table      column two.
- layout
-```
 <a name="module_table-layout--Table+load"></a>
 
 #### table.load(data)
@@ -87,5 +73,5 @@ Returns the input data as a text table.
 | [padding] | <code>object</code> | padding options |
 | [padding.left] | <code>string</code> | a string to pad the left of each cell (default: `' '`) |
 | [padding.right] | <code>string</code> | a string to pad the right of each cell (default: `' '`) |
-| [get] | <code>function</code> | A getter function to return the cell value. |
+| [get] | <code>function</code> | A getter function to return the cell value, the function receives the existing cell value. Signature: `function (cellValue) { // return the desired cell value }` |
 

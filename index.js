@@ -14,18 +14,6 @@ import { removeEmptyColumns, getLongestWord, getLongestArray, padCell } from './
 /**
  * Recordset data in (array of objects), text table out.
  * @alias module:table-layout
- * @example
- * > Table = require('table-layout')
- * > jsonData = [{
- *   col1: 'Some text you wish to read in table layout',
- *   col2: 'And some more text in column two. '
- * }]
- * > table = new Table(jsonData, { maxWidth: 30 })
- * > console.log(table.toString())
- *  Some text you  And some more
- *  wish to read   text in
- *  in table      column two.
- *  layout
  */
 class Table {
   /**
@@ -210,6 +198,6 @@ class Table {
  * @property [padding] {object} - padding options
  * @property [padding.left] {string} - a string to pad the left of each cell (default: `' '`)
  * @property [padding.right] {string} - a string to pad the right of each cell (default: `' '`)
- * @property [get] {function(cell)} - A getter function to return the cell value.
+ * @property [get] {function(cell)} - A getter function to return the cell value, the function receives the existing cell value. Signature: `function (cellValue) { // return the desired cell value }`
  */
 export default Table
