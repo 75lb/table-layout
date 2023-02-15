@@ -338,7 +338,7 @@ $ node example/computed-values.js
 
 See [this file](https://github.com/75lb/table-layout/blob/master/example/colour-scale-formatting.js) for a example of colour-scale formatting (increasing intensity of red/green for more positive/negative values).
 
-<img src="https://s9.gifyu.com/images/Screenshot-2021-09-04-at-17.53.16.png" width="600px" title="Colour-scale">
+<img src="https://raw.githubusercontent.com/75lb/table-layout/master/example/colour-scale.jpg" width="600px" title="Colour-scale">
 
 ### API Reference
 
