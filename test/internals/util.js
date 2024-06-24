@@ -1,6 +1,6 @@
 import TestRunner from 'test-runner'
 import { strict as a } from 'assert'
-import { removeEmptyColumns } from '../../lib/util.js'
+import { removeEmptyColumns } from '../../packages/lib/util.js'
 
 const tom = new TestRunner.Tom()
 

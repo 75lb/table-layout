@@ -1,7 +1,6 @@
 import TestRunner from 'test-runner'
-import { strict as a } from 'assert'
-import Rows from '../../lib/rows.js'
-import Columns from '../../lib/columns.js'
+import Rows from '../../packages/lib/rows.js'
+import Columns from '../../packages/lib/columns.js'
 
 const tom = new TestRunner.Tom()
 

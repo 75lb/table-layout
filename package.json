@@ -1,67 +1,24 @@
 {
-  "name": "table-layout",
+  "name": "table-layout-monorepo",
+  "private": true,
+  "type": "module",
   "author": "Lloyd Brookes <75pound@gmail.com>",
   "version": "3.0.2",
   "description": "Stylable text tables, handling ansi colour. Useful for console output.",
   "repository": "https://github.com/75lb/table-layout",
   "license": "MIT",
-  "keywords": [
-    "wrap",
-    "terminal",
-    "data",
-    "columns",
-    "format",
-    "json",
-    "command line",
-    "table",
-    "view"
-  ],
-  "type": "module",
-  "exports": {
-    "import": "./index.js",
-    "require": "./dist/index.cjs"
-  },
-  "bin": "./bin/cli.js",
   "engines": {
     "node": ">=12.17"
   },
   "scripts": {
     "test": "npm run dist && npm run test:ci",
     "test:ci": "test-runner 'test/**/*.js'",
-    "docs": "jsdoc2md index.js -p list --member-index-format list > docs/API.md",
-    "dist": "rollup -c",
+    "dist": "pnpm -r dist",
     "examples": "for FILE in example/*/*.json; do echo \"# $FILE\"; echo; cat \"$FILE\" | node bin/cli.js; done"
   },
-  "dependencies": {
-    "@75lb/deep-merge": "^1.1.1",
-    "array-back": "^6.2.2",
-    "command-line-args": "^5.2.1",
-    "command-line-usage": "^7.0.0",
-    "stream-read-all": "^3.0.1",
-    "typical": "^7.1.1",
-    "wordwrapjs": "^5.1.0"
-  },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^24.0.1",
-    "@rollup/plugin-node-resolve": "^15.0.1",
     "@test-runner/tom": "^0.9.1",
-    "ansi-escape-sequences": "^6.2.1",
     "isomorphic-assert": "^1.0.0",
-    "jsdoc-to-markdown": "^8.0.0",
-    "rollup": "^3.18.0",
     "test-runner": "^0.10.1"
-  },
-  "files": [
-    "index.js",
-    "lib",
-    "dist",
-    "bin"
-  ],
-  "standard": {
-    "ignore": [
-      "tmp",
-      "dist"
-    ],
-    "envs": []
   }
 }

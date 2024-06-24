@@ -1,4 +1,4 @@
-import Table from 'table-layout'
+import Table from 'table-layout-core'
 import streamReadAll from 'stream-read-all'
 import commandLineArgs from 'command-line-args'
 import extend from '@75lb/deep-merge'

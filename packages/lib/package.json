@@ -1,0 +1,54 @@
+{
+  "name": "table-layout-core",
+  "author": "Lloyd Brookes <75pound@gmail.com>",
+  "version": "3.0.2",
+  "description": "Stylable text tables, handling ansi colour. Useful for console output.",
+  "repository": "https://github.com/75lb/table-layout",
+  "license": "MIT",
+  "keywords": [
+    "wrap",
+    "terminal",
+    "data",
+    "columns",
+    "format",
+    "json",
+    "command line",
+    "table",
+    "view"
+  ],
+  "type": "module",
+  "exports": {
+    "import": "./index.js",
+    "require": "./dist/index.cjs"
+  },
+  "engines": {
+    "node": ">=12.17"
+  },
+  "scripts": {
+    "docs": "jsdoc2md index.js -p list --member-index-format list > docs/API.md",
+    "dist": "rollup -c"
+  },
+  "dependencies": {
+    "@75lb/deep-merge": "^1.1.1",
+    "array-back": "^6.2.2",
+    "typical": "^7.1.1",
+    "wordwrapjs": "^5.1.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^26.0.1",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "jsdoc-to-markdown": "^8.0.0",
+    "rollup": "^4.18.0"
+  },
+  "files": [
+    "*.js",
+    "dist"
+  ],
+  "standard": {
+    "ignore": [
+      "tmp",
+      "dist"
+    ],
+    "envs": []
+  }
+}

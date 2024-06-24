@@ -1,5 +1,5 @@
 import Tom from '@test-runner/tom'
-import Table from 'table-layout'
+import Table from '../packages/lib/index.js'
 import getAssert from 'isomorphic-assert'
 
 const eol = '\n'

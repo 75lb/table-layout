@@ -1,0 +1,46 @@
+{
+  "name": "table-layout",
+  "author": "Lloyd Brookes <75pound@gmail.com>",
+  "version": "3.0.2",
+  "description": "Stylable text tables, handling ansi colour. Useful for console output.",
+  "repository": "https://github.com/75lb/table-layout",
+  "license": "MIT",
+  "keywords": [
+    "wrap",
+    "terminal",
+    "data",
+    "columns",
+    "format",
+    "json",
+    "command line",
+    "table",
+    "view"
+  ],
+  "type": "module",
+  "exports": {
+    "default": "./cli.js"
+  },
+  "bin": "./cli.js",
+  "engines": {
+    "node": ">=12.17"
+  },
+  "dependencies": {
+    "@75lb/deep-merge": "^1.1.1",
+    "command-line-args": "^5.2.1",
+    "command-line-usage": "^7.0.0",
+    "stream-read-all": "^3.0.1",
+    "table-layout-core": "workspace:^",
+    "typical": "^7.1.1"
+  },
+  "files": [
+    "cli.js",
+    "lib"
+  ],
+  "standard": {
+    "ignore": [
+      "tmp",
+      "dist"
+    ],
+    "envs": []
+  }
+}

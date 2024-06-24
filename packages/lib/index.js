@@ -1,11 +1,11 @@
-import Rows from './lib/rows.js'
-import Columns from './lib/columns.js'
+import Rows from './rows.js'
+import Columns from './columns.js'
 import wrap from 'wordwrapjs'
 import deepMerge from '@75lb/deep-merge'
-import Cell from './lib/cell.js'
+import Cell from './cell.js'
 import arrayify from 'array-back'
-import * as ansi from './lib/ansi.js'
-import { removeEmptyColumns, getLongestWord, getLongestArray, padCell } from './lib/util.js'
+import * as ansi from './ansi.js'
+import { removeEmptyColumns, getLongestWord, getLongestArray, padCell } from './util.js'
 
 /**
  * @module table-layout
