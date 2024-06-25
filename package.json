@@ -20,5 +20,6 @@
     "@test-runner/tom": "^0.9.1",
     "isomorphic-assert": "^1.0.0",
     "test-runner": "^0.10.1"
-  }
+  },
+  "packageManager": "pnpm@9.4.0"
 }
