@@ -30,7 +30,7 @@ const germanNumber = new Intl.NumberFormat('de-DE', { notation: 'compact', maxim
 
 /* solved via language - user has control */
 {
-  const proxy = rows.map(row => {
+  const proxiedRows = rows.map(row => {
     return new Proxy(row, {
       get (target, property, receiver) {
         if (property === 'country') {
@@ -45,9 +45,6 @@ const germanNumber = new Intl.NumberFormat('de-DE', { notation: 'compact', maxim
       }
     })
   })
-  const table = new Table(proxy, {
-    maxWidth: 60
-  })
-
+  const table = new Table(proxiedRows, { maxWidth: 60})
   console.log(table.toString())
 }
