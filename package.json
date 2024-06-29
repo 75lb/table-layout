@@ -7,8 +7,6 @@
   "license": "MIT",
   "keywords": [
     "wrap",
-    "terminal",
-    "data",
     "columns",
     "format",
     "json",
@@ -21,7 +19,6 @@
     "import": "./index.js",
     "require": "./dist/index.cjs"
   },
-  "bin": "./bin/cli.js",
   "engines": {
     "node": ">=16"
   },
@@ -29,30 +26,25 @@
     "test": "npm run dist && npm run test:ci",
     "test:ci": "test-runner 'test/**/*.js'",
     "docs": "jsdoc2md index.js -p list --member-index-format list > docs/API.md",
-    "dist": "rollup -c",
-    "examples": "for FILE in example/*/*.json; do echo \"# $FILE\"; echo; cat \"$FILE\" | node bin/cli.js; done"
+    "dist": "rollup -c"
   },
   "dependencies": {
     "@75lb/deep-merge": "^1.1.1",
     "array-back": "^6.2.2",
-    "command-line-args": "^5.2.1",
-    "command-line-usage": "^7.0.0",
-    "stream-read-all": "^3.0.1",
     "wordwrapjs": "^5.1.0"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^24.0.1",
-    "@rollup/plugin-node-resolve": "^15.0.1",
-    "ansi-escape-sequences": "^6.2.1",
-    "jsdoc-to-markdown": "^8.0.0",
-    "rollup": "^3.18.0",
+    "@rollup/plugin-commonjs": "^26.0.1",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "ansi-escape-sequences": "^6.2.2",
+    "jsdoc-to-markdown": "^8.0.1",
+    "rollup": "^4.18.0",
     "test-runner": "^0.10.1"
   },
   "files": [
     "index.js",
     "lib",
-    "dist",
-    "bin"
+    "dist"
   ],
   "standard": {
     "ignore": [

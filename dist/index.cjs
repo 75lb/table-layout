@@ -468,6 +468,10 @@ function breakWord (word) {
   }
 }
 
+function getDefaultExportFromCjs (x) {
+	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
+}
+
 /**
  * lodash (Custom Build) <https://lodash.com/>
  * Build: `lodash modularize exports="npm" -o ./`
@@ -580,7 +584,7 @@ function arrayLikeKeys(value, inherited) {
       skipIndexes = !!length;
 
   for (var key in value) {
-    if ((inherited || hasOwnProperty.call(value, key)) &&
+    if ((hasOwnProperty.call(value, key)) &&
         !(skipIndexes && (key == 'length' || isIndex(key, length)))) {
       result.push(key);
     }
@@ -1091,6 +1095,8 @@ function keys(object) {
 
 var lodash_assignwith = assignWith;
 
+var assignWith$1 = /*@__PURE__*/getDefaultExportFromCjs(lodash_assignwith);
+
 /**
  * Isomorphic, functional type-checking for Javascript.
  * @module typical
@@ -1099,6 +1105,7 @@ var lodash_assignwith = assignWith;
  * import * as t from 'typical'
  * const allDefined = array.every(t.isDefined)
  */
+
 
 /**
  * A plain object is a simple object literal, it is not an instance of a class. Returns true if the input `typeof` is `object` and directly decends from `Object`.
@@ -1143,7 +1150,7 @@ function isDefined (input) {
 function customiser (previousValue, newValue, key, object, source) {
   /* deep merge plain objects */
   if (isPlainObject(previousValue) && isPlainObject(newValue)) {
-    return lodash_assignwith(previousValue, newValue, customiser)
+    return assignWith$1(previousValue, newValue, customiser)
     /* overwrite arrays if the new array has items */
   } else if (Array.isArray(previousValue) && Array.isArray(newValue) && newValue.length) {
     return newValue
@@ -1156,7 +1163,7 @@ function customiser (previousValue, newValue, key, object, source) {
 }
 
 function deepMerge (...args) {
-  return lodash_assignwith(...args, customiser)
+  return assignWith$1(...args, customiser)
 }
 
 /**
