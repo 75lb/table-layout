@@ -30,12 +30,12 @@
  * [ 1, 2, 3 ]
  */
 
-function isObject$2 (input) {
+function isObject$1 (input) {
   return typeof input === 'object' && input !== null
 }
 
-function isArrayLike$2 (input) {
-  return isObject$2(input) && typeof input.length === 'number'
+function isArrayLike$1 (input) {
+  return isObject$1(input) && typeof input.length === 'number'
 }
 
 /**
@@ -48,7 +48,7 @@ function arrayify (input) {
     return input
   } else if (input === undefined) {
     return []
-  } else if (isArrayLike$2(input) || input instanceof Set) {
+  } else if (isArrayLike$1(input) || input instanceof Set) {
     return Array.from(input)
   } else {
     return [input]
@@ -107,305 +107,6 @@ class Rows {
     }
   }
 }
-
-/**
- * Isomorphic, functional type-checking for Javascript.
- * @module typical
- * @typicalname t
- * @example
- * import * as t from 'typical'
- * const allDefined = array.every(t.isDefined)
- */
-
-/**
- * Returns true if input is a number (including infinity). It is a more reasonable alternative to `typeof n` which returns `number` for `NaN`.
- *
- * @param {*} n - The input to test
- * @returns {boolean} `true` if input is a number
- * @static
- * @example
- * > t.isNumber(0)
- * true
- * > t.isNumber(1)
- * true
- * > t.isNumber(1.1)
- * true
- * > t.isNumber(0xff)
- * true
- * > t.isNumber(0644)
- * true
- * > t.isNumber(6.2e5)
- * true
- * > t.isNumber(NaN)
- * false
- * > t.isNumber(Infinity)
- * true
- */
-function isNumber (n) {
-  return !isNaN(parseFloat(n))
-}
-
-/**
- * Returns true if input is a finite number. Identical to `isNumber` beside excluding infinity.
- *
- * @param {*} n - The input to test
- * @returns {boolean}
- * @static
- * @example
- * > t.isFiniteNumber(0)
- * true
- * > t.isFiniteNumber(1)
- * true
- * > t.isFiniteNumber(1.1)
- * true
- * > t.isFiniteNumber(0xff)
- * true
- * > t.isFiniteNumber(0644)
- * true
- * > t.isFiniteNumber(6.2e5)
- * true
- * > t.isFiniteNumber(NaN)
- * false
- * > t.isFiniteNumber(Infinity)
- * false
- */
-function isFiniteNumber (n) {
-  return !isNaN(parseFloat(n)) && isFinite(n)
-}
-
-/**
- * A plain object is a simple object literal, it is not an instance of a class. Returns true if the input `typeof` is `object` and directly decends from `Object`.
- *
- * @param {*} input - The input to test
- * @returns {boolean}
- * @static
- * @example
- * > t.isPlainObject({ something: 'one' })
- * true
- * > t.isPlainObject(new Date())
- * false
- * > t.isPlainObject([ 0, 1 ])
- * false
- * > t.isPlainObject(/test/)
- * false
- * > t.isPlainObject(1)
- * false
- * > t.isPlainObject('one')
- * false
- * > t.isPlainObject(null)
- * false
- * > t.isPlainObject((function * () {})())
- * false
- * > t.isPlainObject(function * () {})
- * false
- */
-function isPlainObject (input) {
-  return input !== null && typeof input === 'object' && input.constructor === Object
-}
-
-/**
- * An array-like value has all the properties of an array yet is not an array instance. An example is the `arguments` object. Returns `true`` if the input value is an object, not `null`` and has a `length` property set with a numeric value.
- *
- * @param {*} input - The input to test
- * @returns {boolean}
- * @static
- * @example
- * function sum(x, y){
- *   console.log(t.isArrayLike(arguments))
- *   // prints `true`
- * }
- */
-function isArrayLike$1 (input) {
-  return isObject$1(input) && typeof input.length === 'number'
-}
-
-/**
- * Returns true if the typeof input is `'object'` but not null.
- * @param {*} input - The input to test
- * @returns {boolean}
- * @static
- */
-function isObject$1 (input) {
-  return typeof input === 'object' && input !== null
-}
-
-/**
- * Returns true if the input value is defined.
- * @param {*} input - The input to test
- * @returns {boolean}
- * @static
- */
-function isDefined (input) {
-  return typeof input !== 'undefined'
-}
-
-/**
- * Returns true if the input value is undefined.
- * @param {*} input - The input to test
- * @returns {boolean}
- * @static
- */
-function isUndefined (input) {
-  return !isDefined(input)
-}
-
-/**
- * Returns true if the input value is null.
- * @param {*} input - The input to test
- * @returns {boolean}
- * @static
- */
-function isNull (input) {
-  return input === null
-}
-
-/**
- * Returns true if the input value is not one of `undefined`, `null`, or `NaN`.
- * @param {*} input - The input to test
- * @returns {boolean}
- * @static
- */
-function isDefinedValue (input) {
-  return isDefined(input) && !isNull(input) && !Number.isNaN(input)
-}
-
-/**
- * Returns true if the input value is an ES2015 `class`.
- * @param {*} input - The input to test
- * @returns {boolean}
- * @static
- */
-function isClass (input) {
-  if (typeof input === 'function') {
-    return /^class /.test(Function.prototype.toString.call(input))
-  } else {
-    return false
-  }
-}
-
-/**
- * Returns true if the input is a string, number, symbol, boolean, null or undefined value.
- * @param {*} input - The input to test
- * @returns {boolean}
- * @static
- */
-function isPrimitive (input) {
-  if (input === null) return true
-  switch (typeof input) {
-    case 'string':
-    case 'number':
-    case 'symbol':
-    case 'undefined':
-    case 'boolean':
-      return true
-    default:
-      return false
-  }
-}
-
-/**
- * Returns true if the input is a Promise.
- * @param {*} input - The input to test
- * @returns {boolean}
- * @static
- */
-function isPromise (input) {
-  if (input) {
-    const isPromise = isDefined(Promise) && input instanceof Promise;
-    const isThenable = input.then && typeof input.then === 'function';
-    return !!(isPromise || isThenable)
-  } else {
-    return false
-  }
-}
-
-/**
- * Returns true if the input is an iterable (`Map`, `Set`, `Array`, Generator etc.).
- * @param {*} input - The input to test
- * @returns {boolean}
- * @static
- * @example
- * > t.isIterable('string')
- * true
- * > t.isIterable(new Map())
- * true
- * > t.isIterable([])
- * true
- * > t.isIterable((function * () {})())
- * true
- * > t.isIterable(Promise.resolve())
- * false
- * > t.isIterable(Promise)
- * false
- * > t.isIterable(true)
- * false
- * > t.isIterable({})
- * false
- * > t.isIterable(0)
- * false
- * > t.isIterable(1.1)
- * false
- * > t.isIterable(NaN)
- * false
- * > t.isIterable(Infinity)
- * false
- * > t.isIterable(function () {})
- * false
- * > t.isIterable(Date)
- * false
- * > t.isIterable()
- * false
- * > t.isIterable({ then: function () {} })
- * false
- */
-function isIterable (input) {
-  if (input === null || !isDefined(input)) {
-    return false
-  } else {
-    return (
-      typeof input[Symbol.iterator] === 'function' ||
-      typeof input[Symbol.asyncIterator] === 'function'
-    )
-  }
-}
-
-/**
- * Returns true if the input value is a string. The equivalent of `typeof input === 'string'` for use in funcitonal contexts.
- * @param {*} input - The input to test
- * @returns {boolean}
- * @static
- */
-function isString (input) {
-  return typeof input === 'string'
-}
-
-/**
- * Returns true if the input value is a function. The equivalent of `typeof input === 'function'` for use in funcitonal contexts.
- * @param {*} input - The input to test
- * @returns {boolean}
- * @static
- */
-function isFunction$1 (input) {
-  return typeof input === 'function'
-}
-
-var t = {
-  isNumber,
-  isFiniteNumber,
-  isPlainObject,
-  isArrayLike: isArrayLike$1,
-  isObject: isObject$1,
-  isDefined,
-  isUndefined,
-  isNull,
-  isDefinedValue,
-  isClass,
-  isPrimitive,
-  isPromise,
-  isIterable,
-  isString,
-  isFunction: isFunction$1
-};
 
 /**
  * @module padding
@@ -469,7 +170,7 @@ class Column {
   }
 
   isFixed () {
-    return t.isDefined(this.width) || this.noWrap || !this.contentWrappable
+    return this.width !== undefined || this.noWrap || !this.contentWrappable
   }
 
   generateWidth () {
@@ -552,11 +253,11 @@ class Columns {
 
     /* adjust if user set a min or maxWidth */
     for (const column of this.list) {
-      if (t.isDefined(column.maxWidth) && column.generatedWidth > column.maxWidth) {
+      if (column.maxWidth !== undefined && column.generatedWidth > column.maxWidth) {
         column.generatedWidth = column.maxWidth;
       }
 
-      if (t.isDefined(column.minWidth) && column.generatedWidth < column.minWidth) {
+      if (column.minWidth !== undefined && column.generatedWidth < column.minWidth) {
         column.generatedWidth = column.minWidth;
       }
     }
@@ -1388,6 +1089,55 @@ function keys(object) {
 
 var lodash_assignwith = assignWith;
 
+/**
+ * Isomorphic, functional type-checking for Javascript.
+ * @module typical
+ * @typicalname t
+ * @example
+ * import * as t from 'typical'
+ * const allDefined = array.every(t.isDefined)
+ */
+
+/**
+ * A plain object is a simple object literal, it is not an instance of a class. Returns true if the input `typeof` is `object` and directly decends from `Object`.
+ *
+ * @param {*} input - The input to test
+ * @returns {boolean}
+ * @static
+ * @example
+ * > t.isPlainObject({ something: 'one' })
+ * true
+ * > t.isPlainObject(new Date())
+ * false
+ * > t.isPlainObject([ 0, 1 ])
+ * false
+ * > t.isPlainObject(/test/)
+ * false
+ * > t.isPlainObject(1)
+ * false
+ * > t.isPlainObject('one')
+ * false
+ * > t.isPlainObject(null)
+ * false
+ * > t.isPlainObject((function * () {})())
+ * false
+ * > t.isPlainObject(function * () {})
+ * false
+ */
+function isPlainObject (input) {
+  return input !== null && typeof input === 'object' && input.constructor === Object
+}
+
+/**
+ * Returns true if the input value is defined.
+ * @param {*} input - The input to test
+ * @returns {boolean}
+ * @static
+ */
+function isDefined (input) {
+  return typeof input !== 'undefined'
+}
+
 function customiser (previousValue, newValue, key, object, source) {
   /* deep merge plain objects */
   if (isPlainObject(previousValue) && isPlainObject(newValue)) {
@@ -1456,7 +1206,7 @@ function removeEmptyColumns (data) {
   const emptyColumns = distinctColumnNames.filter(columnName => {
     const hasValue = data.some(row => {
       const value = row[columnName];
-      return (t.isDefined(value) && typeof value !== 'string') || (typeof value === 'string' && /\S+/.test(value))
+      return (value !== undefined && typeof value !== 'string') || (typeof value === 'string' && /\S+/.test(value))
     });
     return !hasValue
   });

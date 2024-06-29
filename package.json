@@ -23,7 +23,7 @@
   },
   "bin": "./bin/cli.js",
   "engines": {
-    "node": ">=12.17"
+    "node": ">=16"
   },
   "scripts": {
     "test": "npm run dist && npm run test:ci",
@@ -38,15 +38,12 @@
     "command-line-args": "^5.2.1",
     "command-line-usage": "^7.0.0",
     "stream-read-all": "^3.0.1",
-    "typical": "^7.1.1",
     "wordwrapjs": "^5.1.0"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^24.0.1",
     "@rollup/plugin-node-resolve": "^15.0.1",
-    "@test-runner/tom": "^0.9.1",
     "ansi-escape-sequences": "^6.2.1",
-    "isomorphic-assert": "^1.0.0",
     "jsdoc-to-markdown": "^8.0.0",
     "rollup": "^3.18.0",
     "test-runner": "^0.10.1"

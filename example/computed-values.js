@@ -21,7 +21,7 @@ const germanNumber = new Intl.NumberFormat('de-DE', { notation: 'compact', maxim
       {
         name: 'population',
         get: (cellValue) => germanNumber.format(cellValue)
-      },
+      }
     ]
   })
 
