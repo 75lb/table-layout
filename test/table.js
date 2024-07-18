@@ -1,6 +1,6 @@
 import Tom from '@test-runner/tom'
 import Table from 'table-layout'
-import a from 'node:assert/strict'
+import { strict as a } from 'assert'
 
 const eol = '\n'
 const tom = new Tom()

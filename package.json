@@ -20,7 +20,7 @@
     "require": "./dist/index.cjs"
   },
   "engines": {
-    "node": ">=16"
+    "node": ">=12.17"
   },
   "scripts": {
     "test": "npm run dist && npm run test:ci",
