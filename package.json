@@ -24,7 +24,7 @@
   },
   "scripts": {
     "test": "npm run dist && npm run test:ci",
-    "test:ci": "test-runner 'test/**/*.js'",
+    "test:ci": "test-runner 'test/**/*.js' 'test/**/*.cjs'",
     "docs": "jsdoc2md index.js -p list --member-index-format list > docs/API.md",
     "dist": "rollup -c"
   },
