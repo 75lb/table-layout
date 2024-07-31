@@ -45,6 +45,6 @@ const germanNumber = new Intl.NumberFormat('de-DE', { notation: 'compact', maxim
       }
     })
   })
-  const table = new Table(proxiedRows, { maxWidth: 60})
+  const table = new Table(proxiedRows, { maxWidth: 60 })
   console.log(table.toString())
 }

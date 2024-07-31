@@ -1,11 +1,10 @@
 import Rows from './lib/rows.js'
 import Columns from './lib/columns.js'
 import wrap from 'wordwrapjs'
-import deepMerge from '@75lb/deep-merge'
 import Cell from './lib/cell.js'
 import arrayify from 'array-back'
 import * as ansi from './lib/ansi.js'
-import { removeEmptyColumns, getLongestWord, getLongestArray, padCell } from './lib/util.js'
+import { removeEmptyColumns, getLongestWord, getLongestArray, padCell, applyDefaultValues } from './lib/util.js'
 
 /**
  * @module table-layout
@@ -41,7 +40,7 @@ class Table {
       columns: [],
       eol: '\n'
     }
-    this.options = deepMerge(defaults, options)
+    this.options = applyDefaultValues(options, defaults)
     this.rows = null
     this.columns = null
     this.load(data)

@@ -1,6 +1,6 @@
 import TestRunner from 'test-runner'
 import { strict as a } from 'assert'
-import { removeEmptyColumns } from '../../lib/util.js'
+import { removeEmptyColumns, applyDefaultValues } from '../../lib/util.js'
 
 const tom = new TestRunner.Tom()
 
@@ -20,6 +20,51 @@ tom.test('util.removeEmptyColumns', function () {
     { name: 'Frank' },
     { name: 'Amy' }
   ])
+})
+
+tom.test('util.applyDefaultValues: no options supplied', async function () {
+  const defaults = {
+    padding: {
+      left: ' ',
+      right: ' '
+    },
+    maxWidth: 80,
+    columns: [],
+    eol: '\n'
+  }
+
+  const result = applyDefaultValues({}, defaults)
+  a.deepEqual(result, { padding: { left: ' ', right: ' ' }, maxWidth: 80, columns: [], eol: '\n' })
+})
+
+tom.test('util.applyDefaultValues: all options supplied', async function () {
+  const defaults = {
+    padding: {
+      left: ' ',
+      right: ' '
+    },
+    maxWidth: 80,
+    columns: [],
+    eol: '\n'
+  }
+
+  const result = applyDefaultValues({ padding: { left: 'L', right: 'R' }, maxWidth: 10, columns: [1], eol: 'EOL' }, defaults)
+  a.deepEqual(result, { padding: { left: 'L', right: 'R' }, maxWidth: 10, columns: [ 1 ], eol: 'EOL' })
+})
+
+tom.test('util.applyDefaultValues: not all options supplied', async function () {
+  const defaults = {
+    padding: {
+      left: ' ',
+      right: ' '
+    },
+    maxWidth: 80,
+    columns: [],
+    eol: '\n'
+  }
+
+  const result = applyDefaultValues({ padding: { right: 'R' }, maxWidth: 10 }, defaults)
+  a.deepEqual(result, { padding: { right: 'R', left: ' ' }, maxWidth: 10, columns: [], eol: '\n' })
 })
 
 export default tom
