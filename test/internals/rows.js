@@ -1,11 +1,10 @@
-import TestRunner from 'test-runner'
-import { strict as a } from 'assert'
 import Rows from '../../lib/rows.js'
 import Columns from '../../lib/columns.js'
+import { strict as a } from 'assert'
 
-const tom = new TestRunner.Tom()
+const [test, only, skip] = [new Map(), new Map(), new Map()]
 
-tom.skip('new Rows(data)', function () {
+skip.set('new Rows(data)', function () {
   const data = [
     {
       one: 'one one one',
@@ -24,4 +23,4 @@ tom.skip('new Rows(data)', function () {
   this.data = result
 })
 
-export default tom
+export { test, only, skip }

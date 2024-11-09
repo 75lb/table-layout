@@ -1,10 +1,9 @@
-import TestRunner from 'test-runner'
-import { strict as a } from 'assert'
 import Columns from '../../lib/columns.js'
+import { strict as a } from 'assert'
 
-const tom = new TestRunner.Tom()
+const [test, only, skip] = [new Map(), new Map(), new Map()]
 
-tom.test('columns.autoSize(contentColumns, maxWidth)', function () {
+test.set('columns.autoSize(contentColumns, maxWidth)', function () {
   const columns = new Columns([
     { name: 'one', contentWidth: 10, contentWrappable: true },
     { name: 'two', contentWidth: 20, contentWrappable: true }
@@ -16,7 +15,7 @@ tom.test('columns.autoSize(contentColumns, maxWidth)', function () {
   a.equal(columns.list[1].generatedWidth, 18)
 })
 
-tom.test('Columns.getColumns', async function () {
+test.set('Columns.getColumns', async function () {
   const data = [
     {
       one: 'one one one one one one one one one one one one one one one one one one one one',
@@ -51,4 +50,4 @@ tom.test('Columns.getColumns', async function () {
   })
 })
 
-export default tom
+export { test, only, skip }

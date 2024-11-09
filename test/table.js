@@ -1,11 +1,10 @@
-import Tom from '@test-runner/tom'
 import Table from 'table-layout'
 import { strict as a } from 'assert'
 
+const [test, only, skip] = [new Map(), new Map(), new Map()]
 const eol = '\n'
-const tom = new Tom()
 
-tom.test('new Table()', function () {
+test.set('new Table()', function () {
   const options = {
     maxWidth: 40,
     padding: { left: '<', right: '>' }
@@ -20,7 +19,7 @@ tom.test('new Table()', function () {
   a.equal(table.columns.list.length, 2)
 })
 
-tom.test('table.getWrapped()', function () {
+test.set('table.getWrapped()', function () {
   const options = {
     maxWidth: 40,
     padding: { left: '<', right: '>' }
@@ -38,7 +37,7 @@ tom.test('table.getWrapped()', function () {
   ])
 })
 
-tom.test('table.getLines()', function () {
+test.set('table.getLines()', function () {
   const options = {
     maxWidth: 40,
     padding: { left: '<', right: '>' }
@@ -56,7 +55,7 @@ tom.test('table.getLines()', function () {
   ])
 })
 
-tom.test('table.renderLines()', function () {
+test.set('table.renderLines()', function () {
   const options = {
     maxWidth: 40,
     padding: { left: '<', right: '>' }
@@ -74,7 +73,7 @@ tom.test('table.renderLines()', function () {
   ])
 })
 
-tom.test('table.toString()', function () {
+test.set('table.toString()', function () {
   const options = {
     maxWidth: 40,
     padding: { left: '<', right: '>' }
@@ -93,7 +92,7 @@ tom.test('table.toString()', function () {
   a.equal(table.toString(), expected)
 })
 
-tom.test('table.renderLines() 2', function () {
+test.set('table.renderLines() 2', function () {
   const options = {
     maxWidth: 40,
     padding: { left: '<', right: '>' }
@@ -112,7 +111,7 @@ tom.test('table.renderLines() 2', function () {
   a.deepEqual(table.renderLines(), expected)
 })
 
-tom.test('table.renderLines() 3', function () {
+test.set('table.renderLines() 3', function () {
   const options = {
     maxWidth: 40,
     padding: { left: '<', right: '>' }
@@ -132,7 +131,7 @@ tom.test('table.renderLines() 3', function () {
   a.deepEqual(table.renderLines(), expected)
 })
 
-tom.test('column options', function () {
+test.set('column options', function () {
   const options = {
     maxWidth: 40,
     padding: { left: '<', right: '>' },
@@ -158,7 +157,7 @@ tom.test('column options', function () {
   a.deepEqual(table.renderLines(), expected)
 })
 
-tom.test('Cell getter 1', function () {
+test.set('Cell getter 1', function () {
   const data = [
     { one: 'a', two: 3 },
     { one: 'b', two: 5 },
@@ -182,7 +181,7 @@ tom.test('Cell getter 1', function () {
   a.equal(table.toString(), expected)
 })
 
-tom.test('Cell getter: deep value', function () {
+test.set('Cell getter: deep value', function () {
   const data = [
     { one: 'a', two: { value: 2 } }
   ]
@@ -192,4 +191,4 @@ tom.test('Cell getter: deep value', function () {
   a.equal(table.toString(), expected)
 })
 
-export default tom
+export { test, only, skip }

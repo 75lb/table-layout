@@ -186,6 +186,6 @@ import Table from './node_modules/table-layout/dist/index.mjs'
 
 * * *
 
-&copy; 2015-24 [Lloyd Brookes](https://github.com/75lb) \<75pound@gmail.com\>.
+&copy; 2015-24 [Lloyd Brookes](https://github.com/75lb) \<opensource@75lb.com\>.
 
 Isomorphic test suite by [test-runner](https://github.com/test-runner-js/test-runner). Documented by [jsdoc-to-markdown](https://github.com/jsdoc2md/jsdoc-to-markdown).

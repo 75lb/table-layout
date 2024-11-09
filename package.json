@@ -1,9 +1,12 @@
 {
   "name": "table-layout",
-  "author": "Lloyd Brookes <75pound@gmail.com>",
+  "author": "Lloyd Brookes <opensource@75lb.com>",
   "version": "4.1.1",
   "description": "Stylable text tables, handling ansi colour. Useful for console output.",
-  "repository": "https://github.com/75lb/table-layout",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/75lb/table-layout.git"
+  },
   "license": "MIT",
   "keywords": [
     "wrap",
@@ -24,21 +27,25 @@
   },
   "scripts": {
     "test": "npm run dist && npm run test:ci",
-    "test:ci": "test-runner 'test/**/*.js' 'test/**/*.cjs'",
-    "docs": "jsdoc2md index.js -p list --member-index-format list > docs/API.md",
-    "dist": "rollup -c"
+    "test:ci": "75lb-nature test-runner test/*.js test/internals/*.js test/*.cjs",
+    "docs": "75lb-nature jsdoc2md index.js -p list --member-index-format list > docs/API.md",
+    "dist": "75lb-nature cjs-build index.js && 75lb-nature simple-rollup index.js"
+
+  },
+  "peerDependencies": {
+    "@75lb/nature": "latest"
+  },
+  "peerDependenciesMeta": {
+    "@75lb/nature": {
+      "optional": true
+    }
   },
   "dependencies": {
     "array-back": "^6.2.2",
     "wordwrapjs": "^5.1.0"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^26.0.1",
-    "@rollup/plugin-node-resolve": "^15.2.3",
-    "ansi-escape-sequences": "^6.2.2",
-    "jsdoc-to-markdown": "^8.0.3",
-    "rollup": "^4.19.1",
-    "test-runner": "^0.11.0"
+    "ansi-escape-sequences": "^6.2.3"
   },
   "files": [
     "index.js",

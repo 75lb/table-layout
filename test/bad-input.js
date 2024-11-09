@@ -1,11 +1,9 @@
-import TestRunner from 'test-runner'
-import assert from 'assert'
+import { strict as a } from 'assert'
 import Table from 'table-layout'
-const a = assert.strict
 
-const tom = new TestRunner.Tom()
+const [test, only, skip] = [new Map(), new Map(), new Map()]
 
-tom.test('table.lines(): no data', function () {
+test.set('table.lines(): no data', function () {
   let table = new Table([])
   a.deepEqual(table.getLines([]), [])
 
@@ -13,7 +11,7 @@ tom.test('table.lines(): no data', function () {
   a.deepEqual(table.getLines(), [])
 })
 
-tom.test('process.stdout.columns not available: default maxWidth to 80', async function () {
+test.set('process.stdout.columns not available: default maxWidth to 80', async function () {
   const prevIn = process.stdin.columns
   const prevOut = process.stdout.columns
   const prevErr = process.stderr.columns
@@ -27,4 +25,4 @@ tom.test('process.stdout.columns not available: default maxWidth to 80', async f
   process.stderr.columns = prevErr
 })
 
-export default tom
+export { test, only, skip }
