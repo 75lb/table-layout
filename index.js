@@ -5,6 +5,7 @@ import Cell from './lib/cell.js'
 import arrayify from 'array-back'
 import * as ansi from './lib/ansi.js'
 import { removeEmptyColumns, getLongestWord, getLongestArray, padCell, applyDefaultValues } from './lib/util.js'
+import stringWidth from 'string-width'
 
 /**
  * @module table-layout
@@ -102,15 +103,16 @@ class Table {
 
         /* Remove ansi characters from cell value before calculating widths */
         const cell = new Cell(row[columnName], column)
-        let cellValue = cell.value
-        if (ansi.has(cellValue)) {
-          cellValue = ansi.remove(cellValue)
-        }
+        const cellValue = cell.value
+        // if (ansi.has(cellValue)) {
+        //   cellValue = ansi.remove(cellValue)
+        // }
 
         /* Update column content width if this if this cell is wider */
-        if (cellValue.length > column.contentWidth) {
-          column.contentWidth = cellValue.length
+        if (stringWidth(cellValue) > column.contentWidth) {
+          column.contentWidth = stringWidth(cellValue)
         }
+        // console.log(cellValue, stringWidth(cellValue), getLongestWord(cellValue))
 
         /* Update column minContentWidth if this cell has a longer word */
         const longestWord = getLongestWord(cellValue)
@@ -141,6 +143,7 @@ class Table {
             break: column.break,
             noTrim: this.options.noTrim
           }))
+          // line.push([cell.value])
         }
       }
       return line

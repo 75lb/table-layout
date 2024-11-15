@@ -29,8 +29,7 @@
     "test": "npm run dist && npm run test:ci",
     "test:ci": "75lb-nature test-runner test/*.js test/internals/*.js test/*.cjs",
     "docs": "75lb-nature jsdoc2md index.js -p list --member-index-format list > docs/API.md",
-    "dist": "75lb-nature cjs-build index.js && 75lb-nature simple-rollup index.js"
-
+    "dist": "75lb-nature cjs-build index.js --include-externals && 75lb-nature simple-rollup index.js"
   },
   "peerDependencies": {
     "@75lb/nature": "latest"
@@ -42,6 +41,7 @@
   },
   "dependencies": {
     "array-back": "^6.2.2",
+    "string-width": "^7.2.0",
     "wordwrapjs": "^5.1.0"
   },
   "devDependencies": {

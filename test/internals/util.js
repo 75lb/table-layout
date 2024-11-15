@@ -48,7 +48,7 @@ test.set('util.applyDefaultValues: all options supplied', async function () {
   }
 
   const result = applyDefaultValues({ padding: { left: 'L', right: 'R' }, maxWidth: 10, columns: [1], eol: 'EOL' }, defaults)
-  a.deepEqual(result, { padding: { left: 'L', right: 'R' }, maxWidth: 10, columns: [ 1 ], eol: 'EOL' })
+  a.deepEqual(result, { padding: { left: 'L', right: 'R' }, maxWidth: 10, columns: [1], eol: 'EOL' })
 })
 
 test.set('util.applyDefaultValues: not all options supplied', async function () {
@@ -65,6 +65,5 @@ test.set('util.applyDefaultValues: not all options supplied', async function () 
   const result = applyDefaultValues({ padding: { right: 'R' }, maxWidth: 10 }, defaults)
   a.deepEqual(result, { padding: { right: 'R', left: ' ' }, maxWidth: 10, columns: [], eol: '\n' })
 })
-
 
 export { test, only, skip }
