@@ -1,205 +1,151 @@
-import Rows from './lib/rows.js'
-import Columns from './lib/columns.js'
-import wrap from 'wordwrapjs'
-import Cell from './lib/cell.js'
-import arrayify from 'array-back'
-import * as ansi from './lib/ansi.js'
-import { removeEmptyColumns, getLongestWord, getLongestArray, padCell, applyDefaultValues } from './lib/util.js'
+import { wrap, segment } from 'wordwrapjs'
 import stringWidth from 'string-width'
 
-/**
- * @module table-layout
- */
+function getColumnOptions (data) {
+  const columnNames = data.reduce((set, row) => {
+    Object.keys(row).forEach(key => set.add(key))
+    return set
+  }, new Set())
 
-/**
- * Recordset data in (array of objects), text table out.
- * @alias module:table-layout
- */
-class Table {
-  /**
-   * @param {object[]} - input data
-   * @param [options] {object} - optional settings
-   * @param [options.maxWidth] {number} - maximum width of layout
-   * @param [options.noWrap] {boolean} - disable wrapping on all columns
-   * @param [options.noTrim] {boolean} - disable line-trimming
-   * @param [options.break] {boolean} - enable word-breaking on all columns
-   * @param [options.columns] {module:table-layout~columnOption} - array of column-specific options
-   * @param [options.ignoreEmptyColumns] {boolean} - If set, empty columns or columns containing only whitespace are not rendered.
-   * @param [options.padding] {object} - Padding values to set on each column. Per-column overrides can be set in the `options.columns` array.
-   * @param [options.padding.left] {string} - Defaults to a single space.
-   * @param [options.padding.right] {string} - Defaults to a single space.
-   * @param [options.eol] {string} - EOL character used. Defaults to `\n`.
-   * @alias module:table-layout
-   */
-  constructor (data, options = {}) {
-    const defaults = {
-      padding: {
-        left: ' ',
-        right: ' '
-      },
-      maxWidth: 80,
-      columns: [],
-      eol: '\n'
+  const columns = Array.from(columnNames).map(name => {
+    const column = {
+      name,
+      maxWidth: 20,
+      widthMode: 'visual',
+      contentWidth: Math.max(...data.map(r => stringWidth(String(r[name])) || 0)),
+      biggestSegment: Math.max(...data.map(r => {
+        return Math.max(...Array.from(segment(String(r[name])))
+          .filter(s => s.isWordLike)
+          .map(s => stringWidth(s.segment)))
+      }))
     }
-    this.options = applyDefaultValues(options, defaults)
-    this.rows = null
-    this.columns = null
-    this.load(data)
-  }
-
-  /**
-  * Set the input data to display. Must be an array of objects.
-  * @param data {object[]}
-  */
-  load (data) {
-    const options = this.options
-
-    /* remove empty columns */
-    if (options.ignoreEmptyColumns) {
-      data = removeEmptyColumns(data)
-    }
-
-    /* Create columns.. also removes ansi characters and measures column content width */
-    this.columns = Columns.getColumns(data)
-
-    /* load default column properties from options */
-    this.columns.maxWidth = options.maxWidth
-    for (const column of this.columns.list) {
-      column.padding = options.padding
-      column.noWrap = options.noWrap
-      column.break = options.break
-      if (options.break) {
-        /* Force column to be wrappable */
-        column.contentWrappable = true
-      }
-    }
-
-    /* load column properties from options.columns */
-    for (const optionColumn of options.columns) {
-      const column = this.columns.get(optionColumn.name)
-      if (column) {
-        if (optionColumn.padding) {
-          column.padding.left = optionColumn.padding.left
-          column.padding.right = optionColumn.padding.right
-        }
-        column.width = optionColumn.width
-        column.maxWidth = optionColumn.maxWidth
-        column.minWidth = optionColumn.minWidth
-        column.noWrap = optionColumn.noWrap
-        column.break = optionColumn.break
-
-        if (optionColumn.break) {
-          /* Force column to be wrappable */
-          column.contentWrappable = true
-        }
-
-        column.get = optionColumn.get
-      }
-    }
-
-    for (const row of arrayify(data)) {
-      for (const columnName in row) {
-        const column = this.columns.get(columnName)
-
-        /* Remove ansi characters from cell value before calculating widths */
-        const cell = new Cell(row[columnName], column)
-        const cellValue = cell.value
-        // if (ansi.has(cellValue)) {
-        //   cellValue = ansi.remove(cellValue)
-        // }
-
-        /* Update column content width if this if this cell is wider */
-        if (stringWidth(cellValue) > column.contentWidth) {
-          column.contentWidth = stringWidth(cellValue)
-        }
-        // console.log(cellValue, stringWidth(cellValue), getLongestWord(cellValue))
-
-        /* Update column minContentWidth if this cell has a longer word */
-        const longestWord = getLongestWord(cellValue)
-        if (longestWord > column.minContentWidth) {
-          column.minContentWidth = longestWord
-        }
-        if (!column.contentWrappable) {
-          column.contentWrappable = wrap.isWrappable(cellValue)
-        }
-      }
-    }
-
-    this.columns.autoSize()
-    this.rows = new Rows(data, this.columns)
-    return this
-  }
-
-  getWrapped () {
-    this.columns.autoSize()
-    return this.rows.list.map(row => {
-      const line = []
-      for (const [column, cell] of row.entries()) {
-        if (column.noWrap) {
-          line.push(cell.value.split(/\r\n?|\n/))
-        } else {
-          line.push(wrap.lines(cell.value, {
-            width: column.wrappedContentWidth,
-            break: column.break,
-            noTrim: this.options.noTrim
-          }))
-          // line.push([cell.value])
-        }
-      }
-      return line
-    })
-  }
-
-  getLines () {
-    const wrappedLines = this.getWrapped()
-    const lines = []
-    wrappedLines.forEach(wrapped => {
-      const mostLines = getLongestArray(wrapped)
-      for (let i = 0; i < mostLines; i++) {
-        const line = []
-        wrapped.forEach(cell => {
-          line.push(cell[i] || '')
-        })
-        lines.push(line)
-      }
-    })
-    return lines
-  }
-
-  /**
-   * Identical to `.toString()` with the exception that the result will be an array of lines, rather than a single, multi-line string.
-   * @returns {string[]}
-   */
-  renderLines () {
-    const lines = this.getLines()
-    return lines.map(line => {
-      return line.reduce((prev, cell, index) => {
-        const column = this.columns.list[index]
-        return prev + padCell(cell, column.padding, column.generatedWidth)
-      }, '')
-    })
-  }
-
-  /**
-   * Returns the input data as a text table.
-   * @returns {string}
-   */
-  toString () {
-    return this.renderLines().join(this.options.eol) + this.options.eol
-  }
+    column.width = column.biggestSegment > column.maxWidth
+      ? column.biggestSegment
+      : column.contentWidth > column.maxWidth
+        ? column.maxWidth
+        : column.contentWidth
+    return column
+  })
+  return columns
 }
 
-/**
- * @typedef module:table-layout~columnOption
- * @property name {string} - column name, must match a property name in the input
- * @property [width] {number} - A specific column width. Supply either this or a min and/or max width.
- * @property [minWidth] {number} - column min width
- * @property [maxWidth] {number} - column max width
- * @property [nowrap] {boolean} - disable wrapping for this column
- * @property [break] {boolean} - enable word-breaking for this columns
- * @property [padding] {object} - padding options
- * @property [padding.left] {string} - a string to pad the left of each cell (default: `' '`)
- * @property [padding.right] {string} - a string to pad the right of each cell (default: `' '`)
- * @property [get] {function(cell)} - A getter function to return the cell value, the function receives the existing cell value. Signature: `function (cellValue) { // return the desired cell value }`
- */
-export default Table
+function getWrappedData (data, columns) {
+  const wrappedData = data.map(d => {
+    return columns.reduce((prev, column) => {
+      column.pad = true
+      // prev[column.name] = column.noWrap
+      //   ? [d[column.name]]
+      //   : wrap(d[column.name], column)
+      prev[column.name] = wrap(d[column.name], column)
+      return prev
+    }, {})
+  })
+  return wrappedData
+}
+
+function getMergedRows (wrappedData, columns, columnSeparator = ' \u2502 ') {
+  const rows = []
+  for (const w of wrappedData) {
+    const maxLength = Math.max(...Object.keys(w).map(key => w[key].length))
+    const mergedRow = []
+    for (let x = 0; x < maxLength; x++) {
+      mergedRow[x] = Object.keys(w).map(key => {
+        const wrapOptions = columns.find(c => c.name === key)
+        return w[key][x] || ' '.repeat(wrapOptions.width)
+      }).join(columnSeparator)
+    }
+    rows.push(mergedRow)
+  }
+  return rows
+}
+
+function tableLayout (data, columns) {
+  columns = columns || getColumnOptions(data)
+  // console.log(columns)
+  const wrappedData = getWrappedData(data, columns)
+  // console.log(wrappedData)
+  const mergedRows = getMergedRows(wrappedData, columns)
+  // console.log(mergedRows)
+  return mergedRows.map(r => r.join('\n')).join('\n')
+}
+
+export { getColumnOptions, getWrappedData, getMergedRows, tableLayout }
+
+// const filename = process.argv[2]
+// if (!filename) {
+//   process.exit(1)
+// }
+// import { promises as fs } from 'node:fs'
+// const content = await fs.readFile(filename, 'utf8')
+// const data = JSON.parse(content) // must be an array of objects
+
+// console.log(tableLayout(data, [
+//   { name: 'one', width: 16, rtol: true },
+//   { name: 'two', width: 16, rtol: false },
+//   { name: 'three', width: 16, rtol: false }
+// ]))
+
+// console.log(tableLayout(data, [
+//   {
+//     name: 'name',
+//     width: 25,
+//     granularity: 'grapheme'
+//   },
+//   {
+//     name: 'type',
+//     width: 6,
+//     granularity: 'grapheme',
+//     noWrap: true
+//   },
+//   {
+//     name: 'expiry',
+//     width: 6,
+//     granularity: 'grapheme',
+//     noWrap: true
+//   },
+//   {
+//     name: 'bid',
+//     width: 6,
+//     granularity: 'grapheme',
+//     noWrap: true
+//   },
+//   {
+//     name: 'offer',
+//     width: 6,
+//     granularity: 'grapheme',
+//     noWrap: true
+//   },
+//   {
+//     name: 'change',
+//     width: 6,
+//     granularity: 'grapheme',
+//     noWrap: true
+//   },
+//   {
+//     name: 'change %',
+//     width: 8,
+//     granularity: 'grapheme',
+//     noWrap: true
+//   },
+//   {
+//     name: 'epic',
+//     width: 25,
+//     granularity: 'grapheme'
+//   }
+// ]))
+
+// // console.log(rows)
+// const dividedRows = rows.reduce((acc, curr, index) => {
+//   if (index % 2 > 0) {
+//     /* odd row */
+//     acc.push(['\u2500'.repeat(curr[0].length)])
+//   }
+//   acc.push(curr)
+//   if (index % 2 > 0) {
+//     /* odd row */
+//     acc.push(['\u2500'.repeat(curr[0].length)])
+//   }
+//   return acc
+// }, [])
+// console.log(dividedRows)
+// console.log(dividedRows.map(r => r.join('\n')).join('\n'))

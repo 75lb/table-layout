@@ -1,14 +1,22 @@
 [
   {
-    "dep": "auto-share",
-    "desc": ""
+    "one": "لما اتفرّقت العقول كل واحد عجبه عقله، ولما اتفرّقت الأرزاق ماحدش عجبه رزقه",
+    "two": "A one-yard square must be drawn in the middle of the combat place, to which the “seconds”, after the fall of one of the contestants or at the beginning of the fight, must take their pupils, placing them face to face.",
+    "three": "有理走遍天下，无理寸步难行。"
   },
   {
-    "dep": "autodeploy-transport",
-    "desc": "自动化部署网络传输通道。"
+    "one": "A one-yard square must be drawn in the middle of the combat place, to which the “seconds”, after the fall of one of the contestants or at the beginning of the fight, must take their pupils, placing them face to face.",
+    "two": "لما اتفرّقت العقول كل واحد عجبه عقله، ولما اتفرّقت الأرزاق ماحدش عجبه رزقه",
+    "three": "有理走遍天下，无理寸步难行。"
   },
   {
-    "dep": "autohost",
-    "desc": "Resource driven, transport agnostic host"
+    "one": "有理走遍天下，无理寸步难行。",
+    "two": "A one-yard square must be drawn in the middle of the combat place, to which the “seconds”, after the fall of one of the contestants or at the beginning of the fight, must take their pupils, placing them face to face.",
+    "three": "لما اتفرّقت العقول كل واحد عجبه عقله، ولما اتفرّقت الأرزاق ماحدش عجبه رزقه"
+  },
+  {
+    "two": "有理走遍天下，无理寸步难行。",
+    "three": "A one-yard square must be drawn in the middle of the combat place, to which the “seconds”, after the fall of one of the contestants or at the beginning of the fight, must take their pupils, placing them face to face.",
+    "one": "لما اتفرّقت العقول كل واحد عجبه عقله، ولما اتفرّقت الأرزاق ماحدش عجبه رزقه"
   }
 ]

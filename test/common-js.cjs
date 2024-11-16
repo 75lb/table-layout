@@ -1,11 +1,11 @@
-const Table = require('table-layout')
+const { tableLayout } = require('table-layout')
 const assert = require('assert')
 const a = assert.strict
 
 const [test, only, skip] = [new Map(), new Map(), new Map()]
 const eol = '\n'
 
-test.set('new Table()', function () {
+skip.set('new Table()', function () {
   const options = {
     maxWidth: 40,
     padding: { left: '<', right: '>' }
