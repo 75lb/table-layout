@@ -1,5 +1,3 @@
-import 'node:fs';
-
 function ansiRegex$1({onlyFirst = false} = {}) {
 	// Valid string terminator sequences are BEL, ESC\, and 0x9c
 	const ST = '(?:\\u0007|\\u001B\\u005C|\\u009C)';
@@ -501,7 +499,8 @@ class Column {
     width: 30,
     widthMode: 'visual',
     pad: false,
-    rtol: false
+    rtol: false,
+    noWrap: false
   }
 
   constructor (options = {}) {
@@ -543,6 +542,21 @@ class Column {
   }
 }
 
+/**
+ * @module wordwrapjs
+ */
+
+/**
+ * @param {string}
+ * @param options {object} - Options
+ * @param options.locale {string} - Locale
+ * @param options.granularity {string} - [Granularity](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Segmenter/Segmenter#granularity). Possible values: grapheme, word or sentence.
+ * @param options.width {number} - Number
+ * @param options.widthMode {string} - 'char' or 'visual'
+ * @param options.pad {boolean} - Set to true to pad each column cell so its width matches options.width
+ * @param options.rtol {boolean} - Set to true if padding a rtol language.
+ * @param options.noWrap {boolean} - Set to true to disable wrapping per segment
+ */
 function wrap (text = '', options = {}) {
   const column = new Column(options);
   for (const s of segment(text, options)) {
@@ -1110,7 +1124,7 @@ function getMergedRows (wrappedData, columns, columnSeparator = ' \u2502 ') {
   return rows
 }
 
-function tableLayout (data, columns) {
+function tableLayout (data, columns = []) {
   columns = columns || getColumnOptions(data);
   // console.log(columns)
   const wrappedData = getWrappedData(data, columns);
@@ -1120,10 +1134,16 @@ function tableLayout (data, columns) {
   return mergedRows.map(r => r.join('\n')).join('\n')
 }
 
+/* TODO: Demonstrate auto-column-sizing filling the entire terminal display (but don't embed this behaviour as it's irrelevant in the browser) */
+/* TODO: Isomorphism */
+/* TODO: Maintain "new Table()" API already used by many users (although not as many users as i thought): https://github.com/search?q=table-layout+path%3A**%2Fpackage.json&type=code&ref=advsearch */
+/* TODO: Destroy cli-table, columnify https://www.npmjs.com/search?q=cli-table https://www.npmjs.com/package/columnify */
+
 // const filename = process.argv[2]
 // if (!filename) {
 //   process.exit(1)
 // }
+// import { promises as fs } from 'node:fs'
 // const content = await fs.readFile(filename, 'utf8')
 // const data = JSON.parse(content) // must be an array of objects
 

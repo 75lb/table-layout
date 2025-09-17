@@ -59,7 +59,7 @@ function getMergedRows (wrappedData, columns, columnSeparator = ' \u2502 ') {
   return rows
 }
 
-function tableLayout (data, columns) {
+function tableLayout (data, columns = []) {
   columns = columns || getColumnOptions(data)
   // console.log(columns)
   const wrappedData = getWrappedData(data, columns)
@@ -71,19 +71,24 @@ function tableLayout (data, columns) {
 
 export { getColumnOptions, getWrappedData, getMergedRows, tableLayout }
 
-// const filename = process.argv[2]
-// if (!filename) {
-//   process.exit(1)
-// }
-// import { promises as fs } from 'node:fs'
-// const content = await fs.readFile(filename, 'utf8')
-// const data = JSON.parse(content) // must be an array of objects
+/* TODO: Demonstrate auto-column-sizing filling the entire terminal display (but don't embed this behaviour as it's irrelevant in the browser) */
+/* TODO: Isomorphism */
+/* TODO: Maintain "new Table()" API already used by many users (although not as many users as i thought): https://github.com/search?q=table-layout+path%3A**%2Fpackage.json&type=code&ref=advsearch */
+/* TODO: Destroy cli-table, columnify https://www.npmjs.com/search?q=cli-table https://www.npmjs.com/package/columnify */
 
-// console.log(tableLayout(data, [
-//   { name: 'one', width: 16, rtol: true },
-//   { name: 'two', width: 16, rtol: false },
-//   { name: 'three', width: 16, rtol: false }
-// ]))
+const filename = process.argv[2]
+if (!filename) {
+  process.exit(1)
+}
+import { promises as fs } from 'node:fs'
+const content = await fs.readFile(filename, 'utf8')
+const data = JSON.parse(content) // must be an array of objects
+
+console.log(tableLayout(data, [
+  { name: 'one', width: 16, rtol: true },
+  { name: 'two', width: 16, rtol: false },
+  { name: 'three', width: 16, rtol: false }
+]))
 
 // console.log(tableLayout(data, [
 //   {
